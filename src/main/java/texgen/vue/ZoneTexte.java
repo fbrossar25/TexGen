@@ -2,7 +2,8 @@ package texgen.vue;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import texgen.modele.PseudoCode;
 
 /**
  * @author fanny
@@ -12,15 +13,18 @@ public class ZoneTexte extends JPanel {
 	/**
 	 * 
 	 */
-	private JTextArea texte;
+	private PseudoCode pseudoCode;
 
 	/**
 	 * 
 	 */
 	public ZoneTexte() {
 		super();
-		texte = new JTextArea(10, 30);
-		texte.append("Entrez votre pseudo-code.");
-		add(new JScrollPane(texte));
+		pseudoCode = new PseudoCode();
+		add(new JScrollPane(pseudoCode));
+	}
+
+	public PseudoCode getPseudoCode() {
+		return pseudoCode;
 	}
 }
