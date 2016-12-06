@@ -1,7 +1,6 @@
 package texgen.vue;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import texgen.modele.PseudoCode;
 
@@ -21,7 +20,8 @@ public class ZoneTexte extends JPanel {
 	public ZoneTexte() {
 		super();
 		pseudoCode = new PseudoCode();
-		add(new JScrollPane(pseudoCode));
+		// add(new JScrollPane(pseudoCode));
+		add(pseudoCode);
 	}
 
 	/**
