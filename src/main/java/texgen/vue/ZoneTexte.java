@@ -24,6 +24,10 @@ public class ZoneTexte extends JPanel {
 		add(new JScrollPane(pseudoCode));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public PseudoCode getPseudoCode() {
 		return pseudoCode;
 	}
