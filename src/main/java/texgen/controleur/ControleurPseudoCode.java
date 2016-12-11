@@ -1,11 +1,11 @@
 package texgen.controleur;
 
-import texgen.vue.ZoneTexte;
+import texgen.vue.PseudoCode;
 
 public class ControleurPseudoCode {
-	ZoneTexte pseudoCode;
+    PseudoCode pseudoCode;
 
-	ControleurPseudoCode(ZoneTexte pseudoCode) {
-		this.pseudoCode = pseudoCode;
-	}
+    ControleurPseudoCode(PseudoCode pseudoCode) {
+        this.pseudoCode = pseudoCode;
+    }
 }
