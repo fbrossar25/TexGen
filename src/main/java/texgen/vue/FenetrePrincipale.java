@@ -37,7 +37,7 @@ public class FenetrePrincipale extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        menuBar = new BarreMenu();
+        menuBar = new BarreMenu(this);
         add(menuBar, BorderLayout.NORTH);
 
         pseudoCode = new PseudoCode();
@@ -48,5 +48,9 @@ public class FenetrePrincipale extends JFrame {
         add(separateurV, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    public PseudoCode getPseudoCode() {
+        return pseudoCode;
     }
 }
