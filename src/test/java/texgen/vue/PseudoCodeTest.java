@@ -23,6 +23,7 @@ public class PseudoCodeTest {
         PseudoCode p = new PseudoCode();
         assertEquals(stringArray, p.getLignes());
         p.getTextArea().append("\nTest");
+        p.setNombreDeLignes(2);
         assertEquals("Test", p.getLigne(2));
     }
 
@@ -42,14 +43,16 @@ public class PseudoCodeTest {
         p.getTextArea().setText("");
         assertEquals(1, p.getNombreLignes());
         p.getTextArea().append("\nTest");
+        p.refreshNombreDeLignes();
         assertEquals(2, p.getNombreLignes());
         p.getTextArea().setText("");
         for (int i = 1; i <= 100; i++) {
             p.getTextArea().append("Test" + ((i < 100) ? "\n" : ""));
+            p.refreshNombreDeLignes();
             p.marquage(1, i);
             assertTrue(p.estMarquee(1, i));
         }
-
+        p.refreshNombreDeLignes();
         assertEquals(100, p.getNombreLignes());
         TreeSet<Integer> t = new TreeSet<Integer>();
 
@@ -67,10 +70,10 @@ public class PseudoCodeTest {
         for (int i = 0; i < 5; i++) {
             p.getTextArea().append("Test\n");
         }
+        p.refreshNombreDeLignes();
         p.marquage(2, 5);
-        p.marquage(2, 6);
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 10; j++) {
                 if ((i == 2) && (j == 5)) {
                     assertTrue(p.estMarquee(i, j));
                 } else {
