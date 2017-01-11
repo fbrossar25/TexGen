@@ -79,7 +79,6 @@ public class PseudoCode extends JPanel {
 
     public TreeSet<Integer> getMarqueursDiapo(int diapo) {
         if ((diapo < 1) || (diapo > getNombreDiapos())) {
-            System.out.println("Je suis le null pointer qui t'emmerde pour la diapo " + diapo);
             return null;
         }
         return marqueurs.get(diapo - 1);
@@ -129,6 +128,7 @@ public class PseudoCode extends JPanel {
     }
 
     public int getNombreLignes() {
+        refreshNombreDeLignes();
         return linenumber;
     }
 
@@ -138,10 +138,11 @@ public class PseudoCode extends JPanel {
             return;
         }
         int prochainMarqueur;
-        if (getDiapo(diapoCourante).isEmpty()) {
+        if (getDiapo(diapoCourante).isEmpty() || (getDiapo(diapoCourante).last() == getNombreLignes())) {
             prochainMarqueur = 1;
         } else {
             prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + ((diapoCourante < getNombreLignes()) ? 1 : 0);
+            // System.out.println("next mark at " + prochainMarqueur);
         }
         marquage(diapoCourante + 1, prochainMarqueur);
         // afficherMarqueurs();
