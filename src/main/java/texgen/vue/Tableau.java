@@ -1,12 +1,16 @@
 package texgen.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import texgen.controleur.ControleurTableau;
 
@@ -43,6 +47,9 @@ public class Tableau extends JPanel {
     /** Controleur du tableau */
     private ControleurTableau            ctrl;
 
+    /** Couleur du marquage des case modifiée. */
+    private Color                        markColor;
+
     /**
      * Constructeur de la classe
      * 
@@ -51,6 +58,7 @@ public class Tableau extends JPanel {
      */
     public Tableau(FenetrePrincipale fenetrePrincipale) {
         super();
+        markColor = new Color(0, 255, 0);
         // On utilise le même controleur pour chaque élément du tableau pour n'avoir à en désactiver qu'un au besoin
         ctrl = new ControleurTableau(this);
         diapoCourante = 1;
@@ -65,9 +73,67 @@ public class Tableau extends JPanel {
         model.addTableModelListener(ctrl);
 
         tab = new JTable();
+        tab.setDefaultRenderer(Object.class, new TableCellRenderer() {
+            JLabel comp = new JLabel();
+            String val  = new String();
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                comp.setOpaque(true);
+                comp.setForeground(Color.BLACK); // text color
+                if (value != null) {
+                    val = value.toString();
+                    comp.setText(val);
+                    if (estMarquee(row, column)) {
+                        comp.setBackground(markColor);
+                    } else {
+                        comp.setBackground(Color.WHITE);
+                    }
+                }
+                return comp;
+            }
+        });
         tab.setModel(getDiapo(diapoCourante));
         tab.setRowHeight(DEFAULT_ROW_HEIGHT);
         add(tab, BorderLayout.CENTER);
+    }
+
+    /**
+     * Retourne la présence ou l'absence de marquage de la cellule (ligne,colonne) à la diapo donnée
+     * 
+     * @param diapo
+     *            la diapo
+     * @param ligne
+     *            la ligne
+     * @param colonne
+     *            la colonne
+     * @return true si la cellule est marquée, false sinon
+     */
+    public boolean estMarquee(int diapo, int ligne, int colonne) {
+        // On ne marque pa la premiere ligne (les titres)
+        if ((diapo < 1) || (diapo > getNombreDiapos()) || (ligne < 1) || (ligne > li) || (colonne < 0) || (colonne > col)) {
+            return false;
+        }
+
+        Object value = getDiapo(diapo).getValueAt(ligne, colonne);
+        if (diapo == 1) {
+            return (value != null) && !value.equals("");
+        } else {
+            return (value != null) && !value.equals("") && !value.equals(getDiapo(diapo - 1).getValueAt(ligne, colonne));
+        }
+    }
+
+    /**
+     * Retourne la présence ou l'absence de marquage de la cellule (ligne,colonne) à la diapo courante
+     * 
+     * @param ligne
+     *            la ligne
+     * @param colonne
+     *            la colonne
+     * @return true si la cellule est marquée, false sinon
+     */
+    public boolean estMarquee(int ligne, int colonne) {
+        return estMarquee(diapoCourante, ligne, colonne);
     }
 
     /**
@@ -257,7 +323,7 @@ public class Tableau extends JPanel {
      */
     public void supprimerDiapo(int i) {
         if ((i > 0) && (i <= getNombreDiapos())) {
-            diapos.remove(i);
+            diapos.remove(i - 1);
         }
     }
 
