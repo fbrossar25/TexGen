@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" additionalparam=" -encoding utf8&#13;&#10;-docencoding utf8&#13;&#10;-charset utf8" author="true" classpath="target/test-classes;C:\Users\flori\.p2\pool\plugins\org.hamcrest.core_1.3.0.v201303031735.jar;C:\Users\flori\.m2\repository\junit\junit\4.12\junit-4.12.jar;C:\Users\flori\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\flori\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar" destdir="doc" nodeprecated="true" nodeprecatedlist="true" noindex="false" nonavbar="false" notree="false" packagenames="texgen.modele,utilities,texgen.controleur,texgen.vue" source="1.8" sourcefiles="src/main/java/texgen/MainApp.java,src/main/java/texgen/package-info.java" sourcepath="src/main/java;src/test/java" splitindex="true" use="true" version="false">
+            <link href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/"/>
+            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://junit-team.github.io/junit/javadoc/latest/"/>
+            <link href="http://docs.oracle.com/javase/8/javafx/api/"/>
+        </javadoc>
+    </target>
+</project>

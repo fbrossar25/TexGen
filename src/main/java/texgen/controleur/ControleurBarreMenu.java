@@ -10,35 +10,27 @@ import utilities.FileUtilities;
 import utilities.GenerateurLatex;
 
 /**
- * Classe gèrant les controleurs de la barre de menu
+ * Classe controleur de la barre de menu
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 
 public class ControleurBarreMenu implements ActionListener {
-	
-	/**	La barre de menu. */
+
+    /** La barre de menu. */
     private BarreMenu barreMenu;
 
-    /**	 Constructeur de la classe 
+    /**
+     * Constructeur de la classe
      * 
      * @param barreMenu
-     * 	Barre de menu
-     * 
+     *            Barre de menu
      */
     public ControleurBarreMenu(BarreMenu barreMenu) {
         this.barreMenu = barreMenu;
     }
-    
-    /**
-     * Fonction gérant les actions des différents composants de la barre de menu
-     * 
-     * @param e 
-     * 	Evénement lié à l'action
-     * 
-     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JMenuItem source = (JMenuItem) e.getSource();

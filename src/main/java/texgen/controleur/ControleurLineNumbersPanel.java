@@ -12,53 +12,39 @@ import texgen.vue.LineNumbersPanel;
 import utilities.DrawUtilities;
 
 /**
- * Classe gèrant les controleurs du Panel correspondant aux numéros de ligne du Pseudo code
+ * Classe controleur du panel des numéros de lignes du pseudoCode
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 
 public class ControleurLineNumbersPanel implements MouseListener {
-    
-	/** Panel correspondant aux numéros de ligne du Pseudo code */
-	private LineNumbersPanel lineNumbersPanel;
 
-	/**
-	 * Constructeur de la classe
-	 * 
-	 * @param lineNumbersPanel
-	 * 	Panel correspondant aux numéros de ligne du Pseudo code
-	 * 
-	 */
+    /** Panel des numéros de ligne du Pseudo code */
+    private LineNumbersPanel lineNumbersPanel;
+
+    /**
+     * Constructeur de la classe
+     * 
+     * @param lineNumbersPanel
+     *            Panel des numéros de ligne du Pseudo code
+     */
     public ControleurLineNumbersPanel(LineNumbersPanel lineNumbersPanel) {
         this.lineNumbersPanel = lineNumbersPanel;
     }
 
-    /**
-     * Fonction gérant les actions effectuées avec un clique de la souris
-     * 
-     * @param e
-     * 	Evénement lié à la souris
-     * 
-     */
     @Override
     public void mouseClicked(MouseEvent e) {
+        // On place le marqueur sur la ligne line
         int line = Integer.parseInt(((JLabel) (e.getSource())).getText());
         // System.out.println("Label " + line + " clicked");
         lineNumbersPanel.getPseudoCode().marquage(lineNumbersPanel.getPseudoCode().getDiapoCourante(), line);
         lineNumbersPanel.getPseudoCode().repaint();
     }
-    
-    /**
-     * Fonction gérant les actions effectuées lorsque la souris entre dans un composant
-     * 
-     * @param e
-     * 	Evénement lié à la souris
-     * 
-     */
+
     @Override
     public void mouseEntered(MouseEvent e) {
+        // On dessine un cercle gris pour visualiser où le marqueur seras sur le panel des numéros de ligne
         JLabel source = (JLabel) e.getSource();
         if (Integer.parseInt(source.getText()) <= lineNumbersPanel.getPseudoCode().getNombreLignes()) {
             Point pos = lineNumbersPanel.getLabelDrawPoint((JLabel) (e.getSource()));
@@ -68,36 +54,15 @@ public class ControleurLineNumbersPanel implements MouseListener {
         }
     }
 
-    /**
-     * Fonction gérant les actions effectuées lorsque la souris quitte un composant
-     * 
-     * @param e
-     * 	Evénement lié à la souris
-     * 
-     */
     @Override
     public void mouseExited(MouseEvent e) {
         lineNumbersPanel.repaint();
     }
-    
-    /**
-     * Fonction gérant les actions effectuées lorsqu'un bouton de la souris a été appuyé sur un composant
-     *
-     * @param e
-     * 	Evénement lié à la souris
-     * 
-     */
+
     @Override
     public void mousePressed(MouseEvent e) {
     }
-    
-    /**
-     * Fonction gérant les actions effectuées lorsqu'un bouton de la souris a été relâché sur un composant
-     * 
-     * @param e
-     * 	Evénement lié à la souris
-     * 
-     */
+
     @Override
     public void mouseReleased(MouseEvent e) {
     }

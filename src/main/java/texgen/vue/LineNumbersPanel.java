@@ -16,32 +16,31 @@ import utilities.DrawUtilities;
 import utilities.SpringUtilities;
 
 /**
- * Classe gérant la vue de la ligne correspondant aux numéros de ligne du pseudo code
+ * Classe gérant la vue du panel des numéros de ligne du pseudo code
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 @SuppressWarnings("serial")
 public class LineNumbersPanel extends JPanel {
-    
-	/** Nombre de ligne */
-	private final int         ROWS;
-	
-	/** Pseudo code */
+
+    /** Nombre de ligne max du pseudoCode */
+    private final int         ROWS;
+
+    /** Pseudo code */
     private PseudoCode        pseudoCode;
-    
+
     /** numéros des lignes */
     private ArrayList<JLabel> labels;
-    
-    /** hauteur des lignes */
+
+    /** Décalage en hauteur des lignes */
     private final int         LABEL_HEIGHT_OFFSET = 1;
 
     /**
      * Constructeur de la classe
      * 
      * @param pseudoCode
-     * 	Pseudo code
+     *            Pseudo code
      */
     LineNumbersPanel(PseudoCode pseudoCode) {
         super();
@@ -60,25 +59,26 @@ public class LineNumbersPanel extends JPanel {
 
         manageSpring();
 
-        setPreferredSize(new Dimension(computeWidth(), ROWS * pseudoCode.getLineHeight()));
-        setMaximumSize(new Dimension(computeWidth(), ROWS * pseudoCode.getLineHeight()));
-        setMinimumSize(new Dimension(computeWidth(), ROWS * pseudoCode.getLineHeight()));
+        // On fixe la taille du panel pour l'aligner sur le pseudoCode
+        Dimension dim = new Dimension(computeWidth(), ROWS * pseudoCode.getLineHeight());
+        setPreferredSize(dim);
+        setMaximumSize(dim);
+        setMinimumSize(dim);
     }
 
     /**
-     * Fonction que je sais pas à quoi quelle sert ???
+     * Fonction gèrant le layout du panel
      */
     private void manageSpring() {
         SpringUtilities.makeGrid(this, labels.size(), 1, 0, LABEL_HEIGHT_OFFSET, 0, 0);
     }
 
     /**
-     * Fonction donnant un point lier à un numéro de ligne
+     * Fonction donnant le point où dessiner le marqueurs pour le labnel donné
      * 
      * @param label
-     * numéro de ligne dont on veux le point correspondant
-     * 
-     * @return point correspondant au numéro de ligne
+     *            le label
+     * @return le point
      */
     public Point getLabelDrawPoint(JLabel label) {
         int x = label.getX() + ((computeWidth() / 4) * 3);
@@ -87,12 +87,11 @@ public class LineNumbersPanel extends JPanel {
     }
 
     /**
-     * Fonction permettant la création d'une nouvelle ligne
+     * Fonction permettant la création d'un nouveau label
      * 
      * @param text
-     * 	numéro de la nouvelle ligne
-     * 
-     * @return le label créé correspondant à la nouvelle ligne
+     *            numéro de la nouvelle ligne
+     * @return le label créé
      */
     private JLabel createNewLabel(String text) {
         JLabel label = new JLabel(text);
@@ -102,7 +101,7 @@ public class LineNumbersPanel extends JPanel {
     }
 
     /**
-     * 	Fonction permettant l'ajout d'une nouvelle ligne
+     * Fonction permettant l'ajout d'une nouvelle ligne
      */
     public void addLabel() {
         JLabel label = createNewLabel("" + (labels.size() + 1));
@@ -112,7 +111,7 @@ public class LineNumbersPanel extends JPanel {
     }
 
     /**
-     * Fonction permettant la suppression d'une ligne
+     * Fonction permettant la suppression de la dernière
      */
     public void removeLabel() {
         remove(labels.get(labels.size() - 1));
@@ -122,9 +121,9 @@ public class LineNumbersPanel extends JPanel {
     }
 
     /**
-     * Fonction donnant la taille d'une ligne
+     * Fonction renvoyant la largeur nécessaire à l'affichage du panel
      * 
-     * @return taille d'une ligne
+     * @return la largeur du panel
      */
     public int computeWidth() {
         return ((int) (Math.log10(ROWS) + 1) * getFontMetrics(pseudoCode.getFont()).charWidth('0') * 2) + 10;
@@ -139,17 +138,13 @@ public class LineNumbersPanel extends JPanel {
         return pseudoCode;
     }
 
-    /**
-     * 	Fontion permetant de dessiner un composant graphique
-     * 
-     * @param Composant graphique à dessiner
-     */
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);
 
+        // Dessin des marqueurs
         g.setColor(Color.RED);
         TreeSet<Integer> marqueurs = pseudoCode.getMarqueursDiapoCourante();
         if (marqueurs == null) {

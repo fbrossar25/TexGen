@@ -19,35 +19,37 @@ import texgen.controleur.ControleurPseudoCode;
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 @SuppressWarnings("serial")
 public class PseudoCode extends JPanel {
 
-	/** Zone de texte */
+    /** Zone de texte */
     private JTextArea                   textArea;
-    
+
     /** Marqueurs du texte */
     private ArrayList<TreeSet<Integer>> marqueurs;
-    
-    /** Style du texte */
+
+    /** Police du texte */
     private Font                        font = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-    
+
     /** Panel gérant l'affichage des numéros de ligne du pseudo code */
     LineNumbersPanel                    lineNumbersPanel;
-    
+
     /** Nombre de ligne max */
     private int                         rowsNumber;
-    
-    /** ??????? */
+
+    /** Taille de l'interligne */
     private final double                linespacing;
-    
+
     /** Numéro de la diapo courante */
     private int                         diapoCourante;
-    
-    /** Nombre de ligne */
+
+    /** Nombre de ligne non-vide actuel */
     private int                         linenumber;
 
+    /**
+     * Constructeur par défaut avec 50 lignes max
+     */
     PseudoCode() {
         this(50);
     }
@@ -56,7 +58,7 @@ public class PseudoCode extends JPanel {
      * Constructeur de la classe
      * 
      * @param rows
-     * Nombre de ligne max
+     *            Nombre de ligne max
      */
     PseudoCode(int rows) {
         super();
@@ -65,7 +67,7 @@ public class PseudoCode extends JPanel {
         diapoCourante = 1;
         ControleurPseudoCode controleur = new ControleurPseudoCode(this);
 
-        // Getting the line spacing
+        // Calcul de l'interligne
         JTextPane textPane = new JTextPane();
         textPane.setFont(font);
         textPane.setText("foo");
@@ -91,7 +93,7 @@ public class PseudoCode extends JPanel {
      * Fonction permettant la modification du nombre de ligne
      * 
      * @param n
-     * nouveau nombre de ligne
+     *            nouveau nombre de ligne
      */
     public void setNombreDeLignes(int n) {
         if (n > 0) {
@@ -118,9 +120,9 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction donnant les marqueurs de la diapo suivante
+     * Fonction donnant les marqueurs de la diapo courante
      * 
-     * @return marqueurs de la diapo suivante
+     * @return marqueurs de la diapo courante
      */
     public TreeSet<Integer> getMarqueursDiapoCourante() {
         return getMarqueursDiapo(diapoCourante);
@@ -130,9 +132,8 @@ public class PseudoCode extends JPanel {
      * Fonction donnant les marqueurs de la diapo spécifiée
      * 
      * @param diapo
-     * Numéro de la diapo dont on veux les marqueurs
-     * 
-     * @return marqueurs de la diapo spécifiée
+     *            Numéro de la diapo
+     * @return marqueurs de la diapo
      */
     public TreeSet<Integer> getMarqueursDiapo(int diapo) {
         if ((diapo < 1) || (diapo > getNombreDiapos())) {
@@ -142,18 +143,20 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction j'en sais rien
+     * Fonction gèrant le marquage pour la ligne dans la diapo spécifée
      * 
      * @param diapo
-     * Numéro de la diapo 
+     *            Numéro de la diapo
      * @param ligne
-     * Numéro de la ligne
+     *            Numéro de la ligne
      */
     public void marquage(int diapo, int ligne) {
         if ((diapo <= 0) || (ligne <= 0) || (diapo > getNombreDiapos()) || (ligne > getNombreLignes())) {
             return;
         }
+        // On décrémente le numéro de la diapo pour obtenir l'index corespondant
         diapo--;
+        // Si le marqueurs est déja présent, on l'efface, sinon on l'ajoute
         if (marqueurs.get(diapo).contains(ligne)) {
             marqueurs.get(diapo).remove(ligne);
         } else {
@@ -163,12 +166,11 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fontion donnant le texte à une ligne donnée
+     * Fontion donnant le texte de la ligne donnée
      * 
      * @param i
-     * Numéro de la ligne
-     * 
-     * @return texte présent à la ligne donnée
+     *            Numéro de la ligne
+     * @return texte présent à la ligne donnée, null si la ligne est inexistante ou vide
      */
     public String getLigne(int i) {
         if ((i <= 0) || (i > getNombreLignes())) {
@@ -183,11 +185,12 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * ?????
+     * Recalcul le nombre de lignes
      */
     public void refreshNombreDeLignes() {
         int n = 1;
         for (char c : textArea.getText().toCharArray()) {
+            // On compte le nombre de retour charriot
             if (c == (char) 10) {
                 n++;
             }
@@ -196,9 +199,9 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction donnant tout le texte présent dans la zone de texte
+     * Fonction donnant tout le texte sous forme de liste
      * 
-     * @return texte entier
+     * @return liste des lignes
      */
     public ArrayList<String> getLignes() {
         ArrayList<String> list = new ArrayList<>();
@@ -209,7 +212,7 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction donnant le nombre de ligne
+     * Fonction donnant le nombre de ligne actuel
      * 
      * @return nombre de ligne
      */
@@ -227,10 +230,13 @@ public class PseudoCode extends JPanel {
             return;
         }
         int prochainMarqueur;
+        // S'il n'y avait aucun marqueur, ou si le dernier marqueur était à la dernière ligne, on marque la première
+        // ligne, sinon on marque la ligne suivant le dernier marqueur
         if (getDiapo(diapoCourante).isEmpty() || (getDiapo(diapoCourante).last() == getNombreLignes())) {
             prochainMarqueur = 1;
         } else {
-            prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + ((diapoCourante < getNombreLignes()) ? 1 : 0);
+            // On utilise new Integer et intValue pour ne pas modifier le dernier marqueur
+            prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + 1;
             // System.out.println("next mark at " + prochainMarqueur);
         }
         marquage(diapoCourante + 1, prochainMarqueur);
@@ -238,7 +244,7 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction permettant l'affichage des marqueurs
+     * Fonction permettant l'affichage des marqueurs sur la console
      */
     public void afficherMarqueurs() {
         int n = 1;
@@ -260,7 +266,7 @@ public class PseudoCode extends JPanel {
      * Fonction permettant la suppression d'une diapo donnée
      * 
      * @param i
-     * Numéro de la diapo à supprimer
+     *            Numéro de la diapo à supprimer
      */
     public void supprimerDiapo(int i) {
         if ((i >= 0) && (i < marqueurs.size())) {
@@ -272,11 +278,10 @@ public class PseudoCode extends JPanel {
      * Fonction permettant de voir si une ligne est marquée sur une diapo donnée
      * 
      * @param diapo
-     * Numéro de la diapo
+     *            Numéro de la diapo
      * @param ligne
-     * Numéro de la ligne
-     * 
-     * @return présence d'un marquage ou non présence
+     *            Numéro de la ligne
+     * @return true si la ligne est marquée sur la diapo donnée, false sinon
      */
     public boolean estMarquee(int diapo, int ligne) {
         if ((diapo <= 0) || (ligne <= 0) || (diapo > marqueurs.size()) || (ligne > getNombreLignes())) {
@@ -287,41 +292,28 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction donnant une diapo dont on donne le numéro
+     * Fonction donnant la liste des marqueurs d'une diapo donnée
      * 
      * @param i
-     * Numéro de la diapo recherchée
-     * 
+     *            Numéro de la diapo recherchée
      * @return diapo correspondante
      */
     public TreeSet<Integer> getDiapo(int i) {
         return ((i > 0) && (i <= marqueurs.size())) ? marqueurs.get(i - 1) : null;
     }
 
-    /**
-     * Fonction donnant le style du texte présent dans la zone de texte
-     */
     @Override
     public Font getFont() {
         return font;
     }
 
     /**
-     * Fonction donnant le nombre de diapo
+     * Fonction donnant le nombre de diapo actuels
      * 
      * @return nombre de diapo
      */
     public int getNombreDiapos() {
         return marqueurs.size();
-    }
-
-    /**
-     * Fonction donnant la taille d'une colonne
-     * 
-     * @return taille d'une colonne
-     */
-    public int getLineNumbersColumnWidth() {
-        return (int) (Math.log10(rowsNumber) + 1) * getFontMetrics(font).charWidth('0');
     }
 
     /**
@@ -334,7 +326,7 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * Fonction donnant la hauteur d'une ligne
+     * Fonction donnant la hauteur d'une ligne (interligne compris)
      * 
      * @return hauteur d'une ligne
      */
@@ -353,7 +345,7 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * FOnction permettant de passer à la diapo précedante
+     * Fonction permettant de passer à la diapo précedante
      */
     public void diapoPrecedente() {
         if (diapoCourante > 1) {

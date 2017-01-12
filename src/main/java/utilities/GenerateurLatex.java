@@ -10,18 +10,16 @@ import texgen.vue.PseudoCode;
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 public class GenerateurLatex {
 
-	/**
-	 * Fonction générant le code LaTeX
-	 * 
-	 * @param fenetrePrincipale
-	 * fenêtre principale de l'aplication
-	 * 
-	 * @return code généré
-	 */
+    /**
+     * Fonction générant le code LaTeX
+     * 
+     * @param fenetrePrincipale
+     *            fenêtre principale de l'aplication
+     * @return code généré
+     */
     public static String generer(FenetrePrincipale fenetrePrincipale) {
         String string = genererEntete() + "\n\n";
         string += genererColorCode() + "\n\n";
@@ -49,9 +47,8 @@ public class GenerateurLatex {
      * Fonction permettant de séparer les lignes du pseudo code
      * 
      * @param txt
-     * Pseudo code
-     * 
-     * @return Pseudo code dont les lignes on été séparées
+     *            Pseudo code
+     * @return liste des lignes
      */
     private static ArrayList<String> separerLignes(String txt) {
         if ((txt == null) || (txt.length() <= 0)) {
@@ -76,16 +73,15 @@ public class GenerateurLatex {
     }
 
     /**
-     * Fonction générant la couleur du texte du pseudo code
+     * Fonction générant la ligne utilisant la macro colorCode correspondant à la ligne du pseudoCode
      * 
      * @param p
-     * Pseudo code
+     *            Pseudo code
      * @param ligne
-     * Ligne du pseudo code
+     *            Ligne du pseudo code
      * @param ligneNum
-     * Numéro de ligne
-     * 
-     * @return partie du code correspondant à la couleur du pseudo code
+     *            Numéro de ligne
+     * @return la ligne du pseudoCode avec le colorCode correspondant
      */
     public static String genererColorCode(PseudoCode p, String ligne, int ligneNum) {
         String res = "\\colorCode";
@@ -130,8 +126,7 @@ public class GenerateurLatex {
      * Fonction générant la partie du code correspondant au pseudo code
      * 
      * @param pseudoCode
-     * Pseudo code
-     * 
+     *            Pseudo code
      * @return code généré
      */
     public static String genererPseudoCode(PseudoCode pseudoCode) {
@@ -149,9 +144,9 @@ public class GenerateurLatex {
     }
 
     /**
-     * Fonction générant la couleur du code
+     * Fonction générant la macro colorCode
      * 
-     * @return partie du code correspondant à la couleur
+     * @return la macro colorCode
      */
     public static String genererColorCode() {
         return "\\newcommand{    \\colorCode}[3]{%\n\\only<#1>{\\textcolor{black}{#3}}\\only<#2>{\\textcolor{red}{#3}}\n}";

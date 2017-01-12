@@ -15,32 +15,31 @@ import texgen.controleur.ControleurTableau;
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 @SuppressWarnings("serial")
 public class Tableau extends JPanel {
-	
-	/** Fenêtre principale du projet */
+
+    /** Fenêtre principale du projet */
     private FenetrePrincipale            fenetrePrincipale;
-    
+
     /** Tableau */
     private JTable                       tab;
-    
+
     /** Nombre de colonne du tableau */
     private int                          col;
-    
+
     /** Nombre de ligne du tableau */
     private int                          li;
-    
+
     /** Hauteur de ligne par défaut */
     private final int                    DEFAULT_ROW_HEIGHT = 21;
-    
-    /** Liste des diapos liée au tableau */
+
+    /** Liste des modeles du tableau */
     private ArrayList<DefaultTableModel> diapos;
-    
+
     /** Numéro de la diapo courante */
     private int                          diapoCourante;
-    
+
     /** Controleur du tableau */
     private ControleurTableau            ctrl;
 
@@ -48,10 +47,11 @@ public class Tableau extends JPanel {
      * Constructeur de la classe
      * 
      * @param fenetrePrincipale
-     * Fenêtre principale du projet
+     *            Fenêtre principale du projet
      */
     public Tableau(FenetrePrincipale fenetrePrincipale) {
         super();
+        // On utilise le même controleur pour chaque élément du tableau pour n'avoir à en désactiver qu'un au besoin
         ctrl = new ControleurTableau(this);
         diapoCourante = 1;
         this.fenetrePrincipale = fenetrePrincipale;
@@ -71,9 +71,10 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction permettant la création du model du tableau
+     * Fonction permettant la création d'un nouveau modele "vide" (càd avec li*col case contenant chacune une chaine
+     * vide)
      * 
-     * @return model par défaut du tableau
+     * @return le modele "vide" créer
      */
     public DefaultTableModel createNewVoidModel() {
         DefaultTableModel model = new DefaultTableModel();
@@ -103,10 +104,9 @@ public class Tableau extends JPanel {
      * Fonction donnant le rectangle correspondant à une cellule dont on donne les numéros de ligne et de colonne
      * 
      * @param row
-     * Numéro de ligne correspondant à la cellule
+     *            Numéro de ligne correspondant à la cellule
      * @param col
-     * Numéro de colonne correspondant à la cellule
-     * 
+     *            Numéro de colonne correspondant à la cellule
      * @return le rectangle correspondant à la cellule recherchée
      */
     public Rectangle getCellRect(int row, int col) {
@@ -131,7 +131,7 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction permmetant la suppression d'une ligne dans le tableau
+     * Fonction permmetant la suppression de la derniere ligne du tableau
      */
     public void supprimerLigne() {
         if (li > 2) {
@@ -154,7 +154,7 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction permettant la suppression d'une colonne dans le tableau
+     * Fonction permettant la suppression de la derniere colonne du tableau
      */
     public void supprimerColonne() {
         if (col > 1) {
@@ -186,6 +186,7 @@ public class Tableau extends JPanel {
      */
     public void ajouterDiapo() {
         DefaultTableModel newModel = createNewVoidModel();
+        // On copie le modele de la diapo précédente
         for (int i = 0; i < li; i++) {
             for (int j = 0; j < col; j++) {
                 newModel.setValueAt(getDiapo(diapoCourante).getValueAt(i, j), i, j);
@@ -200,25 +201,25 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction désactivant les controles du tableau
+     * Fonction désactivant le controleur du tableau
      */
     public void disableAllModelListener() {
         ctrl.setActive(false);
     }
 
     /**
-     * Fonction activant les controles du tableau
+     * Fonction activant le controleur du tableau
      */
     public void enableAllModelListener() {
         ctrl.setActive(true);
     }
 
     /**
-     * Fonction donnant le model du tableau à une diapo donnée
-     * @param i
-     * Numéro de la diapo dont on cherche le model du tableau
+     * Fonction donnant le modele d'une diapo donnée
      * 
-     * @return model du tableau correspondant à la diapo
+     * @param i
+     *            Numéro de la diapo
+     * @return le modele correspondant
      */
     public DefaultTableModel getDiapo(int i) {
         if ((i < 1) || (i > diapos.size())) {
@@ -252,7 +253,7 @@ public class Tableau extends JPanel {
      * Fonction permettant de supprimer une diapo donnée
      * 
      * @param i
-     * Numéro de la diapo à supprimer
+     *            Numéro de la diapo à supprimer
      */
     public void supprimerDiapo(int i) {
         if ((i > 0) && (i <= getNombreDiapos())) {
@@ -270,14 +271,16 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction repercutant la modification des titres du tableau d'une diapo
+     * Fonction repercutant la modification d'un titre d'une colonne (première ligne du tableau) sur toutes les diapos
      * 
      * @param colonne
-     * Numéro de la colonne modifiée
+     *            Numéro de la colonne modifiée
      * @param source
-     * Numéro de la diapo où se situe la modification
+     *            Numéro de la diapo source de la modification
      */
     public void repercuterModifTitre(int colonne, int source) {
+        // Désactivation du controleur pour éviter les appels récursif
+        // car le controleur réagit à setValueAt
         disableAllModelListener();
         for (DefaultTableModel m : diapos) {
             m.setValueAt(getDiapo(source).getValueAt(0, colonne), 0, colonne);
@@ -286,16 +289,18 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction repercutant la modification d'une cellule du tableau d'une diapo
+     * Fonction repercutant la modification d'une cellule du tableau sur cette même cellule pour les diapos suivante
      * 
      * @param diapoSource
-     * Numéro de la diapo où se situe la modification
+     *            Numéro de la diapo où se situe la modification
      * @param ligne
-     * Numéro de la ligne modifiée
+     *            Numéro de la ligne modifiée
      * @param colonne
-     * Numéroi de la colonne modifiée
+     *            Numéroi de la colonne modifiée
      */
     public void repercuterModif(int diapoSource, int ligne, int colonne) {
+        // Désactivation du controleur pour éviter les appels récursif
+        // car le controleur réagit à setValueAt
         disableAllModelListener();
         for (int i = diapoSource + 1; i <= getNombreDiapos(); i++) {
             getDiapo(i).setValueAt(getDiapo(diapoSource).getValueAt(ligne, colonne), ligne, colonne);

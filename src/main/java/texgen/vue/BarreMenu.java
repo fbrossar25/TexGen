@@ -9,19 +9,18 @@ import javax.swing.JMenuItem;
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 @SuppressWarnings("serial")
 public class BarreMenu extends JMenuBar {
-	
-	/** Fenêtre principale du projet */
+
+    /** Fenêtre principale du projet */
     private FenetrePrincipale fenetrePrincipale;
 
     /**
      * Constructeur de la classe
      * 
      * @param fenetrePrincipale
-     * 	Fenêtre principale du projet
+     *            Fenêtre principale du projet
      */
     public BarreMenu(FenetrePrincipale fenetrePrincipale) {
         super();
@@ -32,19 +31,19 @@ public class BarreMenu extends JMenuBar {
      * Fonction permettant l'ajout d'un menu
      * 
      * @param menu
-     * 	Menu à ajouter
+     *            Menu à ajouter
      */
     public void ajouterMenu(JMenu menu) {
         add(menu);
     }
-    
+
     /**
      * Fonction permettant l'ajout d'un item dans un menu
      * 
      * @param menu
-     * 	nom du menu dans lequel ajouter l'item
+     *            nom du menu dans lequel ajouter l'item
      * @param item
-     * 	item à ajouter dans le menu
+     *            item à ajouter dans le menu
      */
     public void ajouterItem(String menu, JMenuItem item) {
         JMenu targetedMenu = null;
@@ -58,13 +57,13 @@ public class BarreMenu extends JMenuBar {
             targetedMenu.add(item);
         }
     }
-    
+
     /**
      * Fonction donnant le menu dont on donne le nom
      * 
      * @param menu
-     * 	nom du menu à rechercher
-     * @return menu trouvé
+     *            nom du menu à rechercher
+     * @return menu trouvé, null sinon
      */
     public JMenu getMenu(String menu) {
         for (int i = 0; i < getMenuCount(); i++) {

@@ -10,38 +10,30 @@ import javax.swing.event.TableModelListener;
 import texgen.vue.Tableau;
 
 /**
- * Classe gèrant les controleurs du tableau
+ * Classe controleur du tableau
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 public class ControleurTableau implements ActionListener, TableModelListener {
-	
-	/** Tableau */
-	private Tableau tableau;
-	
-	/** Active ou désactive un composant */
+
+    /** Tableau */
+    private Tableau tableau;
+
+    /** Active ou désactive le controleur */
     private boolean active;
 
     /**
      * Constructeur de la classe
      * 
      * @param tableau
-     * 	tableau
+     *            tableau
      */
     public ControleurTableau(Tableau tableau) {
         this.tableau = tableau;
         active = true;
     }
 
-    /**
-     * Fonction gérant les actions liées au tableau
-     * 
-     * @param e 
-     * 	Evénement lié à l'action
-     * 
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (active) {
@@ -59,23 +51,20 @@ public class ControleurTableau implements ActionListener, TableModelListener {
     }
 
     /**
-     * Fonction qui permet de changer la valeur de la variable active
+     * Fonction qui permet de définir l'état (actif / inactif) du controleur.
      * 
      * @param b
-     * 	Activation ou désactivation d'un composant
+     *            Activation ou désactivation d'un composant
      */
     public void setActive(boolean b) {
         active = b;
     }
 
-    /**
-     * Fonction qui gére la modification des informations dans le tableau
-     * 
-     * @param e
-     * 	Evénement lié au model du tableau
-     */
     @Override
     public void tableChanged(TableModelEvent e) {
+        // Si le controleur est actif on répercute les modifications des noms des colonne (la première ligne)
+        // sur toutes les diapos, et on répercute les modifications des autres case sur les diapos
+        // suivant la diapos modifiées
         if (active) {
             // System.out.println("value changed at (" + e.getFirstRow() + "," + e.getColumn() + ")");
             if (e.getFirstRow() == 0) {

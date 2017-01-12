@@ -6,22 +6,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Classe gérant Bonne question
+ * Classe utilitaire utiliser pour la lecture/écriture dans des fichiers
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 public class FileUtilities {
-	
-	/**
-	 * Fonction permettant l'écriture d'un texte dans un fichier
-	 * 
-	 * @param s
-	 * Texte à écrire
-	 * @param fullPath
-	 * Nom du fichier
-	 */
+
+    /**
+     * Fonction permettant l'écriture d'un texte dans un fichier
+     * 
+     * @param s
+     *            Texte à écrire
+     * @param fullPath
+     *            Chemin absolu du fichier
+     */
     public static void writeStringInFile(String s, String fullPath) {
         FileWriter fw = null;
         try {
@@ -36,10 +35,10 @@ public class FileUtilities {
     }
 
     /**
-     * Fonction permettant l'ouverture de l'éditeur par défaut
+     * Fonction permettant l'ouverture de l'éditeur LaTeX par défaut du système
      * 
      * @param fullPath
-     * Nom du fichier
+     *            Nom du fichier
      */
     public static void openDefaultEditor(String fullPath) {
         if ((fullPath == null) || (fullPath.length() <= 0)) {
