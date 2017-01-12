@@ -12,17 +12,33 @@ import texgen.controleur.ControleurBarreMenu;
 import texgen.controleur.ControleurTableau;
 
 /**
- * @author fanny
+ * Classe gérant la vue de la fenêtre principale
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
  */
 @SuppressWarnings("serial")
 public class FenetrePrincipale extends JFrame {
-
+	
+	/** Barre de menu */ 
     private BarreMenu  menuBar;
+    
+    /** Panel où est placé le pseudo code */
     private PseudoCode pseudoCode;
+    
+    /** Séparateur verticale */
     private JSplitPane separateurV;
+    
+    /** Séparateur horizontale */
     private JSplitPane separateurH;
+    
+    /** Panel où est placé le tableau */
     private Tableau    tableau;
 
+    /**
+     * Constructeur de la classe
+     */
     public FenetrePrincipale() {
         setTitle("TexGen");
         this.setSize(800, 600);
@@ -45,6 +61,9 @@ public class FenetrePrincipale extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Fonction gérant l'initialisation de la barre de menu
+     */
     public void initMenuBar() {
         // Menu Fichier
         ControleurBarreMenu ctrlMenuBar = new ControleurBarreMenu(menuBar);
@@ -106,30 +125,54 @@ public class FenetrePrincipale extends JFrame {
         menuBar.add(aide);
     }
 
+    /**
+     *  Fonction permettant l'ajout d'une diapo
+     */
     public void ajouterDiapo() {
         pseudoCode.ajouterDiapo();
         tableau.ajouterDiapo();
         diapoSuivante();
     }
 
+    /**
+     * Fonction permettant de passer à la diapo suivante
+     */
     public void diapoSuivante() {
         pseudoCode.diapoSuivante();
         tableau.diapoSuivante();
     }
 
+    /**
+     * Fonction permettant de passer à la diapo précedente
+     */
     public void diapoPrecedente() {
         pseudoCode.diapoPrecedente();
         tableau.diapoPrecedente();
     }
 
+    /**
+     * Fonction donnant la barre de menu
+     * 
+     * @return la barre de menu
+     */
     public BarreMenu getBarreMenu() {
         return menuBar;
     }
 
+    /**
+     * Fonction donnant le pseudo code
+     * 
+     * @return	le pseudo code
+     */
     public PseudoCode getPseudoCode() {
         return pseudoCode;
     }
 
+    /**
+     * Fonction donnant le tableau
+     * 
+     * @return le tableau
+     */
     public Tableau getTableau() {
         return tableau;
     }

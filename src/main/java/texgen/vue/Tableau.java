@@ -10,17 +10,46 @@ import javax.swing.table.DefaultTableModel;
 
 import texgen.controleur.ControleurTableau;
 
+/**
+ * Classe gérant la vue du tableau
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
+ */
 @SuppressWarnings("serial")
 public class Tableau extends JPanel {
+	
+	/** Fenêtre principale du projet */
     private FenetrePrincipale            fenetrePrincipale;
+    
+    /** Tableau */
     private JTable                       tab;
+    
+    /** Nombre de colonne du tableau */
     private int                          col;
+    
+    /** Nombre de ligne du tableau */
     private int                          li;
+    
+    /** Hauteur de ligne par défaut */
     private final int                    DEFAULT_ROW_HEIGHT = 21;
+    
+    /** Liste des diapos liée au tableau */
     private ArrayList<DefaultTableModel> diapos;
+    
+    /** Numéro de la diapo courante */
     private int                          diapoCourante;
+    
+    /** Controleur du tableau */
     private ControleurTableau            ctrl;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param fenetrePrincipale
+     * Fenêtre principale du projet
+     */
     public Tableau(FenetrePrincipale fenetrePrincipale) {
         super();
         ctrl = new ControleurTableau(this);
@@ -41,6 +70,11 @@ public class Tableau extends JPanel {
         add(tab, BorderLayout.CENTER);
     }
 
+    /**
+     * Fonction permettant la création du model du tableau
+     * 
+     * @return model par défaut du tableau
+     */
     public DefaultTableModel createNewVoidModel() {
         DefaultTableModel model = new DefaultTableModel();
         String[] defaultLine = new String[col];
@@ -56,14 +90,32 @@ public class Tableau extends JPanel {
         return model;
     }
 
+    /**
+     * Fonction donnant la fenêtre principale
+     * 
+     * @return la fenêtre principale
+     */
     public FenetrePrincipale getFenetre() {
         return fenetrePrincipale;
     }
 
+    /**
+     * Fonction donnant le rectangle correspondant à une cellule dont on donne les numéros de ligne et de colonne
+     * 
+     * @param row
+     * Numéro de ligne correspondant à la cellule
+     * @param col
+     * Numéro de colonne correspondant à la cellule
+     * 
+     * @return le rectangle correspondant à la cellule recherchée
+     */
     public Rectangle getCellRect(int row, int col) {
         return tab.getCellRect(row, col, true);
     }
 
+    /**
+     * Fonction permettant l'ajout d'une ligne dans le tableau
+     */
     public void ajouterLigne() {
         String[] defaultLine = new String[col];
         for (int i = 0; i < col; i++) {
@@ -78,6 +130,9 @@ public class Tableau extends JPanel {
 
     }
 
+    /**
+     * Fonction permmetant la suppression d'une ligne dans le tableau
+     */
     public void supprimerLigne() {
         if (li > 2) {
             disableAllModelListener();
@@ -90,11 +145,17 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction permettant l'ajout d'une colonne dans le tableau
+     */
     public void ajouterColonne() {
         getDiapo(diapoCourante).addColumn("");
         col++;
     }
 
+    /**
+     * Fonction permettant la suppression d'une colonne dans le tableau
+     */
     public void supprimerColonne() {
         if (col > 1) {
             col--;
@@ -102,14 +163,27 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction permettant d'obtenir le numéro de la diapo courante
+     * 
+     * @return le numéro de la diapo courante
+     */
     public int getDiapoCourante() {
         return diapoCourante;
     }
 
+    /**
+     * Fonction permettant d'obtenir le nombre de diapo
+     * 
+     * @return le nombre de diapo
+     */
     public int getNombreDiapos() {
         return diapos.size();
     }
 
+    /**
+     * Fonction permettant l'ajout d'une diapo
+     */
     public void ajouterDiapo() {
         DefaultTableModel newModel = createNewVoidModel();
         for (int i = 0; i < li; i++) {
@@ -125,14 +199,27 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction désactivant les controles du tableau
+     */
     public void disableAllModelListener() {
         ctrl.setActive(false);
     }
 
+    /**
+     * Fonction activant les controles du tableau
+     */
     public void enableAllModelListener() {
         ctrl.setActive(true);
     }
 
+    /**
+     * Fonction donnant le model du tableau à une diapo donnée
+     * @param i
+     * Numéro de la diapo dont on cherche le model du tableau
+     * 
+     * @return model du tableau correspondant à la diapo
+     */
     public DefaultTableModel getDiapo(int i) {
         if ((i < 1) || (i > diapos.size())) {
             return null;
@@ -141,6 +228,9 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction permettant de passer à la diapo suivante
+     */
     public void diapoSuivante() {
         if (diapoCourante < getNombreDiapos()) {
             diapoCourante++;
@@ -148,6 +238,9 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction permettant de passer à la diapo précedante
+     */
     public void diapoPrecedente() {
         if (diapoCourante > 1) {
             diapoCourante--;
@@ -155,16 +248,35 @@ public class Tableau extends JPanel {
         }
     }
 
+    /**
+     * Fonction permettant de supprimer une diapo donnée
+     * 
+     * @param i
+     * Numéro de la diapo à supprimer
+     */
     public void supprimerDiapo(int i) {
         if ((i > 0) && (i <= getNombreDiapos())) {
             diapos.remove(i);
         }
     }
 
+    /**
+     * Fonction donnant le tableau
+     * 
+     * @return le tableau
+     */
     public JTable getTab() {
         return tab;
     }
 
+    /**
+     * Fonction repercutant la modification des titres du tableau d'une diapo
+     * 
+     * @param colonne
+     * Numéro de la colonne modifiée
+     * @param source
+     * Numéro de la diapo où se situe la modification
+     */
     public void repercuterModifTitre(int colonne, int source) {
         disableAllModelListener();
         for (DefaultTableModel m : diapos) {
@@ -173,6 +285,16 @@ public class Tableau extends JPanel {
         enableAllModelListener();
     }
 
+    /**
+     * Fonction repercutant la modification d'une cellule du tableau d'une diapo
+     * 
+     * @param diapoSource
+     * Numéro de la diapo où se situe la modification
+     * @param ligne
+     * Numéro de la ligne modifiée
+     * @param colonne
+     * Numéroi de la colonne modifiée
+     */
     public void repercuterModif(int diapoSource, int ligne, int colonne) {
         disableAllModelListener();
         for (int i = diapoSource + 1; i <= getNombreDiapos(); i++) {

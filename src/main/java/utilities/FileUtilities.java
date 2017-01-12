@@ -5,7 +5,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Classe gérant Bonne question
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
+ */
 public class FileUtilities {
+	
+	/**
+	 * Fonction permettant l'écriture d'un texte dans un fichier
+	 * 
+	 * @param s
+	 * Texte à écrire
+	 * @param fullPath
+	 * Nom du fichier
+	 */
     public static void writeStringInFile(String s, String fullPath) {
         FileWriter fw = null;
         try {
@@ -19,6 +35,12 @@ public class FileUtilities {
         openDefaultEditor(fullPath);
     }
 
+    /**
+     * Fonction permettant l'ouverture de l'éditeur par défaut
+     * 
+     * @param fullPath
+     * Nom du fichier
+     */
     public static void openDefaultEditor(String fullPath) {
         if ((fullPath == null) || (fullPath.length() <= 0)) {
             System.out.println("Aucun fichier spécifié !");

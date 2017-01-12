@@ -15,13 +15,34 @@ import texgen.controleur.ControleurLineNumbersPanel;
 import utilities.DrawUtilities;
 import utilities.SpringUtilities;
 
+/**
+ * Classe gérant la vue de la ligne correspondant aux numéros de ligne du pseudo code
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
+ */
 @SuppressWarnings("serial")
 public class LineNumbersPanel extends JPanel {
-    private final int         ROWS;
+    
+	/** Nombre de ligne */
+	private final int         ROWS;
+	
+	/** Pseudo code */
     private PseudoCode        pseudoCode;
+    
+    /** numéros des lignes */
     private ArrayList<JLabel> labels;
+    
+    /** hauteur des lignes */
     private final int         LABEL_HEIGHT_OFFSET = 1;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param pseudoCode
+     * 	Pseudo code
+     */
     LineNumbersPanel(PseudoCode pseudoCode) {
         super();
         SpringLayout layout = new SpringLayout();
@@ -44,16 +65,35 @@ public class LineNumbersPanel extends JPanel {
         setMinimumSize(new Dimension(computeWidth(), ROWS * pseudoCode.getLineHeight()));
     }
 
+    /**
+     * Fonction que je sais pas à quoi quelle sert ???
+     */
     private void manageSpring() {
         SpringUtilities.makeGrid(this, labels.size(), 1, 0, LABEL_HEIGHT_OFFSET, 0, 0);
     }
 
+    /**
+     * Fonction donnant un point lier à un numéro de ligne
+     * 
+     * @param label
+     * numéro de ligne dont on veux le point correspondant
+     * 
+     * @return point correspondant au numéro de ligne
+     */
     public Point getLabelDrawPoint(JLabel label) {
         int x = label.getX() + ((computeWidth() / 4) * 3);
         int y = label.getY() + (label.getHeight() / 2);
         return new Point(x, y);
     }
 
+    /**
+     * Fonction permettant la création d'une nouvelle ligne
+     * 
+     * @param text
+     * 	numéro de la nouvelle ligne
+     * 
+     * @return le label créé correspondant à la nouvelle ligne
+     */
     private JLabel createNewLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(pseudoCode.getFont());
@@ -61,6 +101,9 @@ public class LineNumbersPanel extends JPanel {
         return label;
     }
 
+    /**
+     * 	Fonction permettant l'ajout d'une nouvelle ligne
+     */
     public void addLabel() {
         JLabel label = createNewLabel("" + (labels.size() + 1));
         labels.add(label);
@@ -68,6 +111,9 @@ public class LineNumbersPanel extends JPanel {
         manageSpring();
     }
 
+    /**
+     * Fonction permettant la suppression d'une ligne
+     */
     public void removeLabel() {
         remove(labels.get(labels.size() - 1));
         labels.remove(labels.size() - 1);
@@ -75,14 +121,29 @@ public class LineNumbersPanel extends JPanel {
         revalidate();
     }
 
+    /**
+     * Fonction donnant la taille d'une ligne
+     * 
+     * @return taille d'une ligne
+     */
     public int computeWidth() {
         return ((int) (Math.log10(ROWS) + 1) * getFontMetrics(pseudoCode.getFont()).charWidth('0') * 2) + 10;
     }
 
+    /**
+     * Fonction donnant le pseudo code
+     * 
+     * @return le pseudo code
+     */
     public PseudoCode getPseudoCode() {
         return pseudoCode;
     }
 
+    /**
+     * 	Fontion permetant de dessiner un composant graphique
+     * 
+     * @param Composant graphique à dessiner
+     */
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);

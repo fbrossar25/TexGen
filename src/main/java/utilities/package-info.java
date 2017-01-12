@@ -1,8 +1,7 @@
 /**
+ * Package regroupent les classes gérant les ??? du projet.
  * 
- */
-/**
- * @author Florian
- *
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
  */
 package utilities;

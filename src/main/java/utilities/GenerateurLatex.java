@@ -5,8 +5,23 @@ import java.util.ArrayList;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.PseudoCode;
 
+/**
+ * Classe gérant la génération d'un code LaTeX
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
+ */
 public class GenerateurLatex {
 
+	/**
+	 * Fonction générant le code LaTeX
+	 * 
+	 * @param fenetrePrincipale
+	 * fenêtre principale de l'aplication
+	 * 
+	 * @return code généré
+	 */
     public static String generer(FenetrePrincipale fenetrePrincipale) {
         String string = genererEntete() + "\n\n";
         string += genererColorCode() + "\n\n";
@@ -18,6 +33,11 @@ public class GenerateurLatex {
         return string;
     }
 
+    /**
+     * Fonction générant l'entête du code
+     * 
+     * @return entête du code
+     */
     public static String genererEntete() {
         return "\\documentclass[hyperref={pdfpagemode=FullScreen,colorlinks=true}]{beamer}\n" + "\\usepackage{kpfonts}\n"
                 + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage[T1]{fontenc}\n" + "\\usepackage{pdfpages}\n" + "\\usetheme{Boadilla}\n"
@@ -25,6 +45,14 @@ public class GenerateurLatex {
                 + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}";
     }
 
+    /**
+     * Fonction permettant de séparer les lignes du pseudo code
+     * 
+     * @param txt
+     * Pseudo code
+     * 
+     * @return Pseudo code dont les lignes on été séparées
+     */
     private static ArrayList<String> separerLignes(String txt) {
         if ((txt == null) || (txt.length() <= 0)) {
             return null;
@@ -47,6 +75,18 @@ public class GenerateurLatex {
         }
     }
 
+    /**
+     * Fonction générant la couleur du texte du pseudo code
+     * 
+     * @param p
+     * Pseudo code
+     * @param ligne
+     * Ligne du pseudo code
+     * @param ligneNum
+     * Numéro de ligne
+     * 
+     * @return partie du code correspondant à la couleur du pseudo code
+     */
     public static String genererColorCode(PseudoCode p, String ligne, int ligneNum) {
         String res = "\\colorCode";
         ArrayList<Integer> marked = new ArrayList<>();
@@ -86,6 +126,14 @@ public class GenerateurLatex {
         return res + unmarkedString + markedString + "{" + ligneString + "}\n";
     }
 
+    /**
+     * Fonction générant la partie du code correspondant au pseudo code
+     * 
+     * @param pseudoCode
+     * Pseudo code
+     * 
+     * @return code généré
+     */
     public static String genererPseudoCode(PseudoCode pseudoCode) {
         String res = "";
 
@@ -100,6 +148,11 @@ public class GenerateurLatex {
         return res;
     }
 
+    /**
+     * Fonction générant la couleur du code
+     * 
+     * @return partie du code correspondant à la couleur
+     */
     public static String genererColorCode() {
         return "\\newcommand{    \\colorCode}[3]{%\n\\only<#1>{\\textcolor{black}{#3}}\\only<#2>{\\textcolor{red}{#3}}\n}";
     }

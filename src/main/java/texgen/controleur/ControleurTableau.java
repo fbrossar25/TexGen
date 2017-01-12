@@ -9,15 +9,39 @@ import javax.swing.event.TableModelListener;
 
 import texgen.vue.Tableau;
 
+/**
+ * Classe gèrant les controleurs du tableau
+ * 
+ * @author Florian BROSSARD
+ * @author Fanny MILLOTTE
+ * 
+ */
 public class ControleurTableau implements ActionListener, TableModelListener {
-    private Tableau tableau;
+	
+	/** Tableau */
+	private Tableau tableau;
+	
+	/** Active ou désactive un composant */
     private boolean active;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param tableau
+     * 	tableau
+     */
     public ControleurTableau(Tableau tableau) {
         this.tableau = tableau;
         active = true;
     }
 
+    /**
+     * Fonction gérant les actions liées au tableau
+     * 
+     * @param e 
+     * 	Evénement lié à l'action
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (active) {
@@ -34,10 +58,22 @@ public class ControleurTableau implements ActionListener, TableModelListener {
         }
     }
 
+    /**
+     * Fonction qui permet de changer la valeur de la variable active
+     * 
+     * @param b
+     * 	Activation ou désactivation d'un composant
+     */
     public void setActive(boolean b) {
         active = b;
     }
 
+    /**
+     * Fonction qui gére la modification des informations dans le tableau
+     * 
+     * @param e
+     * 	Evénement lié au model du tableau
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         if (active) {
