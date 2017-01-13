@@ -16,25 +16,27 @@ import texgen.controleur.ControleurTableau;
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
- * 
  */
 @SuppressWarnings("serial")
 public class FenetrePrincipale extends JFrame {
-	
-	/** Barre de menu */ 
+
+    /** Barre de menu */
     private BarreMenu  menuBar;
-    
+
     /** Panel où est placé le pseudo code */
     private PseudoCode pseudoCode;
-    
+
     /** Séparateur verticale */
     private JSplitPane separateurV;
-    
+
     /** Séparateur horizontale */
     private JSplitPane separateurH;
-    
+
     /** Panel où est placé le tableau */
     private Tableau    tableau;
+
+    /** La barre d'outil */
+    private ToolBar    toolBar;
 
     /**
      * Constructeur de la classe
@@ -57,6 +59,9 @@ public class FenetrePrincipale extends JFrame {
         separateurV = new JSplitPane(JSplitPane.VERTICAL_SPLIT, separateurH, new JScrollPane());
 
         add(separateurV, BorderLayout.CENTER);
+
+        toolBar = new ToolBar(this);
+        add(toolBar, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -126,28 +131,43 @@ public class FenetrePrincipale extends JFrame {
     }
 
     /**
-     *  Fonction permettant l'ajout d'une diapo
+     * Fonction permettant l'ajout d'une diapo
      */
     public void ajouterDiapo() {
-        pseudoCode.ajouterDiapo();
-        tableau.ajouterDiapo();
+        if (toolBar.isPseudoCodeSelected()) {
+            pseudoCode.ajouterDiapo();
+        }
+        if (toolBar.isTableSelected()) {
+            tableau.ajouterDiapo();
+        }
         diapoSuivante();
+        toolBar.updateCompteursDiapo(pseudoCode, tableau);
     }
 
     /**
      * Fonction permettant de passer à la diapo suivante
      */
     public void diapoSuivante() {
-        pseudoCode.diapoSuivante();
-        tableau.diapoSuivante();
+        if (toolBar.isPseudoCodeSelected()) {
+            pseudoCode.diapoSuivante();
+        }
+        if (toolBar.isTableSelected()) {
+            tableau.diapoSuivante();
+        }
+        toolBar.updateCompteursDiapo(pseudoCode, tableau);
     }
 
     /**
      * Fonction permettant de passer à la diapo précedente
      */
     public void diapoPrecedente() {
-        pseudoCode.diapoPrecedente();
-        tableau.diapoPrecedente();
+        if (toolBar.isPseudoCodeSelected()) {
+            pseudoCode.diapoPrecedente();
+        }
+        if (toolBar.isTableSelected()) {
+            tableau.diapoPrecedente();
+        }
+        toolBar.updateCompteursDiapo(pseudoCode, tableau);
     }
 
     /**
@@ -162,7 +182,7 @@ public class FenetrePrincipale extends JFrame {
     /**
      * Fonction donnant le pseudo code
      * 
-     * @return	le pseudo code
+     * @return le pseudo code
      */
     public PseudoCode getPseudoCode() {
         return pseudoCode;
@@ -175,5 +195,14 @@ public class FenetrePrincipale extends JFrame {
      */
     public Tableau getTableau() {
         return tableau;
+    }
+
+    /**
+     * Retourne la barre d'outil
+     * 
+     * @return la barre d'outil
+     */
+    public ToolBar getToolBar() {
+        return toolBar;
     }
 }
