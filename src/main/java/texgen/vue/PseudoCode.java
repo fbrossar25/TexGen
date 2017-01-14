@@ -353,4 +353,46 @@ public class PseudoCode extends JPanel {
             lineNumbersPanel.repaint();
         }
     }
+
+    /**
+     * Permet d'aller directement à une diapo donnée
+     * 
+     * @param i
+     *            le numero de la diapo
+     */
+    public void setDiapoCourante(int i) {
+        if ((i > 0) && (i < getNombreDiapos())) {
+            diapoCourante = i;
+        } else {
+            System.out.println("La diapo " + i + "n'existe pas");
+        }
+    }
+
+    /**
+     * Fonction permettant d'inserer une diapo à l'index i
+     * 
+     * @param i
+     *            Le numero de la diapo à insérer
+     */
+    public void insererDiapo(int i) {
+        if ((i > 0) && (i <= getNombreDiapos())) {
+            if (!marqueurs.add(new TreeSet<Integer>())) {
+                System.out.println("Erreur lors de l'ajout d'une diapo (PseudoCode)");
+                return;
+            }
+
+            int prochainMarqueur;
+            // S'il n'y avait aucun marqueur, ou si le dernier marqueur était à la dernière ligne, on marque la première
+            // ligne, sinon on marque la ligne suivant le dernier marqueur
+            if (getDiapo(diapoCourante).isEmpty() || (getDiapo(diapoCourante).last() == getNombreLignes())) {
+                prochainMarqueur = 1;
+            } else {
+                // On utilise new Integer et intValue pour ne pas modifier le dernier marqueur
+                prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + 1;
+                // System.out.println("next mark at " + prochainMarqueur);
+            }
+            marquage(diapoCourante + 1, prochainMarqueur);
+            // afficherMarqueurs();
+        }
+    }
 }

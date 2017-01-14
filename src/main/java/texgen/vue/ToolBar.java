@@ -1,9 +1,14 @@
 package texgen.vue;
 
+import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 import texgen.controleur.ControleurToolBar;
@@ -26,6 +31,9 @@ public class ToolBar extends JToolBar {
     /** Bouton créer une diapo */
     private JButton           creerDiapo;
 
+    /** Bouton insérer une diapo */
+    private JButton           insererDiapo;
+
     /** Fenetre princiaple */
     private FenetrePrincipale fen;
 
@@ -40,6 +48,8 @@ public class ToolBar extends JToolBar {
 
     /** Les compteurs de diapo pour chaque panel */
     private JLabel[]          compteursDiapos;
+
+    private JTextField        allerA;
 
     /**
      * Constructeur de la classe
@@ -72,13 +82,59 @@ public class ToolBar extends JToolBar {
             add(compteursDiapos[i]);
         }
 
+        allerA = new JTextField("1");
+        allerA.setColumns(3);
+        Dimension d = new Dimension(allerA.getFontMetrics(allerA.getFont()).stringWidth("0000"),
+                (int) (allerA.getFontMetrics(allerA.getFont()).getHeight() * 1.5));
+        allerA.setMaximumSize(d);
+        allerA.setMinimumSize(d);
+        allerA.setPreferredSize(d);
+        allerA.setToolTipText("Aller à la diapo");
+        allerA.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    int i = 1;
+                    try {
+                        i = Integer.parseInt(allerA.getText());
+                    } catch (NumberFormatException exception) {
+                        System.out.println("Saisie incorrect, veuillez saisir un nombre entier.");
+                        allerA.setText("1");
+                        return;
+                    }
+                    // System.out.println("i = " + i);
+                    if ((i > 0) && (i <= fen.getNombreDiapos())) {
+                        fen.allerDiapo(i);
+                    } else {
+                        System.out.println("La diapo " + i + " n'existe pas");
+                        allerA.setText("1");
+                    }
+                }
+            }
+        });
+        add(allerA);
+
         addSeparator();
 
         // Bouton raccourcis édition
         creerDiapo = new JButton(new ImageIcon(cl.getResource(iconsDir + "add.png")));
-        creerDiapo.setToolTipText("Créer une diapo");
+        creerDiapo.setToolTipText("Créer une diapo à la fin");
         creerDiapo.addActionListener(ctrl);
         add(creerDiapo);
+
+        insererDiapo = new JButton(new ImageIcon(cl.getResource(iconsDir + "insert.png")));
+        insererDiapo.setToolTipText("Insérer une diapo ici");
+        insererDiapo.addActionListener(ctrl);
+        add(insererDiapo);
     }
 
     /**
@@ -154,6 +210,15 @@ public class ToolBar extends JToolBar {
     }
 
     /**
+     * Retourne le bouton insérer une diapo
+     * 
+     * @return le bouton insérer une diapo
+     */
+    public JButton getBoutonInserer() {
+        return insererDiapo;
+    }
+
+    /**
      * Retourne le tableau des compteurs de diapos
      * 
      * @return le tableau des compteurs de diapos
@@ -173,5 +238,15 @@ public class ToolBar extends JToolBar {
     public void updateCompteursDiapo(PseudoCode p, Tableau t) {
         compteursDiapos[0].setText(p.getDiapoCourante() + "/" + p.getNombreDiapos());
         compteursDiapos[1].setText(t.getDiapoCourante() + "/" + t.getNombreDiapos());
+        allerA.setText("" + Math.max(p.getDiapoCourante(), t.getDiapoCourante()));
+    }
+
+    /**
+     * Retourne le textField allerA
+     * 
+     * @return le textField permettant de changer de diapo
+     */
+    public JTextField getAllerA() {
+        return allerA;
     }
 }

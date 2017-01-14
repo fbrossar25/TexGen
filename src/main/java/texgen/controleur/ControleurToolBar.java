@@ -23,6 +23,8 @@ public class ControleurToolBar implements ActionListener {
             toolBar.getFenetre().diapoPrecedente();
         } else if (source == toolBar.getBoutonCreer()) {
             toolBar.getFenetre().ajouterDiapo();
+        } else if (source == toolBar.getBoutonInserer()) {
+            toolBar.getFenetre().insererDiapo();
         }
     }
 }

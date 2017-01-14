@@ -205,4 +205,35 @@ public class FenetrePrincipale extends JFrame {
     public ToolBar getToolBar() {
         return toolBar;
     }
+
+    /**
+     * Fonction permettant d'aller à la diapo donnée pour tout les panels
+     * 
+     * @param i
+     *            le numéro de la diapo voulue
+     */
+    public void allerDiapo(int i) {
+        pseudoCode.setDiapoCourante(i);
+        tableau.setDiapoCourante(i);
+        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        repaint();
+    }
+
+    /**
+     * Fonction permettant d'inserer une diapo à la diapo courante de chaque panel
+     */
+    public void insererDiapo() {
+        pseudoCode.insererDiapo(pseudoCode.getDiapoCourante());
+        tableau.insererDiapo(tableau.getDiapoCourante());
+        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+    }
+
+    /**
+     * Retourne le nombre de diapos max entre les panels
+     * 
+     * @return le nombre de diapos
+     */
+    public int getNombreDiapos() {
+        return Math.max(pseudoCode.getNombreDiapos(), tableau.getNombreDiapos());
+    }
 }

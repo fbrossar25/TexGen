@@ -1,2 +1,4 @@
 precedant, suivant : fait avec paint
-add, close : Créée par madebyolivier sur flaticon
+add, remove_last : Créée par madebyolivier sur flaticon
+insert : Créee par freepik sur flaticon
+remove_current: Créée par Dario Ferrando sur flaticon

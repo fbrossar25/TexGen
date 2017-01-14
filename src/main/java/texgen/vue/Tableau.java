@@ -267,6 +267,32 @@ public class Tableau extends JPanel {
     }
 
     /**
+     * Fonction permettant d'inserer une diapo au numero donné
+     * 
+     * @param i
+     *            le numero de la diapo
+     */
+    public void insererDiapo(int i) {
+        if ((i > 0) && (i <= getNombreDiapos())) {
+            DefaultTableModel newModel = createNewVoidModel();
+            // On copie le modele de la diapo précédente
+            for (int j = 0; j < li; j++) {
+                for (int k = 0; k < col; k++) {
+                    newModel.setValueAt(getDiapo(i - 1).getValueAt(j, k), j, k);
+                }
+            }
+            diapos.add(i - 1, newModel);
+
+            if (getDiapo(i) != newModel) {
+                System.out.println("Erreur lors de l'ajout d'une diapo (Tableau)");
+                return;
+            } else {
+                newModel.addTableModelListener(ctrl);
+            }
+        }
+    }
+
+    /**
      * Fonction désactivant le controleur du tableau
      */
     public void disableAllModelListener() {
@@ -372,5 +398,17 @@ public class Tableau extends JPanel {
             getDiapo(i).setValueAt(getDiapo(diapoSource).getValueAt(ligne, colonne), ligne, colonne);
         }
         enableAllModelListener();
+    }
+
+    /**
+     * Fonction permettant d'aller à la diapo numéro i
+     * 
+     * @param i
+     *            le numéro de la diapo
+     */
+    public void setDiapoCourante(int i) {
+        if ((i > 1) && (i <= getNombreDiapos())) {
+            diapoCourante = i;
+        }
     }
 }
