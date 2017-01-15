@@ -20,8 +20,10 @@ public class FileUtilities {
      *            Texte à écrire
      * @param fullPath
      *            Chemin absolu du fichier
+     * @param openEditor
+     *            true pour ouvrir l'editeur après l'écriture du fichier, false sinon
      */
-    public static void writeStringInFile(String s, String fullPath) {
+    public static void writeStringInFile(String s, String fullPath, boolean openEditor) {
         FileWriter fw = null;
         try {
             fw = new FileWriter(new File(fullPath));
@@ -31,7 +33,9 @@ public class FileUtilities {
             e.printStackTrace();
             System.exit(-1);
         }
-        openDefaultEditor(fullPath);
+        if (openEditor) {
+            openDefaultEditor(fullPath);
+        }
     }
 
     /**

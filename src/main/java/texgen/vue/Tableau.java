@@ -411,4 +411,35 @@ public class Tableau extends JPanel {
             diapoCourante = i;
         }
     }
+
+    /**
+     * Retourne le nombre de lignes du tableau
+     * 
+     * @return le nombre de lignes
+     */
+    public int getNombreLignes() {
+        return li;
+    }
+
+    /**
+     * Retourne le nombre de colonnes du tableau
+     * 
+     * @return le nombre de colonnes
+     */
+    public int getNombreColonnes() {
+        return col;
+    }
+
+    /**
+     * Retourne la liste des noms de colonnes du tableau (càd la première ligne du tableau)
+     * 
+     * @return la liste des noms des colonnes
+     */
+    public ArrayList<String> getNomsColonnes() {
+        ArrayList<String> colonnes = new ArrayList<>();
+        for (int i = 0; i < diapos.get(0).getColumnCount(); i++) {
+            colonnes.add((String) diapos.get(0).getValueAt(0, i));
+        }
+        return colonnes;
+    }
 }

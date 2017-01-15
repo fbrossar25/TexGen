@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<pseudocode>
+	<text>
+		<ligne>test</ligne>
+		<ligne></ligne>
+		<ligne>test</ligne>
+	</text>
+	<marqueurs>
+		<diapo numero="1">
+		</diapo>
+		<diapo numero="2">
+			<marqueur>1</marqueur>
+		</diapo>
+		<diapo numero="3">
+			<marqueur>2</marqueur>
+		</diapo>
+		<diapo numero="4">
+			<marqueur>3</marqueur>
+		</diapo>
+		<diapo numero="5">
+			<marqueur>1</marqueur>
+		</diapo>
+	</marqueurs>
+</pseudocode>
+
+<tableau lignes="2" colonnes="4">
+	<colonnes>
+		<colonne numero="0">FA</colonne>
+		<colonne numero="1">TA</colonne>
+		<colonne numero="2">LY</colonne>
+		<colonne numero="3">TY</colonne>
+	</colonnes>
+	<diapo numero="1">
+		<ligne numero="1">
+			<case numero="1">lo</case>
+		</ligne>
+	</diapo>
+	<diapo numero="2">
+		<ligne numero="1">
+			<case numero="1">lo</case>
+			<case numero="2">li</case>
+		</ligne>
+	</diapo>
+	<diapo numero="3">
+		<ligne numero="1">
+			<case numero="1">lo</case>
+			<case numero="2">li</case>
+			<case numero="3">lo</case>
+		</ligne>
+	</diapo>
+	<diapo numero="4">
+		<ligne numero="1">
+			<case numero="1">lo</case>
+			<case numero="2">li</case>
+			<case numero="3">lo</case>
+			<case numero="4">l</case>
+		</ligne>
+	</diapo>
+	<diapo numero="5">
+		<ligne numero="1">
+			<case numero="1">lo</case>
+			<case numero="2">li</case>
+			<case numero="3">lo</case>
+			<case numero="4">l</case>
+		</ligne>
+	</diapo>
+</tableau>

@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 
 import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
+import texgen.utilities.GestionnaireSauvegarde;
 import texgen.vue.BarreMenu;
 
 /**
@@ -38,13 +39,16 @@ public class ControleurBarreMenu implements ActionListener {
             System.exit(0);
         } else if (source.getText().equals("Générer")) {
             String fullPath = System.getProperty("user.dir") + "/generated.tex";
-            FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath);
+            FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
         } else if (source.getText().equals("Diapo suivante")) {
             barreMenu.getFenetre().diapoSuivante();
         } else if (source.getText().equals("Diapo precedente")) {
             barreMenu.getFenetre().diapoPrecedente();
         } else if (source.getText().equals("Créer diapo")) {
             barreMenu.getFenetre().ajouterDiapo();
+        } else if (source.getText().equals("Sauvegarder sous...")) {
+            String fullPath = System.getProperty("user.dir") + "/save.xml";
+            GestionnaireSauvegarde.sauvegarder(barreMenu.getFenetre().getPseudoCode(), barreMenu.getFenetre().getTableau(), fullPath);
         }
     }
 
