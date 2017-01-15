@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
+import texgen.utilities.FileUtilities;
+import texgen.utilities.GenerateurLatex;
 import texgen.vue.BarreMenu;
-import utilities.FileUtilities;
-import utilities.GenerateurLatex;
 
 /**
  * Classe controleur de la barre de menu

@@ -1,4 +1,4 @@
-package utilities;
+package texgen.utilities;
 
 import java.awt.Desktop;
 import java.io.File;

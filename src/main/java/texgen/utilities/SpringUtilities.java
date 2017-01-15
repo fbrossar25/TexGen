@@ -22,7 +22,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package utilities;
+package texgen.utilities;
 
 import java.awt.Component;
 import java.awt.Container;

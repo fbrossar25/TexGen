@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
 import texgen.controleur.ControleurLineNumbersPanel;
-import utilities.DrawUtilities;
-import utilities.SpringUtilities;
+import texgen.utilities.DrawUtilities;
+import texgen.utilities.SpringUtilities;
 
 /**
  * Classe gérant la vue du panel des numéros de ligne du pseudo code

@@ -8,8 +8,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
+import texgen.utilities.DrawUtilities;
 import texgen.vue.LineNumbersPanel;
-import utilities.DrawUtilities;
 
 /**
  * Classe controleur du panel des numéros de lignes du pseudoCode
