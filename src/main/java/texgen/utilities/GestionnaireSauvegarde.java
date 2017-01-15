@@ -16,7 +16,9 @@ import texgen.vue.Tableau;
 public class GestionnaireSauvegarde {
     public static void sauvegarder(PseudoCode p, Tableau t, String fullPath) {
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
+        s += "<projet>\n";
         s += sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t);
+        s += "\n</projet>";
         FileUtilities.writeStringInFile(s, fullPath, false);
     }
 
