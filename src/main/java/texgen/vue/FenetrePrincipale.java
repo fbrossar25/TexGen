@@ -75,11 +75,14 @@ public class FenetrePrincipale extends JFrame {
         JMenu fichier = new JMenu("Fichier");
         JMenuItem sauvegarder = new JMenuItem("Sauvegarder sous...");
         sauvegarder.addActionListener(ctrlMenuBar);
+        JMenuItem charger = new JMenuItem("Ouvrir");
+        charger.addActionListener(ctrlMenuBar);
         JMenuItem fermer = new JMenuItem("Fermer");
         fermer.addActionListener(ctrlMenuBar);
         JMenuItem quitter = new JMenuItem("Quitter");
         quitter.addActionListener(ctrlMenuBar);
         fichier.add(sauvegarder);
+        fichier.add(charger);
         fichier.add(fermer);
         fichier.add(quitter);
         menuBar.ajouterMenu(fichier);

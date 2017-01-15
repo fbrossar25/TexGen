@@ -49,6 +49,9 @@ public class ControleurBarreMenu implements ActionListener {
         } else if (source.getText().equals("Sauvegarder sous...")) {
             String fullPath = System.getProperty("user.dir") + "/save.xml";
             GestionnaireSauvegarde.sauvegarder(barreMenu.getFenetre().getPseudoCode(), barreMenu.getFenetre().getTableau(), fullPath);
+        } else if (source.getText().equals("Ouvrir")) {
+            String fullPath = System.getProperty("user.dir") + "/save.xml";
+            GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);
         }
     }
 
