@@ -48,3 +48,4 @@ Temporary Items
 /target/
 *.tex
 generated.*
+/bin/

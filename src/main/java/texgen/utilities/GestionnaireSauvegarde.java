@@ -242,7 +242,40 @@ public class GestionnaireSauvegarde {
     }
 
     public static void chargerPseudoCodeXML(PseudoCode p, Node node) {
-        // TODO
+        if (!node.getNodeName().equals("pseudocode")) {
+            System.out.println("Erreur : nom du noeuds différent de 'pseudocode'");
+            return;
+        }
+        p.reset();
+        int nbChild = node.getChildNodes().getLength();
+        NodeList list = node.getChildNodes();
+        for (int i = 0; i < nbChild; i++) {
+            Node n = list.item(i);
+            if ((n instanceof Element) && (n.getNodeType() == Node.ELEMENT_NODE)) {
+                Element elm = (Element) n;
+                if (elm.getNodeName().equals("texte")) {
+                    chargerPseudoCodeXMLTexte(p, elm);
+                } else if (elm.getNodeName().equals("marqueurs")) {
+                    chargerPseudoCodeXMLMarqueurs(p, elm);
+                } else {
+                    System.out.println("Erreur : balise '" + elm.getNodeName() + "' invalide");
+                }
+            }
+        }
+    }
+
+    public static void chargerPseudoCodeXMLTexte(PseudoCode p, Element e) {
+        p.getTextArea().setText("");
+        NodeList list = e.getChildNodes();
+        for (int i = 0; i < list.getLength(); i++) {
+            if (list.item(i).getNodeName().equals("ligne_p")) {
+                p.getTextArea().append(list.item(i).getTextContent());
+            }
+        }
+    }
+
+    public static void chargerPseudoCodeXMLMarqueurs(PseudoCode p, Element e) {
+
     }
 
     public static void chargerTableauXML(Tableau t, Node node) {
