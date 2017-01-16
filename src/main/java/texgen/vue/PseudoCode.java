@@ -395,4 +395,14 @@ public class PseudoCode extends JPanel {
             // afficherMarqueurs();
         }
     }
+
+    /**
+     * Fonction permettant de remettre à son état initial le pseudoCode
+     */
+    public void reset() {
+        linenumber = 1;
+        diapoCourante = 1;
+        marqueurs.clear();
+        textArea.setText("Saisissez votre pseudo code ici.");
+    }
 }
