@@ -137,8 +137,7 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction permettant la création d'un nouveau modele "vide" (càd avec li*col case contenant chacune une chaine
-     * vide)
+     * Fonction permettant la création d'un nouveau modele "vide" (càd avec li*col case contenant chacune une chaine vide)
      * 
      * @return le modele "vide" créer
      */
@@ -441,5 +440,22 @@ public class Tableau extends JPanel {
             colonnes.add((String) diapos.get(0).getValueAt(0, i));
         }
         return colonnes;
+    }
+
+    /**
+     * Retourne toutes les valeurs de la cellule (ligne,colonne) pour chaque diapos
+     * 
+     * @param ligne
+     *            la ligne de la cellule
+     * @param colonne
+     *            la colonne de la cellule
+     * @return les valeurs des la cellule
+     */
+    public ArrayList<String> getCellValues(int ligne, int colonne) {
+        ArrayList<String> values = new ArrayList<>();
+        for (int i = 1; i <= getNombreDiapos(); i++) {
+            values.add(i - 1, (String) getDiapo(i).getValueAt(ligne, colonne));
+        }
+        return values;
     }
 }

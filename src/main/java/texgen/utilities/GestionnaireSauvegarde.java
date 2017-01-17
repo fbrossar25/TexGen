@@ -194,7 +194,7 @@ public class GestionnaireSauvegarde {
         if (n instanceof Element) {
             // Nous sommes donc bien sur un élément de notre document
             // Nous castons l'objet de type Node en type Element
-            Element element = (Element) n;
+            //Element element = (Element) n;
             // Nous pouvons récupérer le nom du nœud actuellement parcouru
             // grâce à cette méthode, nous ouvrons donc notre balise
             str += "<" + n.getNodeName();
