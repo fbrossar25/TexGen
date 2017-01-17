@@ -269,7 +269,12 @@ public class GestionnaireSauvegarde {
         NodeList list = e.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
             if (list.item(i).getNodeName().equals("ligne_p")) {
-                p.getTextArea().append(list.item(i).getTextContent());
+                if(i < list.getLength() -1) {
+                	p.getTextArea().append(list.item(i).getTextContent() + "\n");
+                }
+                else {
+                	p.getTextArea().append(list.item(i).getTextContent());
+                }
             }
         }
     }
