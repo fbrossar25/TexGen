@@ -171,7 +171,8 @@ public class GenerateurLatex {
      * Fonction générant la partie du code correspondant au tableau
      * 
      * @param tableau
-     * @return
+     *            le tableau
+     * @return le code LaTeX du tableau
      */
     public static String genererTableau(Tableau tableau) {
         String res = "";
@@ -186,7 +187,8 @@ public class GenerateurLatex {
      * Fonction générant l'entete dela partie du code LaTeX du tableau
      * 
      * @param tableau
-     * @return
+     *            le tableau
+     * @return le code LaTeX de l'entete du tableau
      */
     public static String genererEnteteTableau(Tableau tableau) {
         String res = "\\begin{tabular}{";
@@ -272,9 +274,48 @@ public class GenerateurLatex {
                 res += "" + diapo + ((i == diapos.size() - 1) ? "" : ",");
                 i++;
             }
-            res += ">{" + protegerCaracteres(val) + "}";
+            res += ">{" + ((val == null || val.equals("")) ? "" : genererColorCodeTableau(tableau, ligne, colonne, val)) + "}";
         }
         return res;
+    }
+
+    public static String genererColorCodeTableau(Tableau tableau, int ligne, int colonne, String s) {
+        String res = "\\colorCode";
+        ArrayList<Integer> marked = new ArrayList<>();
+        ArrayList<Integer> unmarked = new ArrayList<>();
+        int nbDiapo = tableau.getNombreDiapos();
+        for (int diapo = 1; diapo <= nbDiapo; diapo++) {
+            if (tableau.estMarquee(diapo, ligne, colonne)) {
+                marked.add(diapo);
+            } else {
+                unmarked.add(diapo);
+            }
+        }
+
+        // Chaine représentant les numéros des diapos marquées
+        String markedString = "{";
+        int markedSize = marked.size();
+        if (markedSize > 0) {
+            for (int i = 0; i < markedSize; i++) {
+                markedString += marked.get(i) + ((i == (markedSize - 1)) ? "" : ",");
+            }
+        }
+        markedString += "}";
+
+        // Chaine représentant les numéros des diapos non marquées
+        String unmarkedString = "{";
+        int unmarkedSize = unmarked.size();
+        if (unmarkedSize > 0) {
+            for (int i = 0; i < unmarkedSize; i++) {
+                unmarkedString += unmarked.get(i) + ((i == (unmarkedSize - 1)) ? "" : ",");
+            }
+        }
+        unmarkedString += "}";
+
+        // Chaine de la ligne
+        String ligneString = "{" + protegerCaracteres(s) + "}";
+
+        return res + unmarkedString + markedString + ligneString;
     }
 
     /**
@@ -286,6 +327,7 @@ public class GenerateurLatex {
      */
     public static String protegerCaracteres(String s) {
         String res = "";
+        // La protection du caractere \ donne des erreur à la compilation du fichier .tex
         for (char c : s.toCharArray()) {
             res += (isProtectedChar(c)) ? "\\" + c : c;
         }

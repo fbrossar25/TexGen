@@ -171,9 +171,10 @@ public class GestionnaireSauvegarde {
                 for (int i = 0; i < root.getChildNodes().getLength(); i++) {
                     if (root.getChildNodes().item(i).getNodeName().equals("pseudocode")) {
                         chargerPseudoCodeXML(f.getPseudoCode(), root.getChildNodes().item(i));
-                    } else if (root.getChildNodes().item(i).getNodeName().equals("tableau")) {
-                        chargerTableauXML(f.getTableau(), root.getChildNodes().item(i));
-                    }
+                    } else
+                        if (root.getChildNodes().item(i).getNodeName().equals("tableau")) {
+                            chargerTableauXML(f.getTableau(), root.getChildNodes().item(i));
+                        }
                 }
             } catch (SAXParseException e) {
             }
@@ -186,15 +187,17 @@ public class GestionnaireSauvegarde {
      * Méthode qui va parser le contenu d'un nœud (Crédit à openclassrooms.com, cours JAVA et XML)
      * 
      * @param n
+     *            le noeud à parser
      * @param tab
-     * @return
+     *            la tabulation pour l'affichage
+     * @return la chaine décrivant le noeud
      */
     public static String description(Node n, String tab) {
         String str = new String();
         if (n instanceof Element) {
             // Nous sommes donc bien sur un élément de notre document
             // Nous castons l'objet de type Node en type Element
-            //Element element = (Element) n;
+            // Element element = (Element) n;
             // Nous pouvons récupérer le nom du nœud actuellement parcouru
             // grâce à cette méthode, nous ouvrons donc notre balise
             str += "<" + n.getNodeName();
@@ -241,6 +244,14 @@ public class GestionnaireSauvegarde {
         return str;
     }
 
+    /**
+     * Permet de charger les informations du pseudocode d'une sauvegarde
+     * 
+     * @param p
+     *            le pseudocode
+     * @param node
+     *            le noeud pseudocode du fichier
+     */
     public static void chargerPseudoCodeXML(PseudoCode p, Node node) {
         if (!node.getNodeName().equals("pseudocode")) {
             System.out.println("Erreur : nom du noeuds différent de 'pseudocode'");
@@ -255,25 +266,33 @@ public class GestionnaireSauvegarde {
                 Element elm = (Element) n;
                 if (elm.getNodeName().equals("texte")) {
                     chargerPseudoCodeXMLTexte(p, elm);
-                } else if (elm.getNodeName().equals("marqueurs")) {
-                    chargerPseudoCodeXMLMarqueurs(p, elm);
-                } else {
-                    System.out.println("Erreur : balise '" + elm.getNodeName() + "' invalide");
-                }
+                } else
+                    if (elm.getNodeName().equals("marqueurs")) {
+                        chargerPseudoCodeXMLMarqueurs(p, elm);
+                    } else {
+                        System.out.println("Erreur : balise '" + elm.getNodeName() + "' invalide");
+                    }
             }
         }
     }
 
+    /**
+     * Fonction qui charge le texte du pseudocode contenus dans une sauvegarde
+     * 
+     * @param p
+     *            le pseudocode
+     * @param e
+     *            l'élement texte de la sauvegarde
+     */
     public static void chargerPseudoCodeXMLTexte(PseudoCode p, Element e) {
         p.getTextArea().setText("");
         NodeList list = e.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
             if (list.item(i).getNodeName().equals("ligne_p")) {
-                if(i < list.getLength() -1) {
-                	p.getTextArea().append(list.item(i).getTextContent() + "\n");
-                }
-                else {
-                	p.getTextArea().append(list.item(i).getTextContent());
+                if (i < list.getLength() - 1) {
+                    p.getTextArea().append(list.item(i).getTextContent() + "\n");
+                } else {
+                    p.getTextArea().append(list.item(i).getTextContent());
                 }
             }
         }

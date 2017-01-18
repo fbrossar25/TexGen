@@ -11,7 +11,7 @@
 
 <!ELEMENT tableau (colonnes, diapos_t) >
 <!ATTLIST tableau lignes CDATA #REQUIRED >
-<!ATTLIST tableau colonnes CDATA #REQUIRED > 
+<!ATTLIST tableau colonnes CDATA #REQUIRED >
 <!ELEMENT colonnes (colonne)+ >
 <!ELEMENT colonne (#PCDATA) >
 <!ATTLIST colonne numero CDATA #REQUIRED >

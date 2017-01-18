@@ -1,25 +1,19 @@
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
- * following conditions are met:
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- * - Redistributions of source code must retain the above copyright notice, this list of conditions and the following
- * disclaimer.
+ * - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
  *
- * - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
- * disclaimer in the documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the
+ * distribution.
  *
- * - Neither the name of Oracle or the names of its contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
+ * - Neither the name of Oracle or the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package texgen.utilities;
@@ -31,12 +25,14 @@ import javax.swing.Spring;
 import javax.swing.SpringLayout;
 
 /**
- * A 1.4 file that provides utility methods for creating form- or grid-style layouts with SpringLayout. These utilities
- * are used by several programs, such as SpringBox and SpringCompactGrid.
+ * A 1.4 file that provides utility methods for creating form- or grid-style layouts with SpringLayout. These utilities are used by several programs, such as SpringBox and SpringCompactGrid.
  */
 public class SpringUtilities {
     /**
      * A debugging utility that prints to stdout the component's minimum, preferred, and maximum sizes.
+     * 
+     * @param c
+     *            hthe component
      */
     public static void printSizes(Component c) {
         System.out.println("minimumSize = " + c.getMinimumSize());
@@ -45,10 +41,11 @@ public class SpringUtilities {
     }
 
     /**
-     * Aligns the first <code>rows</code> * <code>cols</code> components of <code>parent</code> in a grid. Each
-     * component is as big as the maximum preferred width and height of the components. The parent is made just big
-     * enough to fit them all.
+     * Aligns the first <code>rows</code> * <code>cols</code> components of <code>parent</code> in a grid. Each component is as big as the maximum preferred width and height of the components. The
+     * parent is made just big enough to fit them all.
      *
+     * @param parent
+     *            the parent
      * @param rows
      *            number of rows
      * @param cols
@@ -124,7 +121,19 @@ public class SpringUtilities {
         pCons.setConstraint(SpringLayout.EAST, Spring.sum(Spring.constant(xPad), lastCons.getConstraint(SpringLayout.EAST)));
     }
 
-    /* Used by makeCompactGrid. */
+    /**
+     * Used by makeCompactGrid
+     * 
+     * @param row
+     *            the row
+     * @param col
+     *            the column
+     * @param parent
+     *            the parent
+     * @param cols
+     *            the number of columns
+     * @return the cell constraints
+     */
     private static SpringLayout.Constraints getConstraintsForCell(int row, int col, Container parent, int cols) {
         SpringLayout layout = (SpringLayout) parent.getLayout();
         Component c = parent.getComponent((row * cols) + col);
@@ -132,10 +141,11 @@ public class SpringUtilities {
     }
 
     /**
-     * Aligns the first <code>rows</code> * <code>cols</code> components of <code>parent</code> in a grid. Each
-     * component in a column is as wide as the maximum preferred width of the components in that column; height is
-     * similarly determined for each row. The parent is made just big enough to fit them all.
+     * Aligns the first <code>rows</code> * <code>cols</code> components of <code>parent</code> in a grid. Each component in a column is as wide as the maximum preferred width of the components in
+     * that column; height is similarly determined for each row. The parent is made just big enough to fit them all.
      *
+     * @param parent
+     *            the parent
      * @param rows
      *            number of rows
      * @param cols
