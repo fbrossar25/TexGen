@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
 import texgen.utilities.GestionnaireSauvegarde;
+import texgen.utilities.ParserCode;
 import texgen.vue.BarreMenu;
 
 /**
@@ -37,22 +38,30 @@ public class ControleurBarreMenu implements ActionListener {
         JMenuItem source = (JMenuItem) e.getSource();
         if (source.getText().equals("Quitter")) {
             System.exit(0);
-        } else if (source.getText().equals("Générer")) {
-            String fullPath = System.getProperty("user.dir") + "/generated.tex";
-            FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
-        } else if (source.getText().equals("Diapo suivante")) {
-            barreMenu.getFenetre().diapoSuivante();
-        } else if (source.getText().equals("Diapo precedente")) {
-            barreMenu.getFenetre().diapoPrecedente();
-        } else if (source.getText().equals("Créer diapo")) {
-            barreMenu.getFenetre().ajouterDiapo();
-        } else if (source.getText().equals("Sauvegarder sous...")) {
-            String fullPath = System.getProperty("user.dir") + "/save.xml";
-            GestionnaireSauvegarde.sauvegarder(barreMenu.getFenetre().getPseudoCode(), barreMenu.getFenetre().getTableau(), fullPath);
-        } else if (source.getText().equals("Ouvrir")) {
-            String fullPath = System.getProperty("user.dir") + "/save.xml";
-            GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);
-        }
+        } else
+            if (source.getText().equals("Générer")) {
+                String fullPath = System.getProperty("user.dir") + "/generated.tex";
+                FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
+                fullPath = System.getProperty("user.dir") + "/parsed.txt";
+                FileUtilities.writeStringInFile(ParserCode.parseText(barreMenu.getFenetre().getPseudoCode().getTextArea().getText()), fullPath, true);
+            } else
+                if (source.getText().equals("Diapo suivante")) {
+                    barreMenu.getFenetre().diapoSuivante();
+                } else
+                    if (source.getText().equals("Diapo precedente")) {
+                        barreMenu.getFenetre().diapoPrecedente();
+                    } else
+                        if (source.getText().equals("Créer diapo")) {
+                            barreMenu.getFenetre().ajouterDiapo();
+                        } else
+                            if (source.getText().equals("Sauvegarder sous...")) {
+                                String fullPath = System.getProperty("user.dir") + "/save.xml";
+                                GestionnaireSauvegarde.sauvegarder(barreMenu.getFenetre().getPseudoCode(), barreMenu.getFenetre().getTableau(), fullPath);
+                            } else
+                                if (source.getText().equals("Ouvrir")) {
+                                    String fullPath = System.getProperty("user.dir") + "/save.xml";
+                                    GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);
+                                }
     }
 
 }

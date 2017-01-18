@@ -168,6 +168,18 @@ public class GenerateurLatex {
     }
 
     /**
+     * Fonction qui permet de génere le code LaTeX du pseudocode donné en prenant en compte les blocs de code (si..alors..sinon, tant que, faire .. tant que, pour..faire)
+     * 
+     * @param p
+     *            le pseudocode
+     * @return le code LaTeX du pseudoCode avec les blocs
+     */
+    public static String genererEtParserPseudoCode(PseudoCode p) {
+        String res = "";
+        return res;
+    }
+
+    /**
      * Fonction générant la partie du code correspondant au tableau
      * 
      * @param tableau
