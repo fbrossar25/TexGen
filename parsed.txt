@@ -1,1 +1,2 @@
-uIf{a ou b}{c}{d}
+\lIf{a}{\lIf{b}{c}}
+\uElse{d}

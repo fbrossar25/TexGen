@@ -43,7 +43,7 @@ public class ControleurBarreMenu implements ActionListener {
                 String fullPath = System.getProperty("user.dir") + "/generated.tex";
                 FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
                 fullPath = System.getProperty("user.dir") + "/parsed.txt";
-                FileUtilities.writeStringInFile(ParserCode.parseText(barreMenu.getFenetre().getPseudoCode().getTextArea().getText()), fullPath, true);
+                FileUtilities.writeStringInFile(ParserCode.parserPseudoCode(barreMenu.getFenetre().getPseudoCode()), fullPath, true);
             } else
                 if (source.getText().equals("Diapo suivante")) {
                     barreMenu.getFenetre().diapoSuivante();
