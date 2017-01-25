@@ -310,7 +310,7 @@ public class Tableau extends JPanel {
      * 
      * @param i
      *            Numéro de la diapo
-     * @return le modele correspondant
+     * @return le modele correspondant ou null si inexistant
      */
     public DefaultTableModel getDiapo(int i) {
         if ((i < 1) || (i > diapos.size())) {
@@ -457,5 +457,64 @@ public class Tableau extends JPanel {
             values.add(i - 1, (String) getDiapo(i).getValueAt(ligne, colonne));
         }
         return values;
+    }
+
+    /**
+     * Fonction permettant de supprimer toutes les diapos existants et de créer nombreDiapos nouvelles diapos vide de dimension (lignes, colonnes)
+     * 
+     * @param nombreDiapos
+     *            le nombre de diapos vide à créer
+     * @param lignes
+     *            le nombre de lignes
+     * @param colonnes
+     *            le nombre de colonnes
+     */
+    public void reset(int nombreDiapos, int lignes, int colonnes) {
+        li = (lignes >= 2) ? lignes : 2;
+        col = (colonnes >= 1) ? colonnes : 1;
+        diapos.clear();
+        if (nombreDiapos > 1) {
+            for (int i = 0; i < nombreDiapos; i++) {
+                creerDiapoVide();
+            }
+        } else {
+            creerDiapoVide();
+        }
+    }
+
+    /**
+     * Fonction permettant de définir manuellement une valeur pour une case à la diapo et aux coordonnées données
+     * 
+     * @param value
+     *            la valeur
+     * @param diapo
+     *            la diapo
+     * @param ligne
+     *            la ligne (0 - li)
+     * @param colonne
+     *            la case (0 - col)
+     */
+    public void setValueAt(String value, int diapo, int ligne, int colonne) {
+        if (value != null && ligne >= 0 && ligne < li && colonne >= 0 && colonne < col) {
+            DefaultTableModel model = getDiapo(diapo);
+            if (model != null) {
+                model.setValueAt(value, ligne, colonne);
+            } else {
+                System.out.println("Diapo " + diapo + " inexistante");
+            }
+        } else {
+            System.out.println("Erreur : mauvais arguments pour setValueAt(String,int,int,int)");
+        }
+    }
+
+    /**
+     * Créer une nouvelle diapo vide à l'aide de createNewVoidModel()
+     * 
+     * @see Tableau.createNewVoidModel()
+     */
+    public void creerDiapoVide() {
+        DefaultTableModel newModel = createNewVoidModel();
+        newModel.addTableModelListener(ctrl);
+        diapos.add(newModel);
     }
 }

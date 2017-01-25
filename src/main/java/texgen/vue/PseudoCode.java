@@ -398,11 +398,28 @@ public class PseudoCode extends JPanel {
 
     /**
      * Fonction permettant de remettre à son état initial le pseudoCode
+     * 
+     * @param nombreDiapos
+     *            le nombre de diapos vide à créer
      */
-    public void reset() {
+    public void reset(int nombreDiapos) {
         linenumber = 1;
         diapoCourante = 1;
         marqueurs.clear();
-        textArea.setText("Saisissez votre pseudo code ici.");
+        if (nombreDiapos > 1) {
+            for (int i = 0; i < nombreDiapos; i++) {
+                creerDiapoVide();
+            }
+        } else {
+            creerDiapoVide();
+        }
+        textArea.setText("");
+    }
+
+    /**
+     * Fonction permettant de créer une diapo sans marqueurs
+     */
+    public void creerDiapoVide() {
+        marqueurs.add(new TreeSet<Integer>());
     }
 }

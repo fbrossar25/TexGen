@@ -1,5 +1,11 @@
 package texgen.utilities;
 
+// blockly
+/**
+ * une classe par type d'instructions 1) parsing -> on remplis la structure (Arbre de syntaxe abstraite) 2) on parcours la structure pour appliquer le traitement 3) interpreteur ou visiteur code
+ * maintenable et évolutif
+ */
+
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -185,6 +191,8 @@ public class ParserCode {
             String sinon = m.group(3);
             sinon = parse(sinon, p);
             res = "\\lIf{" + condition + "}{" + alors + "}\n\\uElse{" + sinon + "}";
+        } else {
+            res = texte;
         }
         return res;
     }

@@ -8,6 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,10 +42,11 @@ public class GestionnaireSauvegarde {
      * @param fullPath
      *            le chemin du fichier de sauvegarde
      */
-    public static void sauvegarder(PseudoCode p, Tableau t, String fullPath) {
+    public static void sauvegarder(int nombreDiapos, PseudoCode p, Tableau t, String fullPath) {
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
         s += "<!DOCTYPE projet [\n";
-        s += "\t<!ELEMENT projet (pseudocode, tableau) >\n\n";
+        s += "\t<!ELEMENT projet (pseudocode, tableau) >\n";
+        s += "\t<!ATTLIST projet diapos CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT pseudocode (texte, marqueurs) >\n";
         s += "\t<!ELEMENT texte (ligne_p)* >\n";
         s += "\t<!ELEMENT ligne_p (#PCDATA) >\n";
@@ -63,7 +68,7 @@ public class GestionnaireSauvegarde {
         s += "\t<!ELEMENT case (#PCDATA) >\n";
         s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n";
         s += "]>\n";
-        s += "<projet>\n";
+        s += "<projet diapos=\"" + nombreDiapos + "\">\n";
         s += sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t);
         s += "\n</projet>";
         FileUtilities.writeStringInFile(s, fullPath, false);
@@ -134,7 +139,7 @@ public class GestionnaireSauvegarde {
                 for (int k = 0; k < model.getColumnCount(); k++) {
                     String value = (String) model.getValueAt(j, k);
                     if ((value != null) && !value.equals("")) {
-                        res += "\t\t\t\t\t<case numero=\"" + (k + 1) + "\"><![CDATA[" + value + "]]></case>\n";
+                        res += "\t\t\t\t\t<case numero=\"" + k + "\"><![CDATA[" + value + "]]></case>\n";
                     }
                 }
                 res += "\t\t\t\t</ligne_t>\n";
@@ -167,18 +172,213 @@ public class GestionnaireSauvegarde {
             try {
                 Document xml = builder.parse(new File(fullPath));
                 Element root = xml.getDocumentElement();
-                // System.out.println(description(root, ""));
-                for (int i = 0; i < root.getChildNodes().getLength(); i++) {
-                    if (root.getChildNodes().item(i).getNodeName().equals("pseudocode")) {
-                        chargerPseudoCodeXML(f.getPseudoCode(), root.getChildNodes().item(i));
-                    } else
-                        if (root.getChildNodes().item(i).getNodeName().equals("tableau")) {
-                            chargerTableauXML(f.getTableau(), root.getChildNodes().item(i));
-                        }
-                }
+                XPathFactory xpf = XPathFactory.newInstance();
+                XPath path = xpf.newXPath();
+                chargerReset(root, f, path);
+                chargerTextePseudoCode(root, f.getPseudoCode(), path);
+                chargerMarqueursPseudoCode(root, f.getPseudoCode(), path);
+                chargerTableau(root, f.getTableau(), path);
+                f.refresh();
             } catch (SAXParseException e) {
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fonction permettant de charger les données du tableau d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param t
+     *            le tableau
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerTableau(Element root, Tableau t, XPath path) {
+        chargerColonnesTableau(root, t, path);
+        chargerDonneesTableau(root, t, path);
+    }
+
+    /**
+     * Fonction permettant de charger les données du tableau d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param t
+     *            le tableau
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerDonneesTableau(Element root, Tableau t, XPath path) {
+        try {
+            String expression = "/projet/tableau/diapos_t/*";
+            // liste des diapos
+            NodeList listDiapos = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
+            int nombreDiapos = listDiapos.getLength();
+            // System.out.println(nombreDiapos + " diapos : ");
+            if (nombreDiapos > 0) {
+                // Parcours des diapos
+                for (int i = 0; i < nombreDiapos; i++) {
+                    // liste des lignes de la diapo
+                    NodeList listLignes = listDiapos.item(i).getChildNodes();
+                    int nombreLignes = listLignes.getLength();
+                    expression = "/projet/tableau/diapos_t/diapo_t[" + (i + 1) + "]/@numero";
+                    int diapo = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                    // System.out.println("Diapos " + diapo + " : " + nombreLignes + " lignes");
+                    // parcours des lignes
+                    for (int j = 0; j < nombreLignes; j++) {
+                        NodeList listCases = listLignes.item(j).getChildNodes();
+                        int nombreCases = listCases.getLength();
+                        int numeroLigne = 0;
+                        try {
+                            numeroLigne = Integer.parseInt(listLignes.item(j).getAttributes().getNamedItem("numero").getTextContent());
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            System.out.println("diapo " + (i + 1) + ", ligne " + (j + 1) + " : l'attribut 'numero' n'existe pas ou n'est pas un entier");
+                            continue;
+                        }
+                        // System.out.println("\tLigne " + numeroLigne + " : " + nombreCases + " cases");
+                        // Parcours des cases
+                        for (int k = 0; k < nombreCases; k++) {
+                            expression = "/projet/tableau/diapos_t/diapo_t[@numero='" + diapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[" + (k + 1) + "]/@numero";
+                            int numCase = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                            String value = listCases.item(k).getTextContent();
+                            // System.out.println("\t\tCase " + numCase + " : valeur = '" + value + "'");
+                            t.setValueAt(value, diapo, numeroLigne, numCase);
+                        }
+                    }
+                }
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fonction permettant de charger les noms des colonnes du tableau d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param t
+     *            le tableau
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerColonnesTableau(Element root, Tableau t, XPath path) {
+        try {
+            String expression = "count(/projet/tableau/colonnes/colonne)";
+            int nombreColonnes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            expression = "/projet/tableau/colonnes/*";
+            NodeList listColonnes = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
+            for (int i = 0; i < nombreColonnes; i++) {
+                int numeroColonne = 0;
+                try {
+                    numeroColonne = Integer.parseInt(listColonnes.item(i).getAttributes().getNamedItem("numero").getTextContent());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("colonne " + (i + 1) + " : l'attribut 'numero' n'existe pas ou n'est pas un entier");
+                    continue;
+                }
+                String value = listColonnes.item(i).getTextContent();
+                t.setValueAt(value, 1, 0, numeroColonne);
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fonction permettant d'appeler la fonction reset sur la fenetre f avec les informations d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param f
+     *            la fenetrePrincipale
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerReset(Element root, FenetrePrincipale f, XPath path) {
+        try {
+            String expression = "/projet/@diapos";
+            int nombreDiapos = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            expression = "/projet/tableau/@lignes";
+            int nombreLignes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            expression = "/projet/tableau/@colonnes";
+            int nombreColonnes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            // System.out.println("Reset fenetre with (" + nombreDiapos + ',' + nombreLignes + ',' + nombreColonnes + ")");
+            f.reset(nombreDiapos, nombreLignes, nombreColonnes);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fonction permettant de charger les marqueurs du pseudoCode d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param p
+     *            le pseudoCode
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerMarqueursPseudoCode(Element root, PseudoCode p, XPath path) {
+        try {
+            String expression = "/projet/pseudocode/marqueurs/*";
+            // liste des diapos
+            NodeList listDiapos = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
+            int nombreDiapos = listDiapos.getLength();
+            if (nombreDiapos > 0) {
+                for (int i = 0; i < nombreDiapos; i++) {
+                    // liste des marqueurs de la diapo
+                    NodeList listMarqueurs = listDiapos.item(i).getChildNodes();
+                    int nombreMarqueurs = listMarqueurs.getLength();
+                    expression = "/projet/pseudocode/marqueurs/diapo_p[" + (i + 1) + "]/@numero";
+                    int diapo = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                    for (int j = 0; j < nombreMarqueurs; j++) {
+                        int marqueur = 0;
+                        try {
+                            marqueur = Integer.parseInt(listMarqueurs.item(j).getTextContent());
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            System.out.println("diapos " + (i + 1) + " marqueur " + (j + 1) + " is not an integer");
+                            continue;
+                        }
+                        if (marqueur > 0 && diapo > 0) {
+                            p.marquage(diapo, marqueur);
+                        }
+                    }
+                }
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fonction permettant de charger le texte du pseudoCode d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param p
+     *            le pseudoCode
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerTextePseudoCode(Element root, PseudoCode p, XPath path) {
+        try {
+            String expression = "/projet/pseudocode/texte/*";
+            NodeList lignes = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
+            int nombreLignes = lignes.getLength();
+            if (nombreLignes > 0) {
+                for (int i = 0; i < nombreLignes; i++) {
+                    p.getTextArea().append(lignes.item(i).getTextContent() + ((i == nombreLignes - 1) ? "" : "\n"));
+                }
+                p.refreshNombreDeLignes();
+            }
+        } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
     }
@@ -242,67 +442,5 @@ public class GestionnaireSauvegarde {
             }
         }
         return str;
-    }
-
-    /**
-     * Permet de charger les informations du pseudocode d'une sauvegarde
-     * 
-     * @param p
-     *            le pseudocode
-     * @param node
-     *            le noeud pseudocode du fichier
-     */
-    public static void chargerPseudoCodeXML(PseudoCode p, Node node) {
-        if (!node.getNodeName().equals("pseudocode")) {
-            System.out.println("Erreur : nom du noeuds différent de 'pseudocode'");
-            return;
-        }
-        p.reset();
-        int nbChild = node.getChildNodes().getLength();
-        NodeList list = node.getChildNodes();
-        for (int i = 0; i < nbChild; i++) {
-            Node n = list.item(i);
-            if ((n instanceof Element) && (n.getNodeType() == Node.ELEMENT_NODE)) {
-                Element elm = (Element) n;
-                if (elm.getNodeName().equals("texte")) {
-                    chargerPseudoCodeXMLTexte(p, elm);
-                } else
-                    if (elm.getNodeName().equals("marqueurs")) {
-                        chargerPseudoCodeXMLMarqueurs(p, elm);
-                    } else {
-                        System.out.println("Erreur : balise '" + elm.getNodeName() + "' invalide");
-                    }
-            }
-        }
-    }
-
-    /**
-     * Fonction qui charge le texte du pseudocode contenus dans une sauvegarde
-     * 
-     * @param p
-     *            le pseudocode
-     * @param e
-     *            l'élement texte de la sauvegarde
-     */
-    public static void chargerPseudoCodeXMLTexte(PseudoCode p, Element e) {
-        p.getTextArea().setText("");
-        NodeList list = e.getChildNodes();
-        for (int i = 0; i < list.getLength(); i++) {
-            if (list.item(i).getNodeName().equals("ligne_p")) {
-                if (i < list.getLength() - 1) {
-                    p.getTextArea().append(list.item(i).getTextContent() + "\n");
-                } else {
-                    p.getTextArea().append(list.item(i).getTextContent());
-                }
-            }
-        }
-    }
-
-    public static void chargerPseudoCodeXMLMarqueurs(PseudoCode p, Element e) {
-
-    }
-
-    public static void chargerTableauXML(Tableau t, Node node) {
-        // TODO
     }
 }

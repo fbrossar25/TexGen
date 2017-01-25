@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <!DOCTYPE projet [
 	<!ELEMENT projet (pseudocode, tableau) >
+	<!ATTLIST projet diapos CDATA #REQUIRED >
 
 	<!ELEMENT pseudocode (texte, marqueurs) >
 	<!ELEMENT texte (ligne_p)* >
@@ -24,7 +25,7 @@
 	<!ELEMENT case (#PCDATA) >
 	<!ATTLIST case numero CDATA #REQUIRED >
 ]>
-<projet>
+<projet diapos="5">
 	<pseudocode>
 		<texte>
 			<ligne_p><![CDATA[diapo1 2 5;]]></ligne_p>
@@ -61,50 +62,50 @@
 		<diapos_t>
 			<diapo_t numero="1">
 				<ligne_t numero="1">
-					<case numero="1"><![CDATA[diapo 1]]></case>
+					<case numero="0"><![CDATA[diapo 1]]></case>
 				</ligne_t>
 				<ligne_t numero="2">
 				</ligne_t>
 			</diapo_t>
 			<diapo_t numero="2">
 				<ligne_t numero="1">
-					<case numero="1"><![CDATA[diapo 1]]></case>
-					<case numero="2"><![CDATA[diapo 2]]></case>
+					<case numero="0"><![CDATA[diapo 1]]></case>
+					<case numero="1"><![CDATA[diapo 2]]></case>
 				</ligne_t>
 				<ligne_t numero="2">
 				</ligne_t>
 			</diapo_t>
 			<diapo_t numero="3">
 				<ligne_t numero="1">
-					<case numero="1"><![CDATA[diapo 1]]></case>
-					<case numero="2"><![CDATA[diapo 2]]></case>
-					<case numero="3"><![CDATA[diapo 3]]></case>
+					<case numero="0"><![CDATA[diapo 1]]></case>
+					<case numero="1"><![CDATA[diapo 2]]></case>
+					<case numero="2"><![CDATA[diapo 3]]></case>
 				</ligne_t>
 				<ligne_t numero="2">
 				</ligne_t>
 			</diapo_t>
 			<diapo_t numero="4">
 				<ligne_t numero="1">
-					<case numero="1"><![CDATA[diapo 1]]></case>
-					<case numero="2"><![CDATA[diapo 2]]></case>
-					<case numero="3"><![CDATA[diapo 3]]></case>
-					<case numero="4"><![CDATA[diapo 4]]></case>
+					<case numero="0"><![CDATA[diapo 1]]></case>
+					<case numero="1"><![CDATA[diapo 2]]></case>
+					<case numero="2"><![CDATA[diapo 3]]></case>
+					<case numero="3"><![CDATA[diapo 4]]></case>
 				</ligne_t>
 				<ligne_t numero="2">
 				</ligne_t>
 			</diapo_t>
 			<diapo_t numero="5">
 				<ligne_t numero="1">
-					<case numero="1"><![CDATA[diapo 1]]></case>
-					<case numero="2"><![CDATA[diapo 2]]></case>
-					<case numero="3"><![CDATA[diapo 3]]></case>
-					<case numero="4"><![CDATA[diapo 4]]></case>
+					<case numero="0"><![CDATA[diapo 1]]></case>
+					<case numero="1"><![CDATA[diapo 2]]></case>
+					<case numero="2"><![CDATA[diapo 3]]></case>
+					<case numero="3"><![CDATA[diapo 4]]></case>
 				</ligne_t>
 				<ligne_t numero="2">
-					<case numero="1"><![CDATA[diapo 5]]></case>
-					<case numero="2"><![CDATA[(\bold{test})]]></case>
-					<case numero="3"><![CDATA[\\premier]]></case>
-					<case numero="4"><![CDATA[<br>]]></case>
+					<case numero="0"><![CDATA[diapo 5]]></case>
+					<case numero="1"><![CDATA[(\bold{test})]]></case>
+					<case numero="2"><![CDATA[\\premier]]></case>
+					<case numero="3"><![CDATA[<br>]]></case>
 				</ligne_t>
 			</diapo_t>
 		</diapos_t>

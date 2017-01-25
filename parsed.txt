@@ -1,2 +1,2 @@
-\lIf{a}{\lIf{b}{c}}
+\lIf{a}{b}
 \uElse{d}

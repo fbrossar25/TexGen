@@ -140,13 +140,9 @@ public class FenetrePrincipale extends JFrame {
      * Fonction permettant l'ajout d'une diapo
      */
     public void ajouterDiapo() {
-        if (toolBar.isPseudoCodeSelected()) {
-            pseudoCode.ajouterDiapo();
-        }
-        if (toolBar.isTableSelected()) {
-            tableau.ajouterDiapo();
-        }
-        diapoSuivante();
+        pseudoCode.ajouterDiapo();
+        tableau.ajouterDiapo();
+        allerDiapo(getNombreDiapos());
         toolBar.updateCompteursDiapo(pseudoCode, tableau);
     }
 
@@ -241,5 +237,18 @@ public class FenetrePrincipale extends JFrame {
      */
     public int getNombreDiapos() {
         return Math.max(pseudoCode.getNombreDiapos(), tableau.getNombreDiapos());
+    }
+
+    public void reset(int nombreDiapos, int lignes, int colonnes) {
+        pseudoCode.reset(nombreDiapos);
+        tableau.reset(nombreDiapos, lignes, colonnes);
+    }
+
+    /**
+     * Fonction permettant de rafraichir les informations de chaque panels au niveau graphique
+     */
+    public void refresh() {
+        revalidate();
+        repaint();
     }
 }
