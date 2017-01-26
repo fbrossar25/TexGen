@@ -197,8 +197,12 @@ public class GestionnaireSauvegarde {
      *            une instance de XPath
      */
     public static void chargerTableau(Element root, Tableau t, XPath path) {
+        // On désactive le modelListener du tableau pour éviter les répercussions d'informations non désirées,
+        // on répercute manuelement les informations qui le nécessitent (les noms des colonnes notament)
+        t.disableAllModelListener();
         chargerColonnesTableau(root, t, path);
         chargerDonneesTableau(root, t, path);
+        t.enableAllModelListener();
     }
 
     /**
@@ -212,41 +216,35 @@ public class GestionnaireSauvegarde {
      *            une instance de XPath
      */
     public static void chargerDonneesTableau(Element root, Tableau t, XPath path) {
+        final String xpath_diapos_t = "/projet/tableau/diapos_t";
         try {
-            String expression = "/projet/tableau/diapos_t/*";
+            String expression = "count(" + xpath_diapos_t + "/diapo_t)";
             // liste des diapos
-            NodeList listDiapos = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
-            int nombreDiapos = listDiapos.getLength();
-            // System.out.println(nombreDiapos + " diapos : ");
+            int nombreDiapos = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            System.out.println(nombreDiapos + " diapos : ");
             if (nombreDiapos > 0) {
                 // Parcours des diapos
-                for (int i = 0; i < nombreDiapos; i++) {
-                    // liste des lignes de la diapo
-                    NodeList listLignes = listDiapos.item(i).getChildNodes();
-                    int nombreLignes = listLignes.getLength();
-                    expression = "/projet/tableau/diapos_t/diapo_t[" + (i + 1) + "]/@numero";
-                    int diapo = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
-                    // System.out.println("Diapos " + diapo + " : " + nombreLignes + " lignes");
+                for (int i = 1; i <= nombreDiapos; i++) {
+                    expression = "count(" + xpath_diapos_t + "/diapo_t[" + i + "]/ligne_t)";
+                    int nombreLignes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                    expression = xpath_diapos_t + "/diapo_t[" + i + "]/@numero";
+                    int numeroDiapo = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                    System.out.println("Diapos " + numeroDiapo + " : " + nombreLignes + " lignes");
                     // parcours des lignes
-                    for (int j = 0; j < nombreLignes; j++) {
-                        NodeList listCases = listLignes.item(j).getChildNodes();
-                        int nombreCases = listCases.getLength();
-                        int numeroLigne = 0;
-                        try {
-                            numeroLigne = Integer.parseInt(listLignes.item(j).getAttributes().getNamedItem("numero").getTextContent());
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                            System.out.println("diapo " + (i + 1) + ", ligne " + (j + 1) + " : l'attribut 'numero' n'existe pas ou n'est pas un entier");
-                            continue;
-                        }
-                        // System.out.println("\tLigne " + numeroLigne + " : " + nombreCases + " cases");
+                    for (int j = 1; j <= nombreLignes; j++) {
+                        expression = "count(" + xpath_diapos_t + "/diapo_t[" + i + "]/ligne_t[" + j + "]/case)";
+                        int nombreCases = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                        expression = xpath_diapos_t + "/diapo_t[" + i + "]/ligne_t[" + j + "]/@numero";
+                        int numeroLigne = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                        System.out.println("\tLigne " + numeroLigne + " : " + nombreCases + " cases");
                         // Parcours des cases
-                        for (int k = 0; k < nombreCases; k++) {
-                            expression = "/projet/tableau/diapos_t/diapo_t[@numero='" + diapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[" + (k + 1) + "]/@numero";
-                            int numCase = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
-                            String value = listCases.item(k).getTextContent();
-                            // System.out.println("\t\tCase " + numCase + " : valeur = '" + value + "'");
-                            t.setValueAt(value, diapo, numeroLigne, numCase);
+                        for (int k = 1; k <= nombreCases; k++) {
+                            expression = xpath_diapos_t + "/diapo_t[@numero='" + numeroDiapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[" + k + "]/@numero";
+                            int numeroCase = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+                            expression = xpath_diapos_t + "/diapo_t[@numero='" + numeroDiapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[@numero='" + numeroCase + "']";
+                            String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                            System.out.println("\t\tCase " + numeroCase + " : valeur = '" + value + "'");
+                            t.setValueAt(value, numeroDiapo, numeroLigne, numeroCase);
                         }
                     }
                 }
@@ -268,7 +266,9 @@ public class GestionnaireSauvegarde {
      */
     public static void chargerColonnesTableau(Element root, Tableau t, XPath path) {
         try {
-            String expression = "count(/projet/tableau/colonnes/colonne)";
+            String expression = "count(/projet/tableau/diapos_t/diapo_t)";
+            int nombreDiapos = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
+            expression = "count(/projet/tableau/colonnes/colonne)";
             int nombreColonnes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
             expression = "/projet/tableau/colonnes/*";
             NodeList listColonnes = (NodeList) path.evaluate(expression, root, XPathConstants.NODESET);
@@ -282,7 +282,9 @@ public class GestionnaireSauvegarde {
                     continue;
                 }
                 String value = listColonnes.item(i).getTextContent();
-                t.setValueAt(value, 1, 0, numeroColonne);
+                for (int j = 1; j <= nombreDiapos; j++) {
+                    t.setValueAt(value, j, 0, numeroColonne);
+                }
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();
