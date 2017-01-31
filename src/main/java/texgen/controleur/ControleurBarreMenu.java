@@ -9,6 +9,7 @@ import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
 import texgen.utilities.GestionnaireSauvegarde;
 import texgen.vue.BarreMenu;
+import texgen.vue.Graph;
 
 /**
  * Classe controleur de la barre de menu
@@ -54,6 +55,12 @@ public class ControleurBarreMenu implements ActionListener {
         } else if (source.getText().equals("Ouvrir")) {
             String fullPath = System.getProperty("user.dir") + "/save.xml";
             GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);
+        } else if (source.getText().equals("Créer noeud")) {
+            Graph graph = barreMenu.getFenetre().getGraph();
+            graph.creerNoeud("" + (char) ('0' + (graph.getNombreNoeuds() % 10)));
+        } else if (source.getText().equals("Supprimer noeud")) {
+            Graph graph = barreMenu.getFenetre().getGraph();
+            graph.supprimerNoeudSelectionne();
         }
     }
 

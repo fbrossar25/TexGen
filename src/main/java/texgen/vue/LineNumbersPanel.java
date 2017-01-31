@@ -155,7 +155,7 @@ public class LineNumbersPanel extends JPanel {
             int ligne = Integer.parseInt(label.getText());
             if (marqueurs.contains(ligne)) {
                 Point pos = getLabelDrawPoint(label);
-                DrawUtilities.drawCenteredCircle(g, pos.x, pos.y, 10);
+                DrawUtilities.fillCenteredCircle(g, pos.x, pos.y, 10);
             }
         }
     }

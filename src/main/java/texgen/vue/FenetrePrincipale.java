@@ -1,6 +1,9 @@
 package texgen.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -38,32 +41,49 @@ public class FenetrePrincipale extends JFrame {
     /** La barre d'outil */
     private ToolBar    toolBar;
 
+    /** Le graph */
+    private Graph      graph;
+
     /**
      * Constructeur de la classe
      */
     public FenetrePrincipale() {
         setTitle("TexGen");
-        this.setSize(800, 600);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         menuBar = new BarreMenu(this);
         add(menuBar, BorderLayout.NORTH);
         tableau = new Tableau(this);
+        graph = new Graph(this);
 
         initMenuBar();
 
         pseudoCode = new PseudoCode();
         separateurH = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(pseudoCode), new JScrollPane(tableau));
 
-        separateurV = new JSplitPane(JSplitPane.VERTICAL_SPLIT, separateurH, new JScrollPane());
+        separateurV = new JSplitPane(JSplitPane.VERTICAL_SPLIT, separateurH, new JScrollPane(graph));
 
         add(separateurV, BorderLayout.CENTER);
 
         toolBar = new ToolBar(this);
         add(toolBar, BorderLayout.SOUTH);
-
+        centerFrame();
         setVisible(true);
+    }
+
+    /**
+     * Permet de centrer la fenêtre au démarrage
+     */
+    private void centerFrame() {
+        Dimension windowSize = getSize();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Point centerPoint = ge.getCenterPoint();
+
+        int dx = centerPoint.x - windowSize.width / 2;
+        int dy = centerPoint.y - windowSize.height / 2;
+        setLocation(dx, dy);
     }
 
     /**
@@ -127,6 +147,16 @@ public class FenetrePrincipale extends JFrame {
         precedent.addActionListener(ctrlMenuBar);
         diapo.add(precedent);
         menuBar.add(diapo);
+
+        // Menu Graph
+        JMenu graph = new JMenu("Graph");
+        JMenuItem creerNoeud = new JMenuItem("Créer noeud");
+        creerNoeud.addActionListener(ctrlMenuBar);
+        graph.add(creerNoeud);
+        JMenuItem supprimerNoeud = new JMenuItem("Supprimer noeud");
+        supprimerNoeud.addActionListener(ctrlMenuBar);
+        graph.add(supprimerNoeud);
+        menuBar.add(graph);
 
         // Menu Aide
         JMenu aide = new JMenu("Aide");
@@ -206,6 +236,15 @@ public class FenetrePrincipale extends JFrame {
      */
     public ToolBar getToolBar() {
         return toolBar;
+    }
+
+    /**
+     * Retourne le graph
+     * 
+     * @return le graph
+     */
+    public Graph getGraph() {
+        return graph;
     }
 
     /**

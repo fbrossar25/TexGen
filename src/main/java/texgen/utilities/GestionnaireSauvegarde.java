@@ -221,7 +221,7 @@ public class GestionnaireSauvegarde {
             String expression = "count(" + xpath_diapos_t + "/diapo_t)";
             // liste des diapos
             int nombreDiapos = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
-            System.out.println(nombreDiapos + " diapos : ");
+            // System.out.println(nombreDiapos + " diapos : ");
             if (nombreDiapos > 0) {
                 // Parcours des diapos
                 for (int i = 1; i <= nombreDiapos; i++) {
@@ -229,26 +229,30 @@ public class GestionnaireSauvegarde {
                     int nombreLignes = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
                     expression = xpath_diapos_t + "/diapo_t[" + i + "]/@numero";
                     int numeroDiapo = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
-                    System.out.println("Diapos " + numeroDiapo + " : " + nombreLignes + " lignes");
+                    // System.out.println("Diapos " + numeroDiapo + " : " + nombreLignes + " lignes");
                     // parcours des lignes
                     for (int j = 1; j <= nombreLignes; j++) {
                         expression = "count(" + xpath_diapos_t + "/diapo_t[" + i + "]/ligne_t[" + j + "]/case)";
                         int nombreCases = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
                         expression = xpath_diapos_t + "/diapo_t[" + i + "]/ligne_t[" + j + "]/@numero";
                         int numeroLigne = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
-                        System.out.println("\tLigne " + numeroLigne + " : " + nombreCases + " cases");
+                        // System.out.println("\tLigne " + numeroLigne + " : " + nombreCases + " cases");
                         // Parcours des cases
                         for (int k = 1; k <= nombreCases; k++) {
                             expression = xpath_diapos_t + "/diapo_t[@numero='" + numeroDiapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[" + k + "]/@numero";
                             int numeroCase = ((Double) (path.evaluate(expression, root, XPathConstants.NUMBER))).intValue();
                             expression = xpath_diapos_t + "/diapo_t[@numero='" + numeroDiapo + "']/ligne_t[@numero='" + numeroLigne + "']/case[@numero='" + numeroCase + "']";
                             String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
-                            System.out.println("\t\tCase " + numeroCase + " : valeur = '" + value + "'");
+                            // System.out.println("\t\tCase " + numeroCase + " : valeur = '" + value + "'");
                             t.setValueAt(value, numeroDiapo, numeroLigne, numeroCase);
                         }
                     }
                 }
             }
+            // La technique du pauvre
+            // Swing n'aime pas qu'on touche directement aux données
+            t.diapoSuivante();
+            t.diapoPrecedente();
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
