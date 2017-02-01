@@ -38,11 +38,12 @@ public class ControleurBarreMenu implements ActionListener {
         JMenuItem source = (JMenuItem) e.getSource();
         if (source.getText().equals("Quitter")) {
             System.exit(0);
+        } else if (source.getText().equals("Fermer")) {
+            barreMenu.getFenetre().reset();
+            barreMenu.getFenetre().refresh();
         } else if (source.getText().equals("Générer")) {
             String fullPath = System.getProperty("user.dir") + "/generated.tex";
             FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
-            // fullPath = System.getProperty("user.dir") + "/parsed.txt";
-            // FileUtilities.writeStringInFile(ParserCode.parserPseudoCode(barreMenu.getFenetre().getPseudoCode()), fullPath, true);
         } else if (source.getText().equals("Diapo suivante")) {
             barreMenu.getFenetre().diapoSuivante();
         } else if (source.getText().equals("Diapo precedente")) {
@@ -61,6 +62,10 @@ public class ControleurBarreMenu implements ActionListener {
         } else if (source.getText().equals("Supprimer noeud")) {
             Graph graph = barreMenu.getFenetre().getGraph();
             graph.supprimerNoeudSelectionne();
+        } else if (source.getText().equals("Créer lien")) {
+
+        } else if (source.getText().equals("Supprimer lien")) {
+
         }
     }
 

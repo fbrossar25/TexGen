@@ -60,7 +60,7 @@ public class FenetrePrincipale extends JFrame {
 
         initMenuBar();
 
-        pseudoCode = new PseudoCode();
+        pseudoCode = new PseudoCode(this);
         separateurH = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(pseudoCode), new JScrollPane(tableau));
 
         separateurV = new JSplitPane(JSplitPane.VERTICAL_SPLIT, separateurH, new JScrollPane(graph));
@@ -70,6 +70,8 @@ public class FenetrePrincipale extends JFrame {
         toolBar = new ToolBar(this);
         add(toolBar, BorderLayout.SOUTH);
         centerFrame();
+        // separateurH.setEnabled(false);
+        // separateurV.setEnabled(false);
         setVisible(true);
     }
 
@@ -156,6 +158,12 @@ public class FenetrePrincipale extends JFrame {
         JMenuItem supprimerNoeud = new JMenuItem("Supprimer noeud");
         supprimerNoeud.addActionListener(ctrlMenuBar);
         graph.add(supprimerNoeud);
+        JMenuItem creerLien = new JMenuItem("Créer lien");
+        creerLien.addActionListener(ctrlMenuBar);
+        graph.add(creerLien);
+        JMenuItem supprimerLien = new JMenuItem("Supprimer lien");
+        supprimerLien.addActionListener(ctrlMenuBar);
+        graph.add(supprimerLien);
         menuBar.add(graph);
 
         // Menu Aide
@@ -172,8 +180,9 @@ public class FenetrePrincipale extends JFrame {
     public void ajouterDiapo() {
         pseudoCode.ajouterDiapo();
         tableau.ajouterDiapo();
+        graph.ajouterDiapo();
         allerDiapo(getNombreDiapos());
-        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        toolBar.updateCompteursDiapo();
     }
 
     /**
@@ -186,7 +195,10 @@ public class FenetrePrincipale extends JFrame {
         if (toolBar.isTableSelected()) {
             tableau.diapoSuivante();
         }
-        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        if (toolBar.isGraphSelected()) {
+            graph.diapoSuivante();
+        }
+        toolBar.updateCompteursDiapo();
     }
 
     /**
@@ -199,7 +211,10 @@ public class FenetrePrincipale extends JFrame {
         if (toolBar.isTableSelected()) {
             tableau.diapoPrecedente();
         }
-        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        if (toolBar.isGraphSelected()) {
+            graph.diapoPrecedente();
+        }
+        toolBar.updateCompteursDiapo();
     }
 
     /**
@@ -256,7 +271,8 @@ public class FenetrePrincipale extends JFrame {
     public void allerDiapo(int i) {
         pseudoCode.setDiapoCourante(i);
         tableau.setDiapoCourante(i);
-        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        graph.setDiapoCourante(i);
+        toolBar.updateCompteursDiapo();
         repaint();
     }
 
@@ -266,7 +282,8 @@ public class FenetrePrincipale extends JFrame {
     public void insererDiapo() {
         pseudoCode.insererDiapo(pseudoCode.getDiapoCourante());
         tableau.insererDiapo(tableau.getDiapoCourante());
-        toolBar.updateCompteursDiapo(pseudoCode, tableau);
+        graph.insererDiapo(graph.getDiapoCourante());
+        toolBar.updateCompteursDiapo();
     }
 
     /**
@@ -275,18 +292,43 @@ public class FenetrePrincipale extends JFrame {
      * @return le nombre de diapos
      */
     public int getNombreDiapos() {
-        return Math.max(pseudoCode.getNombreDiapos(), tableau.getNombreDiapos());
+        return Math.max(pseudoCode.getNombreDiapos(), Math.max(tableau.getNombreDiapos(), graph.getNombreDiapos()));
     }
 
+    /**
+     * Appel la méthode reset() sur les différents composants
+     * 
+     * @param nombreDiapos
+     *            le nombre de diapos
+     * @param lignes
+     *            le nombre de lignes du tableau
+     * @param colonnes
+     *            le nombre de colonnes du tableau
+     */
     public void reset(int nombreDiapos, int lignes, int colonnes) {
         pseudoCode.reset(nombreDiapos);
         tableau.reset(nombreDiapos, lignes, colonnes);
+        graph.reset(nombreDiapos);
+    }
+
+    /**
+     * Appel la méthode reset(1,3,4)
+     * 
+     * @see FenetrePrincipale#reset(int, int, int)
+     */
+    public void reset() {
+        reset(1, 3, 4);
     }
 
     /**
      * Fonction permettant de rafraichir les informations de chaque panels au niveau graphique
      */
     public void refresh() {
+        // On définis manuellement le model du JTable pour s'assurer que la vue est mise à jour
+        tableau.refresh();
+        pseudoCode.refresh();
+        graph.refresh();
+        toolBar.refresh();
         revalidate();
         repaint();
     }

@@ -6,14 +6,29 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class Noeud extends JTextField {
-    private int rayon = 50;
+    private int   rayon = 50;
+    private Point position;
 
     public Noeud(String label) {
-        super(label);
+        this(label, new Point(0, 0));
     }
 
-    public void deplacer(int dx, int dy) {
-        setLocation(getX() + dx, getY() + dy);
+    public Noeud(String label, Point p) {
+        super(label);
+        position = p;
+    }
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public void updatePosition() {
+        position.setLocation(getX(), getY());
+    }
+
+    public void replacer() {
+        setLocation(position);
+        // System.out.println("node replaced at (" + getX() + "," + getY() + ")");
     }
 
     public Point getCentre() {

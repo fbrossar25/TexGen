@@ -73,6 +73,7 @@ public class Tableau extends JPanel {
         model.addTableModelListener(ctrl);
 
         tab = new JTable();
+        // On définis un nouveau cellRenderer pour colorer les cases ayant une nouvelle valeur
         tab.setDefaultRenderer(Object.class, new TableCellRenderer() {
             JLabel comp = new JLabel();
             String val  = new String();
@@ -93,9 +94,19 @@ public class Tableau extends JPanel {
                 return comp;
             }
         });
+
         tab.setModel(getDiapo(diapoCourante));
         tab.setRowHeight(DEFAULT_ROW_HEIGHT);
         add(tab, BorderLayout.CENTER);
+    }
+
+    /**
+     * Rafraichis la vue du tableau
+     */
+    public void refresh() {
+        tab.setModel(getDiapo(diapoCourante));
+        revalidate();
+        repaint();
     }
 
     /**
@@ -266,29 +277,14 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * Fonction permettant d'inserer une diapo au numero donné
+     * NON IMPLEMENTÉE !!<br>
+     * Fonction permettant d'inserer une diapo juste avant la diapo i
      * 
      * @param i
      *            le numero de la diapo
      */
     public void insererDiapo(int i) {
-        if ((i > 0) && (i <= getNombreDiapos())) {
-            DefaultTableModel newModel = createNewVoidModel();
-            // On copie le modele de la diapo précédente
-            for (int j = 0; j < li; j++) {
-                for (int k = 0; k < col; k++) {
-                    newModel.setValueAt(getDiapo(i - 1).getValueAt(j, k), j, k);
-                }
-            }
-            diapos.add(i - 1, newModel);
-
-            if (getDiapo(i) != newModel) {
-                System.out.println("Erreur lors de l'ajout d'une diapo (Tableau)");
-                return;
-            } else {
-                newModel.addTableModelListener(ctrl);
-            }
-        }
+        // TODO
     }
 
     /**
@@ -406,8 +402,11 @@ public class Tableau extends JPanel {
      *            le numéro de la diapo
      */
     public void setDiapoCourante(int i) {
-        if ((i > 1) && (i <= getNombreDiapos())) {
+        if ((i > 0) && (i <= getNombreDiapos())) {
             diapoCourante = i;
+            tab.setModel(getDiapo(i));
+            revalidate();
+            repaint();
         }
     }
 
@@ -480,6 +479,9 @@ public class Tableau extends JPanel {
         } else {
             creerDiapoVide();
         }
+        diapoCourante = 1;
+        tab.setModel(getDiapo(diapoCourante));
+        refresh();
     }
 
     /**

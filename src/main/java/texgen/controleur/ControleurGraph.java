@@ -21,12 +21,13 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent arg0) {
-        if (graph.updateTargetedNode(arg0.getPoint()) >= 0) {
+        if (graph.updateTargetedNode(arg0.getPoint()) != null) {
             graph.updateSelectedNode(arg0.getPoint());
         } else {
             graph.resetSelectedNode();
         }
         graph.resetTargetedNode();
+        graph.repaint();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent arg0) {
-        if (graph.updateTargetedNode(arg0.getPoint()) >= 0) {
+        if (graph.updateTargetedNode(arg0.getPoint()) != null) {
             // System.out.println("draging node " + noeuds.get(targetedNode).getText());
             previousPoint = arg0.getPoint();
             offsetX = graph.getTargetedNode().getX() - previousPoint.x;
@@ -60,7 +61,8 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent arg0) {
         if (graph.getTargetedNode() != null) {
             graph.getTargetedNode().setLocation((arg0.getX() + offsetX), (arg0.getY() + offsetY));
-            // A optimiser
+            graph.getTargetedNode().updatePosition();
+
             for (Lien l : graph.getLiens()) {
                 l.updateLocation();
             }

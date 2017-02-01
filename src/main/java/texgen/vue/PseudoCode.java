@@ -46,22 +46,30 @@ public class PseudoCode extends JPanel {
 
     /** Nombre de ligne non-vide actuel */
     private int                         linenumber;
+    /** La fenetre principale de l'application */
+    private FenetrePrincipale           fen;
 
     /**
      * Constructeur par défaut avec 50 lignes max
+     * 
+     * @param fen
+     *            la fenetre principale
      */
-    PseudoCode() {
-        this(50);
+    PseudoCode(FenetrePrincipale fen) {
+        this(fen, 50);
     }
 
     /**
      * Constructeur de la classe
      * 
+     * @param fen
+     *            la fenetre principale
      * @param rows
      *            Nombre de ligne max
      */
-    PseudoCode(int rows) {
+    PseudoCode(FenetrePrincipale fen, int rows) {
         super();
+        this.fen = fen;
         rowsNumber = rows;
         linenumber = 1;
         diapoCourante = 1;
@@ -87,6 +95,18 @@ public class PseudoCode extends JPanel {
         lineNumbersPanel = new LineNumbersPanel(this);
 
         add(lineNumbersPanel, BorderLayout.WEST);
+    }
+
+    public FenetrePrincipale getFenetre() {
+        return fen;
+    }
+
+    /**
+     * Rafraichis la vue du pseudoCode
+     */
+    public void refresh() {
+        revalidate();
+        repaint();
     }
 
     /**
@@ -361,39 +381,20 @@ public class PseudoCode extends JPanel {
      *            le numero de la diapo
      */
     public void setDiapoCourante(int i) {
-        if ((i > 0) && (i < getNombreDiapos())) {
+        if ((i > 0) && (i <= getNombreDiapos())) {
             diapoCourante = i;
-        } else {
-            System.out.println("La diapo " + i + "n'existe pas");
         }
     }
 
     /**
-     * Fonction permettant d'inserer une diapo à l'index i
+     * NON IMPLEMENTÉE !!<br>
+     * Fonction permettant d'inserer une diapo juste avant la diapo i
      * 
      * @param i
      *            Le numero de la diapo à insérer
      */
     public void insererDiapo(int i) {
-        if ((i > 0) && (i <= getNombreDiapos())) {
-            if (!marqueurs.add(new TreeSet<Integer>())) {
-                System.out.println("Erreur lors de l'ajout d'une diapo (PseudoCode)");
-                return;
-            }
-
-            int prochainMarqueur;
-            // S'il n'y avait aucun marqueur, ou si le dernier marqueur était à la dernière ligne, on marque la première
-            // ligne, sinon on marque la ligne suivant le dernier marqueur
-            if (getDiapo(diapoCourante).isEmpty() || (getDiapo(diapoCourante).last() == getNombreLignes())) {
-                prochainMarqueur = 1;
-            } else {
-                // On utilise new Integer et intValue pour ne pas modifier le dernier marqueur
-                prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + 1;
-                // System.out.println("next mark at " + prochainMarqueur);
-            }
-            marquage(diapoCourante + 1, prochainMarqueur);
-            // afficherMarqueurs();
-        }
+        // TODO
     }
 
     /**

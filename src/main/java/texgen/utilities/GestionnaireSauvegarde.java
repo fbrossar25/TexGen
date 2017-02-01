@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.TreeSet;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,8 +16,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -44,6 +43,7 @@ public class GestionnaireSauvegarde {
      */
     public static void sauvegarder(int nombreDiapos, PseudoCode p, Tableau t, String fullPath) {
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
+        // TODO utiliser un schema plutôt qu'un DTD dans l'entête
         s += "<!DOCTYPE projet [\n";
         s += "\t<!ELEMENT projet (pseudocode, tableau) >\n";
         s += "\t<!ATTLIST projet diapos CDATA #REQUIRED >\n\n";
@@ -131,12 +131,12 @@ public class GestionnaireSauvegarde {
 
         // Sauvegarde du contenus des diapos
         res += "\t\t<diapos_t>\n";
-        for (int i = 1; i <= t.getNombreDiapos(); i++) {
+        for (int i = 1; i <= t.getNombreDiapos(); i++) {// diapo
             DefaultTableModel model = t.getDiapo(i);
             res += "\t\t\t<diapo_t numero=\"" + i + "\">\n";
-            for (int j = 1; j < model.getRowCount(); j++) {
+            for (int j = 1; j < model.getRowCount(); j++) {// ligne
                 res += "\t\t\t\t<ligne_t numero=\"" + j + "\">\n";
-                for (int k = 0; k < model.getColumnCount(); k++) {
+                for (int k = 0; k < model.getColumnCount(); k++) {// case
                     String value = (String) model.getValueAt(j, k);
                     if ((value != null) && !value.equals("")) {
                         res += "\t\t\t\t\t<case numero=\"" + k + "\"><![CDATA[" + value + "]]></case>\n";
@@ -165,6 +165,7 @@ public class GestionnaireSauvegarde {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setIgnoringElementContentWhitespace(true);
         factory.setIgnoringComments(true);
+        // On utilise la validation pour éviter un mouvais fichier XML
         factory.setValidating(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -180,9 +181,12 @@ public class GestionnaireSauvegarde {
                 chargerTableau(root, f.getTableau(), path);
                 f.refresh();
             } catch (SAXParseException e) {
+                JOptionPane.showMessageDialog(f, "Fichier invalide, introuvable ou illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
+                f.reset();
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(f, "Fichier invalide, introuvable ou illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -249,12 +253,9 @@ public class GestionnaireSauvegarde {
                     }
                 }
             }
-            // La technique du pauvre
-            // Swing n'aime pas qu'on touche directement aux données
-            t.diapoSuivante();
-            t.diapoPrecedente();
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(t.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -292,6 +293,7 @@ public class GestionnaireSauvegarde {
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(t.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -317,6 +319,7 @@ public class GestionnaireSauvegarde {
             f.reset(nombreDiapos, nombreLignes, nombreColonnes);
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(f, "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -360,6 +363,7 @@ public class GestionnaireSauvegarde {
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(p.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -386,67 +390,7 @@ public class GestionnaireSauvegarde {
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(p.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    /**
-     * Méthode qui va parser le contenu d'un nœud (Crédit à openclassrooms.com, cours JAVA et XML)
-     * 
-     * @param n
-     *            le noeud à parser
-     * @param tab
-     *            la tabulation pour l'affichage
-     * @return la chaine décrivant le noeud
-     */
-    public static String description(Node n, String tab) {
-        String str = new String();
-        if (n instanceof Element) {
-            // Nous sommes donc bien sur un élément de notre document
-            // Nous castons l'objet de type Node en type Element
-            // Element element = (Element) n;
-            // Nous pouvons récupérer le nom du nœud actuellement parcouru
-            // grâce à cette méthode, nous ouvrons donc notre balise
-            str += "<" + n.getNodeName();
-            // nous contrôlons la liste des attributs présents
-            if ((n.getAttributes() != null) && (n.getAttributes().getLength() > 0)) {
-                // nous pouvons récupérer la liste des attributs d'un élément
-                NamedNodeMap att = n.getAttributes();
-                int nbAtt = att.getLength();
-                // nous parcourons tous les nœuds pour les afficher
-                for (int j = 0; j < nbAtt; j++) {
-                    Node noeud = att.item(j);
-                    // On récupère le nom de l'attribut et sa valeur grâce à ces deux méthodes
-                    str += " " + noeud.getNodeName() + "=\"" + noeud.getNodeValue() + "\" ";
-                }
-            }
-            // nous refermons notre balise car nous avons traité les différents attributs
-            str += ">";
-            // La méthode getChildNodes retournant le contenu du nœud + les nœuds enfants
-            // Nous récupérons le contenu texte uniquement lorsqu'il n'y a que du texte, donc un seul enfant
-            if (n.getChildNodes().getLength() == 1) {
-                str += n.getTextContent();
-            }
-            // Nous allons maintenant traiter les nœuds enfants du nœud en cours de traitement
-            int nbChild = n.getChildNodes().getLength();
-            // Nous récupérons la liste des nœuds enfants
-            NodeList list = n.getChildNodes();
-            String tab2 = tab + "\t";
-            // nous parcourons la liste des nœuds
-            for (int i = 0; i < nbChild; i++) {
-                Node n2 = list.item(i);
-                // si le nœud enfant est un Element, nous le traitons
-                if (n2 instanceof Element) {
-                    // appel récursif à la méthode pour le traitement du nœud et de ses enfants
-                    str += "\n " + tab2 + description(n2, tab2);
-                }
-            }
-            // Nous fermons maintenant la balise
-            if (n.getChildNodes().getLength() < 2) {
-                str += "</" + n.getNodeName() + ">";
-            } else {
-                str += "\n" + tab + "</" + n.getNodeName() + ">";
-            }
-        }
-        return str;
     }
 }

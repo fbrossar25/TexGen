@@ -84,8 +84,7 @@ public class ToolBar extends JToolBar {
 
         allerA = new JTextField("1");
         allerA.setColumns(3);
-        Dimension d = new Dimension(allerA.getFontMetrics(allerA.getFont()).stringWidth("0000"),
-                (int) (allerA.getFontMetrics(allerA.getFont()).getHeight() * 1.5));
+        Dimension d = new Dimension(allerA.getFontMetrics(allerA.getFont()).stringWidth("0000"), (int) (allerA.getFontMetrics(allerA.getFont()).getHeight() * 1.5));
         allerA.setMaximumSize(d);
         allerA.setMinimumSize(d);
         allerA.setPreferredSize(d);
@@ -235,10 +234,14 @@ public class ToolBar extends JToolBar {
      * @param t
      *            le tableau de l'application
      */
-    public void updateCompteursDiapo(PseudoCode p, Tableau t) {
+    public void updateCompteursDiapo() {
+        PseudoCode p = fen.getPseudoCode();
+        Tableau t = fen.getTableau();
+        Graph g = fen.getGraph();
         compteursDiapos[0].setText(p.getDiapoCourante() + "/" + p.getNombreDiapos());
         compteursDiapos[1].setText(t.getDiapoCourante() + "/" + t.getNombreDiapos());
-        allerA.setText("" + Math.max(p.getDiapoCourante(), t.getDiapoCourante()));
+        compteursDiapos[2].setText(g.getDiapoCourante() + "/" + g.getNombreDiapos());
+        allerA.setText("" + Math.max(p.getDiapoCourante(), Math.max(t.getDiapoCourante(), g.getDiapoCourante())));
     }
 
     /**
@@ -248,5 +251,12 @@ public class ToolBar extends JToolBar {
      */
     public JTextField getAllerA() {
         return allerA;
+    }
+
+    /**
+     * Fonction permettant de mettre à jour la vue de la toolBar
+     */
+    public void refresh() {
+        updateCompteursDiapo();
     }
 }

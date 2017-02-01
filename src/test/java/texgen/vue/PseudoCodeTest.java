@@ -20,7 +20,7 @@ public class PseudoCodeTest {
         // fail("Not yet implemented");
         ArrayList<String> stringArray = new ArrayList<String>();
         stringArray.add("Saisissez votre pseudo code ici.");
-        PseudoCode p = new PseudoCode();
+        PseudoCode p = new PseudoCode(null);
         assertEquals(stringArray, p.getLignes());
         p.getTextArea().append("\nTest");
         p.setNombreDeLignes(2);
@@ -29,13 +29,13 @@ public class PseudoCodeTest {
 
     @Test
     public void testGetNombreLignes() {
-        PseudoCode p = new PseudoCode();
+        PseudoCode p = new PseudoCode(null);
         assertEquals(1, p.getNombreLignes());
     }
 
     @Test
     public void testDiapos() {
-        PseudoCode p = new PseudoCode(100);
+        PseudoCode p = new PseudoCode(null, 100);
         assertEquals(1, p.getNombreDiapos());
         p.supprimerDiapo(10);
         assertEquals(1, p.getNombreDiapos());
@@ -64,7 +64,7 @@ public class PseudoCodeTest {
 
     @Test
     public void testMarquage() {
-        PseudoCode p = new PseudoCode();
+        PseudoCode p = new PseudoCode(null);
         p.ajouterDiapo();
         p.marquage(2, 4);
         for (int i = 0; i < 5; i++) {

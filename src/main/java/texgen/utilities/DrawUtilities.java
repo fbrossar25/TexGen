@@ -2,7 +2,9 @@ package texgen.utilities;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Polygon;
 
+import texgen.modele.Lien;
 import texgen.modele.Noeud;
 
 /**
@@ -74,5 +76,38 @@ public class DrawUtilities {
         Point centre = n.getCentre();
         int r = n.getRayon();
         g.drawRect(centre.x - r / 2, centre.y - r / 2, r, r);
+    }
+
+    /**
+     * Dessine un lien (symbolisé par une flèche) entre deux noeuds.
+     * 
+     * @param g
+     *            l'élément graphique
+     * @param l
+     *            le lien
+     */
+    public static void drawLink(Graphics g, Lien l) {
+        // Dessin de la ligne
+        g.drawLine(l.getPointDepart().x, l.getPointDepart().y, l.getPointArrive().x, l.getPointArrive().y);
+
+        // Dessin de la flèche
+        Polygon p = new Polygon();
+        p.addPoint(l.getPointArrive().x, l.getPointArrive().y);
+
+        Point destination = l.getPointArrive();
+        int taille = 12;
+        double angle = Math.acos(l.getDx() / l.getLongueur());
+        if (l.getDy() >= 0) {
+            angle = (Math.PI * 2.0) - angle;
+        }
+        int x = destination.x - (int) (Math.sin(angle - (Math.PI / 3.0)) * taille);
+        int y = destination.y - (int) (Math.cos(angle - (Math.PI / 3.0)) * taille);
+        p.addPoint(x, y);
+
+        x = destination.x - (int) (Math.sin(angle - ((2.0 * Math.PI) / 3.0)) * taille);
+        y = destination.y - (int) (Math.cos(angle - ((2.0 * Math.PI) / 3.0)) * taille);
+        p.addPoint(x, y);
+
+        g.fillPolygon(p);
     }
 }
