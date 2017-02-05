@@ -9,6 +9,7 @@ import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
 import texgen.utilities.GestionnaireSauvegarde;
 import texgen.vue.BarreMenu;
+import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph;
 
 /**
@@ -52,7 +53,8 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().ajouterDiapo();
         } else if (source.getText().equals("Sauvegarder sous...")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier XML .xml", "xml");
-            GestionnaireSauvegarde.sauvegarder(barreMenu.getFenetre().getNombreDiapos(), barreMenu.getFenetre().getPseudoCode(), barreMenu.getFenetre().getTableau(), fullPath);
+            FenetrePrincipale f = barreMenu.getFenetre();
+            GestionnaireSauvegarde.sauvegarder(f.getNombreDiapos(), f.getPseudoCode(), f.getTableau(), f.getGraph(), fullPath);
         } else if (source.getText().equals("Ouvrir")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier XML .xml", "xml");
             GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);

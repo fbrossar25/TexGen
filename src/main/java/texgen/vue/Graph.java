@@ -403,6 +403,25 @@ public class Graph extends JPanel {
     }
 
     /**
+     * Créer un noeud avec le label donné au coordonnées données
+     * 
+     * @param label
+     *            le label
+     * @param x
+     *            la coordonnée en x
+     * @param y
+     *            la coordonnée en y
+     * @return le noeud créé
+     */
+    public Noeud creerNoeud(String label, int x, int y) {
+        Noeud n = new Noeud(label, new Point(x, y));
+        noeuds.put(n, getFullInactiveStates());
+        add(n);
+        refresh();
+        return n;
+    }
+
+    /**
      * Supprime le noeud selectionné
      */
     public void supprimerNoeudSelectionne() {

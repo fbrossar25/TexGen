@@ -20,7 +20,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import texgen.modele.Lien;
+import texgen.modele.Noeud;
 import texgen.vue.FenetrePrincipale;
+import texgen.vue.Graph;
 import texgen.vue.PseudoCode;
 import texgen.vue.Tableau;
 
@@ -31,21 +34,15 @@ import texgen.vue.Tableau;
  * @author Fanny MILLOTTE
  */
 public class GestionnaireSauvegarde {
+
     /**
-     * Méthode générant un fichier de sauvegarde au format XML 1.0
+     * Retourne l'enete DTD du fichier XML
      * 
-     * @param p
-     *            le pseudoCode
-     * @param t
-     *            le tableau
-     * @param fullPath
-     *            le chemin du fichier de sauvegarde
+     * @return l'entete DTD
      */
-    public static void sauvegarder(int nombreDiapos, PseudoCode p, Tableau t, String fullPath) {
-        String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
-        // TODO utiliser un schema plutôt qu'un DTD dans l'entête
-        s += "<!DOCTYPE projet [\n";
-        s += "\t<!ELEMENT projet (pseudocode, tableau) >\n";
+    public static String enteteDTD() {
+        String s = "<!DOCTYPE projet [\n";
+        s += "\t<!ELEMENT projet (pseudocode, tableau, graph) >\n";
         s += "\t<!ATTLIST projet diapos CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT pseudocode (texte, marqueurs) >\n";
         s += "\t<!ELEMENT texte (ligne_p)* >\n";
@@ -66,12 +63,73 @@ public class GestionnaireSauvegarde {
         s += "\t<!ELEMENT ligne_t (case)* >\n";
         s += "\t<!ATTLIST ligne_t numero CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT case (#PCDATA) >\n";
-        s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n\n";
+        s += "\t<!ELEMENT graph (noeuds, liens) >\n";
+        s += "\t<!ELEMENT noeuds (noeud)* >\n";
+        s += "\t<!ELEMENT noeud (#PCDATA) >\n";
+        s += "\t<!ATTLIST noeud x CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST noeud y CDATA #REQUIRED >\n";
+        s += "\t<!ELEMENT liens (lien)* >\n";
+        s += "\t<!ELEMENT lien (#PCDATA) >\n";
+        s += "\t<!ATTLIST lien depart CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST lien arrive CDATA #REQUIRED >\n";
         s += "]>\n";
+        return s;
+    }
+
+    /**
+     * Méthode générant un fichier de sauvegarde au format XML 1.0
+     * 
+     * @param nombreDiapos
+     *            le nombre de diapos
+     * @param p
+     *            le pseudoCode
+     * @param t
+     *            le tableau
+     * @param g
+     *            le graph
+     * @param fullPath
+     *            le chemin du fichier de sauvegarde
+     */
+    public static void sauvegarder(int nombreDiapos, PseudoCode p, Tableau t, Graph g, String fullPath) {
+        String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
+        // TODO utiliser un schema plutôt qu'un DTD dans l'entête
+        s += enteteDTD();
         s += "<projet diapos=\"" + nombreDiapos + "\">\n";
-        s += sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t);
+        s += sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t) + "\n\n" + sauvegarderGraph(g);
         s += "\n</projet>";
         FileUtilities.writeStringInFile(s, fullPath, false);
+    }
+
+    /**
+     * Fonction retournant la chaine de caractere XML caracterisant le graph
+     * 
+     * @param g
+     *            le graph
+     * @return la chaine XML du graph
+     */
+    public static String sauvegarderGraph(Graph g) {
+        String res = "\t<graph>\n";
+        res += "\t\t<noeuds>\n";
+        for (Noeud n : g.getNoeuds()) {
+            res += "\t\t\t<noeud x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">";
+            res += "<![CDATA[" + n.getText() + "]]>";
+            res += "</noeud>\n";
+        }
+        res += "\t\t</noeuds>\n";
+
+        res += "\t\t<liens>\n";
+
+        int depart, arrive;
+        for (Lien l : g.getLiens()) {
+            depart = g.getNoeuds().indexOf(l.getDepart());
+            arrive = g.getNoeuds().indexOf(l.getArrive());
+            res += "\t\t\t<lien depart=\"" + depart + "\" arrive=\"" + arrive + "\">";
+            res += "<![CDATA[" + l.getText() + "]]>";
+            res += "</lien>\n";
+        }
+        res += "\t\t</liens>\n";
+        return res + "\t</graph>";
     }
 
     /**
@@ -179,6 +237,7 @@ public class GestionnaireSauvegarde {
                 chargerTextePseudoCode(root, f.getPseudoCode(), path);
                 chargerMarqueursPseudoCode(root, f.getPseudoCode(), path);
                 chargerTableau(root, f.getTableau(), path);
+                chargerGraph(root, f.getGraph(), path);
                 f.refresh();
             } catch (SAXParseException e) {
                 JOptionPane.showMessageDialog(f, "Fichier invalide, introuvable ou illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -187,6 +246,52 @@ public class GestionnaireSauvegarde {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(f, "Fichier invalide, introuvable ou illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Fonction permettant de charger les données du graph d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param g
+     *            le graph
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerGraph(Element root, Graph g, XPath path) {
+        try {
+            // Chargement des noeuds
+            String expression = "count(/projet/graph/noeuds/*)";
+            int nombreNoeuds = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+            for (int i = 1; i <= nombreNoeuds; i++) {
+                expression = "/projet/graph/noeuds/noeud[" + i + "]/text()";
+                String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                expression = "/projet/graph/noeuds/noeud[" + i + "]/@x";
+                int x = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                expression = "/projet/graph/noeuds/noeud[" + i + "]/@y";
+                int y = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                g.creerNoeud(value, x, y);
+            }
+
+            // chargement des liens
+            expression = "count(/projet/graph/liens/*)";
+            int nombreLiens = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+            for (int i = 1; i <= nombreLiens; i++) {
+                expression = "/projet/graph/liens/lien[" + i + "]/text()";
+                String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                expression = "/projet/graph/liens/lien[" + i + "]/@depart";
+                int indexDepart = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                // On récupère un noeud via son index pour éviter de confondre les noeuds avec les mêmes labels
+                Noeud depart = g.getNoeud(indexDepart);
+                expression = "/projet/graph/liens/lien[" + i + "]/@arrive";
+                int indexArrive = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                Noeud arrive = g.getNoeud(indexArrive);
+                g.creerLien(value, depart, arrive);
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(g.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
