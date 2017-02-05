@@ -73,4 +73,8 @@ public class Lien extends JTextField {
         int y = ((centreDepart.y + centreArrive.y)) / 2 - (getHeight() / 2);
         setLocation(x, y);
     }
+
+    public boolean estAssocieA(Noeud n) {
+        return (depart == n || arrive == n);
+    }
 }

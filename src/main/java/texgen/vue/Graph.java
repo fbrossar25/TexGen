@@ -43,6 +43,8 @@ public class Graph extends JPanel {
     private int                                     diapoCourante;
     /** le nombre de diapos */
     private int                                     nombreDiapos;
+    /** Référence au noeud créant un lien */
+    private Noeud                                   nodeCreatingLink;
 
     /**
      * Constructeur de la classe
@@ -61,7 +63,19 @@ public class Graph extends JPanel {
         addMouseListener(ctrl);
         addMouseMotionListener(ctrl);
         targetedNode = null;
+        selectedNode = null;
+        nodeCreatingLink = null;
         // setFocusable(true);
+    }
+
+    /**
+     * Définis quel est le noeud à partir duquel on créer un lien vers un autre
+     * 
+     * @param n
+     *            le noeud de départ
+     */
+    public void setNodeCreatingLink(Noeud n) {
+        nodeCreatingLink = n;
     }
 
     /**
@@ -211,6 +225,15 @@ public class Graph extends JPanel {
      */
     public Noeud getSelectedNode() {
         return selectedNode;
+    }
+
+    /**
+     * Retourne le noeud à partir duquel on créer un lien vers un autre
+     * 
+     * @return le noeud, ou null
+     */
+    public Noeud getNodeCreatingLink() {
+        return nodeCreatingLink;
     }
 
     /**
@@ -383,11 +406,65 @@ public class Graph extends JPanel {
      * Supprime le noeud selectionné
      */
     public void supprimerNoeudSelectionne() {
-        if (selectedNode != null) {
-            remove(getSelectedNode());
-            noeuds.remove(getSelectedNode());
+        supprimerNoeud(selectedNode);
+    }
+
+    /**
+     * Supprime le noeud ciblé
+     */
+    public void supprimerNoeudCible() {
+        supprimerNoeud(targetedNode);
+    }
+
+    /**
+     * Supprime le Noeud n du graph et les liens associés
+     * 
+     * @param n
+     *            le noeud
+     */
+    public void supprimerNoeud(Noeud n) {
+        if (n != null) {
+            supprimerLienAvecNoeud(n);
+            remove(n);
+            noeuds.remove(n);
+        } else {
+            System.out.println("n is null and cannot be removed");
         }
         resetSelectedNode();
+        refresh();
+    }
+
+    /**
+     * Supprime les liens associés au Noeud n
+     * 
+     * @param n
+     *            le noeud
+     */
+    public void supprimerLienAvecNoeud(Noeud n) {
+        ArrayList<Lien> toDelete = new ArrayList<>();
+        for (Lien l : liens) {
+            if (l.estAssocieA(n)) {
+                toDelete.add(l);
+            }
+        }
+
+        for (Lien l : toDelete) {
+            supprimerLien(l);
+        }
+        toDelete.clear();
+    }
+
+    /**
+     * Supprimer le lien l et tout les noeuds associés
+     * 
+     * @param l
+     *            le lien
+     */
+    public void supprimerLien(Lien l) {
+        if (l != null) {
+            remove(l);
+            liens.remove(l);
+        }
         refresh();
     }
 
@@ -481,7 +558,12 @@ public class Graph extends JPanel {
 
         g.setColor(Color.BLACK);
         for (Lien l : liens) {
-            DrawUtilities.drawLink(g, l);
+            l.updateLocation();
+            DrawUtilities.drawLink(g, l, false);
+        }
+
+        if (nodeCreatingLink != null) {
+            DrawUtilities.drawLink(g, nodeCreatingLink, getMousePosition(), false);
         }
     }
 }
