@@ -82,7 +82,13 @@ public class Graph extends JPanel {
             this.nombreDiapos = nombreDiapos;
         }
         diapoCourante = 1;
+        for (Noeud n : noeuds.keySet()) {
+            remove(n);
+        }
         noeuds.clear();
+        for (Lien l : liens) {
+            remove(l);
+        }
         liens.clear();
         targetedNode = null;
         selectedNode = null;

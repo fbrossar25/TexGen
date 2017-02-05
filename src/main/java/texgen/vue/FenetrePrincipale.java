@@ -317,7 +317,7 @@ public class FenetrePrincipale extends JFrame {
      * @see FenetrePrincipale#reset(int, int, int)
      */
     public void reset() {
-        reset(1, 3, 4);
+        reset(1, 2, 4);
     }
 
     /**

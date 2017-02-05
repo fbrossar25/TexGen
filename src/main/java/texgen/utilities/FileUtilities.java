@@ -5,6 +5,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import texgen.vue.FenetrePrincipale;
+
 /**
  * Classe utilitaire utiliser pour la lecture/écriture dans des fichiers
  * 
@@ -70,4 +75,29 @@ public class FileUtilities {
             System.out.println("OS non supproté !");
         }
     }
+
+    /**
+     * Ouvre une fenêtre de sélection de fichier dans le FenetrePrincipale avec une description et la seule extensions accepté données.
+     * 
+     * @param f
+     *            la fenêtre principale de l'application
+     * @param description
+     *            la description du type de fichier voulu
+     * @param exts
+     *            l'extensions acceptée
+     * @return le chemin absolu du fichier selectionné
+     */
+    public static String selectFileWithFilter(FenetrePrincipale f, String description, String ext) {
+        FileNameExtensionFilter extFilter = new FileNameExtensionFilter(description, ext);
+        JFileChooser jc = new JFileChooser();
+        jc.addChoosableFileFilter(extFilter);
+        jc.setAcceptAllFileFilterUsed(false);
+        jc.showOpenDialog(f);
+        String fullPath = jc.getSelectedFile().getAbsolutePath();
+        if (!fullPath.endsWith("." + ext)) {
+            fullPath += "." + ext;
+        }
+        return fullPath;
+    }
+
 }
