@@ -260,6 +260,7 @@ public class GestionnaireSauvegarde {
      *            une instance de XPath
      */
     public static void chargerGraph(Element root, Graph g, XPath path) {
+        // FIXME Mauvaise restitution des labels
         try {
             // Chargement des noeuds
             String expression = "count(/projet/graph/noeuds/*)";
@@ -287,6 +288,7 @@ public class GestionnaireSauvegarde {
                 expression = "/projet/graph/liens/lien[" + i + "]/@arrive";
                 int indexArrive = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
                 Noeud arrive = g.getNoeud(indexArrive);
+                // System.out.println("Restauration avec ('" + value + "', '" + depart.getText() + "' (" + indexDepart + "), '" + arrive.getText() + "' (" + indexArrive + "))");
                 g.creerLien(value, depart, arrive);
             }
         } catch (XPathExpressionException e) {

@@ -44,6 +44,9 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().refresh();
         } else if (source.getText().equals("Générer")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier LaTeX .tex", "tex");
+            if (fullPath == null || fullPath.equals("")) {
+                return;
+            }
             FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
         } else if (source.getText().equals("Diapo suivante")) {
             barreMenu.getFenetre().diapoSuivante();
@@ -53,10 +56,16 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().ajouterDiapo();
         } else if (source.getText().equals("Sauvegarder sous...")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier XML .xml", "xml");
+            if (fullPath == null || fullPath.equals("")) {
+                return;
+            }
             FenetrePrincipale f = barreMenu.getFenetre();
             GestionnaireSauvegarde.sauvegarder(f.getNombreDiapos(), f.getPseudoCode(), f.getTableau(), f.getGraph(), fullPath);
         } else if (source.getText().equals("Ouvrir")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier XML .xml", "xml");
+            if (fullPath == null || fullPath.equals("")) {
+                return;
+            }
             GestionnaireSauvegarde.charger(barreMenu.getFenetre(), fullPath);
         } else if (source.getText().equals("Créer noeud")) {
             Graph graph = barreMenu.getFenetre().getGraph();

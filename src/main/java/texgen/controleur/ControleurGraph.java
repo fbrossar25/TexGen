@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import texgen.modele.Lien;
 import texgen.vue.Graph;
@@ -14,37 +15,59 @@ import texgen.vue.Graph;
 public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     private Graph      graph;
-    private JPopupMenu contextMenu;
+    private JPopupMenu contextMenuNode;
+    private JPopupMenu contextMenuLink;
     private Point      previousPoint;
     private int        offsetX;
     private int        offsetY;
 
     public ControleurGraph(Graph graph) {
         this.graph = graph;
-        initContextMenu();
+        initContextMenuLink();
+        initContextMenuNode();
     }
 
-    private void initContextMenu() {
-        contextMenu = new JPopupMenu();
-        ControleurGraphContextMenu ctrl = new ControleurGraphContextMenu(contextMenu, graph);
+    private void initContextMenuLink() {
+        contextMenuLink = new JPopupMenu();
+        ControleurGraphContextMenuLink ctrl = new ControleurGraphContextMenuLink(contextMenuLink, graph);
         JMenuItem supprimer = new JMenuItem("Supprimer");
         supprimer.addActionListener(ctrl);
-        contextMenu.add(supprimer);
+        contextMenuLink.add(supprimer);
+        graph.addMouseListener(ctrl);
+    }
+
+    private void initContextMenuNode() {
+        contextMenuNode = new JPopupMenu();
+        ControleurGraphContextMenuNode ctrl = new ControleurGraphContextMenuNode(contextMenuNode, graph);
+        JMenuItem supprimer = new JMenuItem("Supprimer");
+        supprimer.addActionListener(ctrl);
+        contextMenuNode.add(supprimer);
         JMenuItem lier = new JMenuItem("Créer lien");
         lier.addActionListener(ctrl);
-        contextMenu.add(lier);
+        contextMenuNode.add(lier);
         graph.addMouseListener(ctrl);
     }
 
     @Override
     public void mouseClicked(MouseEvent arg0) {
+        if (graph.updateTargetedLink(arg0.getPoint()) != null) {
+            graph.updateSelectedLink(arg0.getPoint());
+        } else {
+            graph.resetSelectedLink();
+        }
+        graph.resetTargetedlink();
+
         if (graph.updateTargetedNode(arg0.getPoint()) != null) {
             graph.updateSelectedNode(arg0.getPoint());
-            if (graph.getNodeCreatingLink() != null) {
+            // On ne prend pas en charge les liens d'un noeud vers lui-même
+            if (graph.getNodeCreatingLink() != null && graph.getNodeCreatingLink() != graph.getTargetedNode()) {
                 graph.creerLien((char) ('a' + (graph.getNombreLiens() % 26)) + "", graph.getNodeCreatingLink(), graph.getTargetedNode());
                 graph.setNodeCreatingLink(null);
             }
         } else {
+            if (graph.getNodeCreatingLink() != null && SwingUtilities.isRightMouseButton(arg0)) {
+                graph.setNodeCreatingLink(null);
+            }
             graph.resetSelectedNode();
         }
         graph.resetTargetedNode();
@@ -72,7 +95,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
             offsetY = graph.getTargetedNode().getY() - previousPoint.y;
             if (arg0.isPopupTrigger()) {
                 System.out.println("Salut");
-                contextMenu.show(arg0.getComponent(), arg0.getX(), arg0.getY());
+                contextMenuNode.show(arg0.getComponent(), arg0.getX(), arg0.getY());
             }
         }
     }

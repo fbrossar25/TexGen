@@ -2,7 +2,9 @@ package texgen.vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +26,7 @@ public class Graph extends JPanel {
 
     /** Représente l'état d'un noeud/lien */
     private enum EtatParcours {
-        Inactif, Actif, Parcourus,
+        Inactif, Actif, Parcourus, Solution, Erreur
     }
 
     /** La fenetre princiapale de l'application */
@@ -32,7 +34,7 @@ public class Graph extends JPanel {
     /** HashMap ayant pour clé les noeuds et une liste d'états pour valeurs */
     private HashMap<Noeud, ArrayList<EtatParcours>> noeuds;
     /** Liste de Lien */
-    private ArrayList<Lien>                         liens;
+    private HashMap<Lien, ArrayList<EtatParcours>>  liens;
     /** Référence au noeud cible (pour le drag'n'drop) */
     private Noeud                                   targetedNode;
     /** Référence au noeud sélectionné (pour suppression, ajout de lien,...) */
@@ -45,6 +47,10 @@ public class Graph extends JPanel {
     private int                                     nombreDiapos;
     /** Référence au noeud créant un lien */
     private Noeud                                   nodeCreatingLink;
+    /** Référence au lien sélectionné */
+    private Lien                                    selectedLink;
+    private Lien                                    targetedLink;
+    private final int                               LINK_SELECTION_SHAPE_SIZE = 15;
 
     /**
      * Constructeur de la classe
@@ -58,14 +64,74 @@ public class Graph extends JPanel {
         diapoCourante = 1;
         this.fenetre = fenetre;
         noeuds = new HashMap<>();
-        liens = new ArrayList<>();
+        liens = new HashMap<>();
         ctrl = new ControleurGraph(this);
         addMouseListener(ctrl);
         addMouseMotionListener(ctrl);
         targetedNode = null;
         selectedNode = null;
         nodeCreatingLink = null;
-        // setFocusable(true);
+        selectedLink = null;
+        targetedLink = null;
+        setFocusable(true);
+    }
+
+    /**
+     * Définis le lien sélectionné (selectedLink) à null
+     */
+    public void resetSelectedLink() {
+        selectedLink = null;
+    }
+
+    /**
+     * Retourne le lien sélectionné
+     * 
+     * @return le liens selectionné
+     */
+    public Lien getSelectedLink() {
+        return selectedLink;
+    }
+
+    /**
+     * Définis le lien ciblé (targetedLink) à null
+     */
+    public void resetTargetedlink() {
+        targetedLink = null;
+    }
+
+    /**
+     * Retourne le lien ciblé (targetedLink) s'il existe, null sinon
+     * 
+     * @return le lien ou null
+     */
+    public Lien getTargetedLink() {
+        return targetedLink;
+    }
+
+    public Lien updateTargetedLink(Point p) {
+        targetedLink = mouseTargetingLink(p);
+        return targetedLink;
+    }
+
+    /**
+     * Retourne le lien sélectionné au point p s'il existe, null sinon
+     * 
+     * @param p
+     *            le point
+     * @return le lien ou null
+     */
+    public Lien updateSelectedLink(Point p) {
+        selectedLink = mouseTargetingLink(p);
+        return selectedLink;
+    }
+
+    public Lien mouseTargetingLink(Point p) {
+        for (Lien l : liens.keySet()) {
+            if (l.contientPoint(this, LINK_SELECTION_SHAPE_SIZE, p)) {
+                return l;
+            }
+        }
+        return null;
     }
 
     /**
@@ -100,7 +166,7 @@ public class Graph extends JPanel {
             remove(n);
         }
         noeuds.clear();
-        for (Lien l : liens) {
+        for (Lien l : liens.keySet()) {
             remove(l);
         }
         liens.clear();
@@ -203,7 +269,7 @@ public class Graph extends JPanel {
     }
 
     /**
-     * Définis la noeud cible (targetedNode) à null
+     * Définis le noeud cible (targetedNode) à null
      */
     public void resetTargetedNode() {
         targetedNode = null;
@@ -284,7 +350,9 @@ public class Graph extends JPanel {
      * @return la liste des liens
      */
     public ArrayList<Lien> getLiens() {
-        return liens;
+        ArrayList<Lien> list = new ArrayList<>();
+        list.addAll(liens.keySet());
+        return list;
     }
 
     /**
@@ -343,7 +411,7 @@ public class Graph extends JPanel {
      * @return le premier lien correspondant
      */
     public Lien getLien(String label) {
-        for (Lien l : liens) {
+        for (Lien l : liens.keySet()) {
             if (l.getText().equals(label)) {
                 return l;
             }
@@ -367,7 +435,7 @@ public class Graph extends JPanel {
             return null;
         }
         Lien l = new Lien(label, depart, arrive);
-        liens.add(l);
+        liens.put(l, getFullInactiveStates());
         add(l);
         l.updateLocation();
         refresh();
@@ -446,8 +514,6 @@ public class Graph extends JPanel {
             supprimerLienAvecNoeud(n);
             remove(n);
             noeuds.remove(n);
-        } else {
-            System.out.println("n is null and cannot be removed");
         }
         resetSelectedNode();
         refresh();
@@ -461,12 +527,13 @@ public class Graph extends JPanel {
      */
     public void supprimerLienAvecNoeud(Noeud n) {
         ArrayList<Lien> toDelete = new ArrayList<>();
-        for (Lien l : liens) {
+        for (Lien l : liens.keySet()) {
             if (l.estAssocieA(n)) {
                 toDelete.add(l);
             }
         }
 
+        // On liste les liens à supprimer afin de ne pas modifier la liste des liens pendant son parcours
         for (Lien l : toDelete) {
             supprimerLien(l);
         }
@@ -513,7 +580,7 @@ public class Graph extends JPanel {
     }
 
     /**
-     * Retourne l'état du noeud n à la diapo donné
+     * Retourne l'état du noeud n à la diapo donnée
      * 
      * @param n
      *            le noeud
@@ -525,7 +592,30 @@ public class Graph extends JPanel {
         if (diapo < 1 || diapo > nombreDiapos) {
             return null;
         }
+        if (noeuds.get(n) == null) {
+            return EtatParcours.Erreur;
+        }
         return noeuds.get(n).get(diapo - 1);
+    }
+
+    /**
+     * Retourne l'état du lien l à la diapo donnée
+     * 
+     * @param l
+     *            le lien
+     * @param diapo
+     *            la diapo
+     * @return l'état du noeud
+     */
+    public EtatParcours getEtatLienDiapo(Lien l, int diapo) {
+        if (l == null || diapo < 1 || diapo > nombreDiapos) {
+            return null;
+        }
+        if (liens.get(l) == null) {
+            // System.out.println("erreur getEtatLienDiapo : diapo = " + diapo + ", Lien :\n\t" + l);
+            return EtatParcours.Erreur;
+        }
+        return liens.get(l).get(diapo - 1);
     }
 
     /**
@@ -539,6 +629,108 @@ public class Graph extends JPanel {
         return getEtatNoeudDiapo(n, diapoCourante);
     }
 
+    /**
+     * Retourne l'état du lien l à la diapo courante
+     * 
+     * @param l
+     *            le lien
+     * @return l'état du noeud
+     */
+    public EtatParcours getEtatCourantLien(Lien l) {
+        return getEtatLienDiapo(l, diapoCourante);
+    }
+
+    /**
+     * Définis la couleur du dessin pour un noeud n en fonction de sont état courant
+     * 
+     * @param g
+     *            l'élément graphique
+     * @param n
+     *            le noeud
+     */
+    public void setColorForNode(Graphics g, Noeud n) {
+        switch (getEtatCourantNoeud(n)) {
+            case Actif: {
+                g.setColor(Color.RED);
+            }
+                break;
+
+            case Inactif: {
+                g.setColor(Color.LIGHT_GRAY);
+            }
+                break;
+
+            case Parcourus: {
+                g.setColor(Color.BLACK);
+            }
+                break;
+
+            case Solution: {
+                g.setColor(Color.GREEN);
+            }
+                break;
+
+            case Erreur: {
+                g.setColor(Color.BLUE);
+            }
+                break;
+            default:
+                g.setColor(Color.ORANGE);
+        }
+    }
+
+    /**
+     * Définis la couleur du dessin pour un lien l en fonction de sont état courant
+     * 
+     * @param g
+     *            l'élément graphique
+     * @param l
+     *            le lien
+     */
+    public void setColorForLink(Graphics g, Lien l) {
+        if (l == null) {
+            return;
+        }
+        switch (getEtatCourantLien(l)) {
+            case Actif: {
+                g.setColor(Color.RED);
+            }
+                break;
+
+            case Inactif: {
+                g.setColor(Color.LIGHT_GRAY);
+            }
+                break;
+
+            case Parcourus: {
+                g.setColor(Color.BLACK);
+            }
+                break;
+
+            case Solution: {
+                g.setColor(Color.GREEN);
+            }
+                break;
+
+            case Erreur: {
+                g.setColor(Color.BLUE);
+            }
+                break;
+
+            default:
+                g.setColor(Color.ORANGE);
+        }
+    }
+
+    /**
+     * Retourne la taille de l'ellipse (sa hauteur) de selection pour chaque lien
+     * 
+     * @return la taille de l'ellipse
+     */
+    public int getLinkSelectionShapeSize() {
+        return LINK_SELECTION_SHAPE_SIZE;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -546,42 +738,42 @@ public class Graph extends JPanel {
         for (Noeud n : noeuds.keySet()) {
             // On replace les Noeuds aux point sauvegarde manuelement pour éviter qu'ils se déplacent au redimensionnement du panel
             n.replacer();
-            switch (getEtatCourantNoeud(n)) {
-                case Actif: {
-                    g.setColor(Color.RED);
-                }
-                    break;
-
-                case Inactif: {
-                    g.setColor(Color.LIGHT_GRAY);
-                }
-                    break;
-
-                case Parcourus: {
-                    g.setColor(Color.BLACK);
-                }
-                    break;
-
-                default:
-                    g.setColor(Color.ORANGE);
-            }
-
+            setColorForNode(g, n);
             DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
             if (n == selectedNode) {
+                Color prev = g.getColor();
                 g.setColor(Color.GRAY);
                 DrawUtilities.drawNodeSelectionSquare(g, n);
-                g.setColor(Color.RED);
+                g.setColor(prev);
             }
 
         }
 
         g.setColor(Color.BLACK);
-        for (Lien l : liens) {
+        for (Lien l : liens.keySet()) {
             l.updateLocation();
+
+            setColorForLink(g, l);
+
             DrawUtilities.drawLink(g, l, false);
+
+            Color c = g.getColor();
+            g.setColor(Color.CYAN);
+            Graphics2D g2d = (Graphics2D) g;
+            Ellipse2D el = l.getSelectionEllipse(this, LINK_SELECTION_SHAPE_SIZE);
+            g2d.draw(el);
+            g.setColor(c);
+            if (l == selectedLink) {
+                Color prev = g.getColor();
+                g.setColor(Color.GRAY);
+                DrawUtilities.drawLinkSelection(g, this, l, LINK_SELECTION_SHAPE_SIZE);
+                g.setColor(prev);
+            }
         }
 
-        if (nodeCreatingLink != null) {
+        if (nodeCreatingLink != null)
+
+        {
             DrawUtilities.drawLink(g, nodeCreatingLink, getMousePosition(), false);
         }
     }

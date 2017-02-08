@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE projet [
+	<!ELEMENT projet (pseudocode, tableau, graph) >
+	<!ATTLIST projet diapos CDATA #REQUIRED >
+
+	<!ELEMENT pseudocode (texte, marqueurs) >
+	<!ELEMENT texte (ligne_p)* >
+	<!ELEMENT ligne_p (#PCDATA) >
+	<!ELEMENT marqueurs (diapo_p)+ >
+	<!ELEMENT diapo_p (marqueur)* >
+	<!ATTLIST diapo_p numero CDATA #REQUIRED >
+	<!ELEMENT marqueur (#PCDATA) >
+
+	<!ELEMENT tableau (colonnes, diapos_t) >
+	<!ATTLIST tableau lignes CDATA #REQUIRED >
+	<!ATTLIST tableau colonnes CDATA #REQUIRED >
+	<!ELEMENT colonnes (colonne)+ >
+	<!ELEMENT colonne (#PCDATA) >
+	<!ATTLIST colonne numero CDATA #REQUIRED >
+	<!ELEMENT diapos_t (diapo_t)+ >
+	<!ELEMENT diapo_t (ligne_t)+ >
+	<!ATTLIST diapo_t numero CDATA #REQUIRED >
+	<!ELEMENT ligne_t (case)* >
+	<!ATTLIST ligne_t numero CDATA #REQUIRED >
+	<!ELEMENT case (#PCDATA) >
+	<!ATTLIST case numero CDATA #REQUIRED >
+
+	<!ELEMENT graph (noeuds, liens) >
+	<!ELEMENT noeuds (noeud)* >
+	<!ELEMENT noeud (#PCDATA) >
+	<!ATTLIST noeud x CDATA #REQUIRED >
+	<!ATTLIST noeud y CDATA #REQUIRED >
+	<!ELEMENT liens (lien)* >
+	<!ELEMENT lien (#PCDATA) >
+	<!ATTLIST lien depart CDATA #REQUIRED >
+	<!ATTLIST lien arrive CDATA #REQUIRED >
+]>
+<projet diapos="1">
+	<pseudocode>
+		<texte>
+			<ligne_p><![CDATA[Saisissez votre pseudo code ici.]]></ligne_p>
+		</texte>
+		<marqueurs>
+			<diapo_p numero="1">
+			</diapo_p>
+		</marqueurs>
+	</pseudocode>
+
+	<tableau lignes="2" colonnes="4">
+		<colonnes>
+			<colonne numero="0"><![CDATA[]]></colonne>
+			<colonne numero="1"><![CDATA[]]></colonne>
+			<colonne numero="2"><![CDATA[]]></colonne>
+			<colonne numero="3"><![CDATA[]]></colonne>
+		</colonnes>
+		<diapos_t>
+			<diapo_t numero="1">
+				<ligne_t numero="1">
+				</ligne_t>
+			</diapo_t>
+		</diapos_t>
+	</tableau>
+
+	<graph>
+		<noeuds>
+			<noeud x="245" y="204"><![CDATA[1]]></noeud>
+			<noeud x="292" y="42"><![CDATA[2]]></noeud>
+			<noeud x="379" y="129"><![CDATA[0]]></noeud>
+		</noeuds>
+		<liens>
+			<lien depart="1" arrive="2"><![CDATA[a]]></lien>
+			<lien depart="0" arrive="2"><![CDATA[c]]></lien>
+			<lien depart="1" arrive="0"><![CDATA[b]]></lien>
+		</liens>
+	</graph>
+</projet>

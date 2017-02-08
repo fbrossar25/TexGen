@@ -8,21 +8,18 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import texgen.modele.Lien;
 import texgen.modele.Noeud;
 import texgen.vue.Graph;
 
-public class ControleurGraphContextMenu extends MouseAdapter implements ActionListener {
+public class ControleurGraphContextMenuNode extends MouseAdapter implements ActionListener {
     private JPopupMenu popup;
     private Graph      graph;
     private Noeud      n;
-    private Lien       l;
 
-    public ControleurGraphContextMenu(JPopupMenu popup, Graph graph) {
+    public ControleurGraphContextMenuNode(JPopupMenu popup, Graph graph) {
         this.popup = popup;
         this.graph = graph;
         n = null;
-        l = null;
     }
 
     @Override
@@ -37,12 +34,8 @@ public class ControleurGraphContextMenu extends MouseAdapter implements ActionLi
 
     private void popupEventHandler(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            n = graph.getTargetedNode();
-            // l = graph.getTargetedLink();
+            n = graph.mouseTargetingNode(e.getPoint());
             if (n != null) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
-            } else if (l != null) {
-                // TODO cacher l'option "créer lien"
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }

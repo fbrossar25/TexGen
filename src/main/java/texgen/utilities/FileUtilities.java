@@ -93,6 +93,9 @@ public class FileUtilities {
         jc.addChoosableFileFilter(extFilter);
         jc.setAcceptAllFileFilterUsed(false);
         jc.showOpenDialog(f);
+        if (jc.getSelectedFile() == null) {
+            return "";
+        }
         String fullPath = jc.getSelectedFile().getAbsolutePath();
         if (!fullPath.endsWith("." + ext)) {
             fullPath += "." + ext;
