@@ -36,10 +36,7 @@ public class ControleurGraphContextMenuLink extends MouseAdapter implements Acti
         if (e.isPopupTrigger()) {
             l = graph.mouseTargetingLink(e.getPoint());
             if (l != null) {
-                System.out.println("plop");
                 popup.show(e.getComponent(), e.getX(), e.getY());
-            } else {
-                System.out.println("ballo");
             }
         }
     }

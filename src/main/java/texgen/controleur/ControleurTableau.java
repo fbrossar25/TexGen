@@ -66,7 +66,6 @@ public class ControleurTableau implements ActionListener, TableModelListener {
         // sur toutes les diapos, et on répercute les modifications des autres case sur les diapos
         // suivant la diapos modifiées
         if (active) {
-            // System.out.println("value changed at (" + e.getFirstRow() + "," + e.getColumn() + ")");
             if (e.getFirstRow() == 0) {
                 tableau.repercuterModifTitre(e.getColumn(), tableau.getDiapoCourante());
             } else {

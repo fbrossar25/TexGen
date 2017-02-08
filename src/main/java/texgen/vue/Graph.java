@@ -244,6 +244,9 @@ public class Graph extends JPanel {
         for (Noeud n : getNoeuds()) {
             noeuds.get(n).add(getEtatCourantNoeud(n));
         }
+        for (Lien l : getLiens()) {
+            liens.get(l).add(getEtatCourantLien(l));
+        }
         nombreDiapos++;
         diapoSuivante();
     }

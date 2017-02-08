@@ -76,20 +76,15 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void mousePressed(MouseEvent arg0) {
         if (graph.updateTargetedNode(arg0.getPoint()) != null) {
-            // System.out.println("draging node " + noeuds.get(targetedNode).getText());
             previousPoint = arg0.getPoint();
             offsetX = graph.getTargetedNode().getX() - previousPoint.x;
             offsetY = graph.getTargetedNode().getY() - previousPoint.y;

@@ -2,6 +2,7 @@ package texgen.utilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
@@ -69,6 +70,7 @@ public class GestionnaireSauvegarde {
         s += "\t<!ELEMENT noeud (#PCDATA) >\n";
         s += "\t<!ATTLIST noeud x CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud y CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST noeud id CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT liens (lien)* >\n";
         s += "\t<!ELEMENT lien (#PCDATA) >\n";
         s += "\t<!ATTLIST lien depart CDATA #REQUIRED >\n";
@@ -111,10 +113,12 @@ public class GestionnaireSauvegarde {
     public static String sauvegarderGraph(Graph g) {
         String res = "\t<graph>\n";
         res += "\t\t<noeuds>\n";
+        int i = 0;
         for (Noeud n : g.getNoeuds()) {
-            res += "\t\t\t<noeud x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">";
+            res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">";
             res += "<![CDATA[" + n.getText() + "]]>";
             res += "</noeud>\n";
+            i++;
         }
         res += "\t\t</noeuds>\n";
 
@@ -265,6 +269,7 @@ public class GestionnaireSauvegarde {
             // Chargement des noeuds
             String expression = "count(/projet/graph/noeuds/*)";
             int nombreNoeuds = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+            HashMap<String, Noeud> noeuds = new HashMap<>();
             for (int i = 1; i <= nombreNoeuds; i++) {
                 expression = "/projet/graph/noeuds/noeud[" + i + "]/text()";
                 String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
@@ -272,7 +277,9 @@ public class GestionnaireSauvegarde {
                 int x = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
                 expression = "/projet/graph/noeuds/noeud[" + i + "]/@y";
                 int y = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                g.creerNoeud(value, x, y);
+                expression = "/projet/graph/noeuds/noeud[" + i + "]/@id";
+                String id = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                noeuds.put(id, g.creerNoeud(value, x, y));
             }
 
             // chargement des liens
@@ -282,12 +289,12 @@ public class GestionnaireSauvegarde {
                 expression = "/projet/graph/liens/lien[" + i + "]/text()";
                 String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
                 expression = "/projet/graph/liens/lien[" + i + "]/@depart";
-                int indexDepart = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                // On récupère un noeud via son index pour éviter de confondre les noeuds avec les mêmes labels
-                Noeud depart = g.getNoeud(indexDepart);
+                String idDepart = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                // On récupère un noeud via son id pour éviter de confondre les noeuds avec les mêmes labels
+                Noeud depart = noeuds.get(idDepart);
                 expression = "/projet/graph/liens/lien[" + i + "]/@arrive";
-                int indexArrive = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                Noeud arrive = g.getNoeud(indexArrive);
+                String idArrive = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                Noeud arrive = noeuds.get(idArrive);
                 // System.out.println("Restauration avec ('" + value + "', '" + depart.getText() + "' (" + indexDepart + "), '" + arrive.getText() + "' (" + indexArrive + "))");
                 g.creerLien(value, depart, arrive);
             }

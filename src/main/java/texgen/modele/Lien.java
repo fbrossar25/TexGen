@@ -2,6 +2,7 @@ package texgen.modele;
 
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 import javax.swing.JTextField;
 
@@ -69,6 +70,12 @@ public class Lien extends JTextField {
         return depart.getCentre().x - arrive.getCentre().x;
     }
 
+    public Point2D getCentre() {
+        Point centreDepart = depart.getCentre();
+        Point centreArrive = arrive.getCentre();
+        return new Point2D.Double((centreDepart.x + centreArrive.x) / 2, (centreDepart.y + centreArrive.y) / 2);
+    }
+
     public void updateLocation() {
         Point centreDepart = depart.getCentre();
         Point centreArrive = arrive.getCentre();
@@ -81,42 +88,38 @@ public class Lien extends JTextField {
         return (depart == n || arrive == n);
     }
 
-    /**
-     * Retourne un point ayant pour coordonnées le Point p ayant subit un rotation d'angle theta (radians) autour du point (centerX, centerY)
-     * 
-     * @param p
-     *            le point subissant la rotation
-     * @param theta
-     *            l'angle en radians
-     * @param centerX
-     *            la coordonnée en X du centre de rotation
-     * @param centerY
-     *            la coordonnée en Y du centre de rotation
-     * @return un nouveau point ayant subis la rotation
-     */
-    public Point applyRotation(Point p, double theta, int centerX, int centerY) {
-        int x1 = p.x - centerX;
-        int y1 = p.y - centerY;
+    public Point applyRotation(Point p, double theta, Ellipse2D el) {
+
+        // FIXME
+        double height = el.getHeight();
+        double x1 = p.x - Math.abs(el.getMinX() - p.x);
+        double y1 = p.y - Math.abs(el.getMinY() - p.y);
+        double PI2 = 2.0 * Math.PI;
 
         // APPLY ROTATION
-        x1 = (int) (x1 * Math.cos(theta) - y1 * Math.sin(theta));
-        y1 = (int) (x1 * Math.sin(theta) + y1 * Math.cos(theta));
+        double x = (x1 * Math.cos(theta) + y1 * Math.sin(theta));
+        double y = (y1 * Math.cos(theta) - x1 * Math.sin(theta));
 
-        // TRANSLATE BACK
-        int x = x1 + centerX;
-        int y = y1 + centerY;
-        return new Point(x, y);
+        x += Math.abs(el.getMinX() - p.x);
+        y += Math.abs(el.getMinY() - p.y);
+
+        return new Point((int) x, (int) y);
     }
 
     public boolean contientPoint(Graph graph, int taille, Point p) {
+        // FIXME
         Ellipse2D el = getSelectionEllipse(graph, taille);
-        Point p1 = applyRotation(p, getAngle() * 0, (int) el.getMinX(), (int) el.getMinY());
+        Point p1 = applyRotation(p, getAngle() * 0.0, el);
+        //
         // DrawUtilities.fillCenteredCircle(graph.getGraphics(), p1, 10);
         // try {
         // TimeUnit.MILLISECONDS.sleep(250);
         // } catch (InterruptedException e) {
         // e.printStackTrace();
         // }
+        // System.out.print("p : (" + p.x + "," + p.y + ") -> ");
+        // System.out.println("p1 : (" + p1.x + "," + p1.y + ") theta :" + Math.toDegrees(getAngle()) + " h:" + el.getHeight() / 2);
+        //
         return el.contains(p1);
     }
 
