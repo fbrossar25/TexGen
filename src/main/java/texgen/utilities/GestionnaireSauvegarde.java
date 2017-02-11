@@ -25,6 +25,7 @@ import texgen.modele.Lien;
 import texgen.modele.Noeud;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph;
+import texgen.vue.Graph.EtatParcours;
 import texgen.vue.PseudoCode;
 import texgen.vue.Tableau;
 
@@ -67,12 +68,16 @@ public class GestionnaireSauvegarde {
         s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT graph (noeuds, liens) >\n";
         s += "\t<!ELEMENT noeuds (noeud)* >\n";
-        s += "\t<!ELEMENT noeud (#PCDATA) >\n";
+        s += "\t<!ELEMENT noeud (label,etats) >\n";
+        s += "\t<!ELEMENT label (#PCDATA) >\n";
+        s += "\t<!ELEMENT etats (diapo_g)+ >\n";
+        s += "\t<!ELEMENT diapo_g (#PCDATA) >\n";
+        s += "\t<!ATTLIST diapo_g numero CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud x CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud y CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud id CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT liens (lien)* >\n";
-        s += "\t<!ELEMENT lien (#PCDATA) >\n";
+        s += "\t<!ELEMENT lien (label,etats) >\n";
         s += "\t<!ATTLIST lien depart CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST lien arrive CDATA #REQUIRED >\n";
         s += "]>\n";
@@ -115,9 +120,15 @@ public class GestionnaireSauvegarde {
         res += "\t\t<noeuds>\n";
         int i = 0;
         for (Noeud n : g.getNoeuds()) {
-            res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">";
-            res += "<![CDATA[" + n.getText() + "]]>";
-            res += "</noeud>\n";
+            res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">\n";
+            res += "\t\t\t\t<label><![CDATA[" + n.getText() + "]]></label>\n";
+            res += "\t\t\t\t<etats>\n";
+            int j = 1;
+            for (EtatParcours etat : g.getEtatsNoeud(n)) {
+                res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+            }
+            res += "\t\t\t\t</etats>\n";
+            res += "\t\t\t</noeud>\n";
             i++;
         }
         res += "\t\t</noeuds>\n";
@@ -128,9 +139,15 @@ public class GestionnaireSauvegarde {
         for (Lien l : g.getLiens()) {
             depart = g.getNoeuds().indexOf(l.getDepart());
             arrive = g.getNoeuds().indexOf(l.getArrive());
-            res += "\t\t\t<lien depart=\"" + depart + "\" arrive=\"" + arrive + "\">";
-            res += "<![CDATA[" + l.getText() + "]]>";
-            res += "</lien>\n";
+            res += "\t\t\t<lien depart=\"" + depart + "\" arrive=\"" + arrive + "\">\n";
+            res += "\t\t\t\t<label><![CDATA[" + l.getText() + "]]></label>\n";
+            res += "\t\t\t\t<etats>\n";
+            int j = 1;
+            for (EtatParcours etat : g.getEtatsLien(l)) {
+                res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+            }
+            res += "\t\t\t\t</etats>\n";
+            res += "\t\t\t</lien>\n";
         }
         res += "\t\t</liens>\n";
         return res + "\t</graph>";
@@ -269,34 +286,50 @@ public class GestionnaireSauvegarde {
             // Chargement des noeuds
             String expression = "count(/projet/graph/noeuds/*)";
             int nombreNoeuds = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+            expression = "/projet/@diapos";
+            int nombreDiapos = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
             HashMap<String, Noeud> noeuds = new HashMap<>();
             for (int i = 1; i <= nombreNoeuds; i++) {
-                expression = "/projet/graph/noeuds/noeud[" + i + "]/text()";
+                String xpathNode = "/projet/graph/noeuds/noeud[" + i + "]";
+                expression = xpathNode + "/label/text()";
                 String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
-                expression = "/projet/graph/noeuds/noeud[" + i + "]/@x";
+                expression = xpathNode + "/@x";
                 int x = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                expression = "/projet/graph/noeuds/noeud[" + i + "]/@y";
+                expression = xpathNode + "/@y";
                 int y = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                expression = "/projet/graph/noeuds/noeud[" + i + "]/@id";
+                expression = xpathNode + "/@id";
                 String id = (String) path.evaluate(expression, root, XPathConstants.STRING);
                 noeuds.put(id, g.creerNoeud(value, x, y));
+
+                for (int j = 1; j <= nombreDiapos; j++) {
+                    expression = xpathNode + "/etats/diapo_g[" + j + "]";
+                    int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                    g.changerEtatNoeud(noeuds.get(id), j, g.getEtatForInt(etat));
+                }
             }
 
             // chargement des liens
             expression = "count(/projet/graph/liens/*)";
             int nombreLiens = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
             for (int i = 1; i <= nombreLiens; i++) {
-                expression = "/projet/graph/liens/lien[" + i + "]/text()";
+                String xpathLink = "/projet/graph/liens/lien[" + i + "]";
+                expression = xpathLink + "/label/text()";
                 String value = (String) path.evaluate(expression, root, XPathConstants.STRING);
-                expression = "/projet/graph/liens/lien[" + i + "]/@depart";
+                expression = xpathLink + "/@depart";
                 String idDepart = (String) path.evaluate(expression, root, XPathConstants.STRING);
                 // On récupère un noeud via son id pour éviter de confondre les noeuds avec les mêmes labels
                 Noeud depart = noeuds.get(idDepart);
-                expression = "/projet/graph/liens/lien[" + i + "]/@arrive";
+                expression = xpathLink + "/@arrive";
                 String idArrive = (String) path.evaluate(expression, root, XPathConstants.STRING);
                 Noeud arrive = noeuds.get(idArrive);
                 // System.out.println("Restauration avec ('" + value + "', '" + depart.getText() + "' (" + indexDepart + "), '" + arrive.getText() + "' (" + indexArrive + "))");
-                g.creerLien(value, depart, arrive);
+                Lien l = g.creerLien(value, depart, arrive);
+
+                for (int j = 1; j <= nombreDiapos; j++) {
+                    expression = xpathLink + "/etats/diapo_g[" + j + "]";
+                    int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                    g.changerEtatLien(l, j, g.getEtatForInt(etat));
+                }
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();

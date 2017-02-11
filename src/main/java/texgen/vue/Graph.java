@@ -80,6 +80,103 @@ public class Graph extends JPanel {
     }
 
     /**
+     * Retourne l'état correspondant à l'entier donné :<br>
+     * Inactif = 0, Parcourus = 1, Actif = 2, Solution = 3, NonSolution = 4, Erreur/autre = -1
+     * 
+     * @param i
+     *            l'entier
+     * @return l'état correspondant à l'état
+     */
+    public EtatParcours getEtatForInt(int i) {
+
+        switch (i) {
+            case 0: {
+                return EtatParcours.Inactif;
+            }
+            case 1: {
+                return EtatParcours.Parcourus;
+            }
+            case 2: {
+                return EtatParcours.Actif;
+            }
+            case 3: {
+                return EtatParcours.Solution;
+            }
+            case 4: {
+                return EtatParcours.NonSolution;
+            }
+            case -1: {
+                return EtatParcours.Erreur;
+            }
+            default: {
+                return EtatParcours.Erreur;
+            }
+        }
+    }
+
+    /**
+     * Retourne un entier correspondant à l'état donné :<br>
+     * Inactif = 0, Parcourus = 1, Actif = 2, Solution = 3, NonSolution = 4, Erreur/autre = -1
+     * 
+     * @param etat
+     *            l'état
+     * @return l'entier correspondant à l'état
+     */
+    public int getIntForEtat(EtatParcours etat) {
+        switch (etat) {
+            case Inactif: {
+                return 0;
+            }
+            case Parcourus: {
+                return 1;
+            }
+            case Actif: {
+                return 2;
+            }
+            case Solution: {
+                return 3;
+            }
+            case NonSolution: {
+                return 4;
+            }
+            case Erreur: {
+                return -1;
+            }
+            default: {
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * Retourne tout les états du lien l
+     * 
+     * @param l
+     *            le lien
+     * @return les etats de l
+     */
+    public ArrayList<EtatParcours> getEtatsLien(Lien l) {
+        if (l == null) {
+            return null;
+        }
+        return liens.get(l);
+    }
+
+    /**
+     * Retourne tout les états du noeud n
+     * 
+     * @param n
+     *            le noeud
+     * @return les etats de n
+     */
+    public ArrayList<EtatParcours> getEtatsNoeud(Noeud n) {
+        if (n == null) {
+            return null;
+        }
+        return noeuds.get(n);
+    }
+
+    /**
      * Définis la position du dernier clic de souris à la position donnée
      * 
      * @param p
@@ -130,6 +227,7 @@ public class Graph extends JPanel {
         }
 
         noeuds.get(n).set(diapo - 1, etat);
+        // System.out.println("node '" + n.getText() + "' set to state " + getIntForEtat(etat) + " at diapo " + diapo);
     }
 
     /**
@@ -779,7 +877,7 @@ public class Graph extends JPanel {
                 break;
 
             case NonSolution: {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.MAGENTA);
                 // TODO dessiner une croix rouge
             }
                 break;
@@ -827,7 +925,7 @@ public class Graph extends JPanel {
                 break;
 
             case NonSolution: {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.MAGENTA);
                 // TODO dessiner une croix rouge
             }
                 break;
