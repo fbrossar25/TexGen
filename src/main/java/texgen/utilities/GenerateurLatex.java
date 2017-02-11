@@ -108,9 +108,9 @@ public class GenerateurLatex {
      * @return entête du code
      */
     public static String genererEntete() {
-        return "\\documentclass[hyperref={pdfpagemode=FullScreen,colorlinks=true}]{beamer}\n" + "\\usepackage{kpfonts}\n" + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage[T1]{fontenc}\n"
-                + "\\usepackage{pdfpages}\n" + "\\usetheme{Boadilla}\n" + "\\usepackage{tikz}\n" + "\\usepackage[frenchb]{babel}\n"
-                + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n" + "\\newcounter{MyAlgoStep}\n" + "\\makeatletter";
+        return "\\documentclass[hyperref={colorlinks=true}]{beamer}\n" + "\\usepackage{kpfonts}\n" + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage[T1]{fontenc}\n" + "\\usepackage{pdfpages}\n"
+                + "\\usetheme{Boadilla}\n" + "\\usepackage{tikz}\n" + "\\usepackage[frenchb]{babel}\n" + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n"
+                + "\\newcounter{MyAlgoStep}\n" + "\\makeatletter";
     }
 
     /**
@@ -231,18 +231,6 @@ public class GenerateurLatex {
         }
 
         res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\\hspace*{0.2cm}\n";
-        return res;
-    }
-
-    /**
-     * Fonction qui permet de génere le code LaTeX du pseudocode donné en prenant en compte les blocs de code (si..alors..sinon, tant que, faire .. tant que, pour..faire)
-     * 
-     * @param p
-     *            le pseudocode
-     * @return le code LaTeX du pseudoCode avec les blocs
-     */
-    public static String genererEtParserPseudoCode(PseudoCode p) {
-        String res = "";
         return res;
     }
 
@@ -392,9 +380,28 @@ public class GenerateurLatex {
         unmarkedString += "}";
 
         // Chaine de la ligne
-        String ligneString = "{" + protegerCaracteres(s) + "}";
+        String ligneString = "{" + protegerCaracteresTableau(s) + "}";
 
         return res + unmarkedString + markedString + ligneString;
+    }
+
+    /**
+     * Protège les caractères si besoin pour le tableau
+     * 
+     * @param s
+     *            la chaîne à traiter
+     * @return la chaîne traitée
+     */
+    public static String protegerCaracteresTableau(String s) {
+        String res = "";
+        for (char c : s.toCharArray()) {
+            if (isProtectedChar(c) && c != '\\' || c == '&') {
+                res += "\\" + c;
+            } else {
+                res += c;
+            }
+        }
+        return res;
     }
 
     /**
