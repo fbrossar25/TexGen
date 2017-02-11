@@ -3,11 +3,9 @@ package texgen.modele;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextField;
 
-import texgen.utilities.DrawUtilities;
 import texgen.vue.Graph;
 
 /**
@@ -163,18 +161,25 @@ public class Lien extends JTextField {
      * 
      * @param p
      *            le point cible de la rotation
-     * @param theta
+     * @param angle
      *            l'angle de rotation
      * @param centreRotation
      *            le centre de rotation
      * @return une nouvelle instance de Point correspondant à p avec la rotation effectuée
      */
-    public Point applyRotation(Point p, double theta, Point2D centreRotation) {
+    public Point applyRotation(Point p, double angle, Point2D centreRotation) {
         // FIXME bad rotation
         double x = p.x;
         double y = p.y;
 
-        return new Point((int) x, (int) y);
+        double a = centreRotation.getX();
+        double b = centreRotation.getY();
+        double X = x - a;
+        double Y = y - b;
+        double xBis = a + X * Math.cos(angle) - Y * Math.sin(angle);
+        double yBis = b + X * Math.sin(angle) + Y * Math.cos(angle);
+
+        return new Point((int) xBis, (int) yBis);
     }
 
     /**
@@ -193,14 +198,15 @@ public class Lien extends JTextField {
         Point p1 = applyRotation(p, getAngle(), new Point2D.Double(el.getMinX(), el.getMinY()));
 
         // fill circle arround the rotated mouse click point
-        DrawUtilities.fillCenteredCircle(graph.getGraphics(), p1, 10);
-        try {
-            TimeUnit.MILLISECONDS.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.print("p : (" + p.x + "," + p.y + ") -> ");
-        System.out.println("(" + p1.x + "," + p1.y + ") theta :" + Math.toDegrees(getAngle()) + " h:" + el.getHeight() / 2 + " l:" + el.getWidth());
+        // DrawUtilities.fillCenteredCircle(graph.getGraphics(), p1, 10);
+        //
+        // try {
+        // TimeUnit.MILLISECONDS.sleep(100);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // System.out.print("p : (" + p.x + "," + p.y + ") -> ");
+        // System.out.println("(" + p1.x + "," + p1.y + ") theta :" + Math.toDegrees(getAngle()) + " h:" + el.getHeight() / 2 + " l:" + el.getWidth());
 
         return el.contains(p1);
     }

@@ -2,9 +2,7 @@ package texgen.vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +50,7 @@ public class Graph extends JPanel {
     /** Référence au lien ciblé */
     private Lien                                    targetedLink;
     /** Constant définissant la taille de la zone de sélection des liens */
-    private final int                               LINK_SELECTION_SHAPE_SIZE = 15;
+    private final int                               LINK_SELECTION_SHAPE_SIZE = 25;
     /** position du dernier clic de souris */
     private Point                                   lastClick;
 
@@ -871,7 +869,6 @@ public class Graph extends JPanel {
 
         }
 
-        g.setColor(Color.BLACK);
         for (Lien l : liens.keySet()) {
             // Comme pour les noeuds, on replace les liens correctement
             l.updateLocation();
@@ -879,12 +876,16 @@ public class Graph extends JPanel {
             setColorForLink(g, l);
             DrawUtilities.drawLink(g, l, false);
 
-            Color c = g.getColor();
-            g.setColor(Color.CYAN);
-            Graphics2D g2d = (Graphics2D) g;
-            Ellipse2D el = l.getSelectionEllipse(this, LINK_SELECTION_SHAPE_SIZE);
-            g2d.draw(el);
-            g.setColor(c);
+            // Color c = g.getColor();
+            // g.setColor(Color.CYAN);
+            // Graphics2D g2d = (Graphics2D) g;
+            // Ellipse2D el = l.getSelectionEllipse(this, LINK_SELECTION_SHAPE_SIZE);
+            // g2d.draw(el);
+            // g2d.setColor(Color.PINK);
+            // g2d.draw(el.getBounds2D());
+            // g2d.setColor(Color.RED);
+            // g2d.drawOval((int) el.getMinX() - 5, (int) el.getMinY() - 5, 10, 10);
+            // g.setColor(c);
             if (l == selectedLink) {
                 Color prev = g.getColor();
                 g.setColor(Color.GRAY);
