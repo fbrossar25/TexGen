@@ -108,6 +108,13 @@ public class Graph extends JPanel {
         return targetedLink;
     }
 
+    /**
+     * Met à jour et retourne le lien ciblé au point p
+     * 
+     * @param p
+     *            le point
+     * @return le lien ou null
+     */
     public Lien updateTargetedLink(Point p) {
         targetedLink = mouseTargetingLink(p);
         return targetedLink;
@@ -125,6 +132,13 @@ public class Graph extends JPanel {
         return selectedLink;
     }
 
+    /**
+     * Retourne le lien ciblé au point p
+     * 
+     * @param p
+     *            le point
+     * @return le lien ciblé ou null
+     */
     public Lien mouseTargetingLink(Point p) {
         for (Lien l : liens.keySet()) {
             if (l.contientPoint(this, LINK_SELECTION_SHAPE_SIZE, p)) {
@@ -739,7 +753,7 @@ public class Graph extends JPanel {
         super.paintComponent(g);
 
         for (Noeud n : noeuds.keySet()) {
-            // On replace les Noeuds aux point sauvegarde manuelement pour éviter qu'ils se déplacent au redimensionnement du panel
+            // On replace les Noeuds aux points sauvegardés manuelement pour éviter qu'ils se déplacent au redimensionnement du panel
             n.replacer();
             setColorForNode(g, n);
             DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
@@ -754,10 +768,10 @@ public class Graph extends JPanel {
 
         g.setColor(Color.BLACK);
         for (Lien l : liens.keySet()) {
+            // Comme pour les noeuds, on replace les liens correctement
             l.updateLocation();
 
             setColorForLink(g, l);
-
             DrawUtilities.drawLink(g, l, false);
 
             Color c = g.getColor();
@@ -774,9 +788,8 @@ public class Graph extends JPanel {
             }
         }
 
-        if (nodeCreatingLink != null)
-
-        {
+        // Dessin d'un lien entre le noeud de départ et la souris pendant la créationd d'un lien
+        if (nodeCreatingLink != null) {
             DrawUtilities.drawLink(g, nodeCreatingLink, getMousePosition(), false);
         }
     }
