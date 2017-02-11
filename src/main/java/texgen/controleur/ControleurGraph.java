@@ -1,12 +1,16 @@
 package texgen.controleur;
 
 import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 
 import texgen.modele.Lien;
@@ -48,6 +52,42 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
     }
 
     /**
+     * Retourne le menu de sélection d'état pour les noeuds (si type = 0) ou les liens (si type = 1)
+     * 
+     * @param type
+     *            le type du controleur (0 : noeud, 1 : lien, autre : renvois null)
+     * @return le menu de sélection d'état
+     */
+    private JMenu getStateChoiceMenu(int type) {
+        if (type < 0 || type > 1) {
+            return null;
+        }
+        ActionListener ctrl = (type == 0) ? new ControleurChoixEtatNoeud(graph) : new ControleurChoixEtatLien(graph);
+        ButtonGroup groupe = new ButtonGroup();
+        JMenu choixEtat = new JMenu("Etat");
+        JRadioButtonMenuItem inactif = new JRadioButtonMenuItem("Inactif");
+        choixEtat.add(inactif);
+        groupe.add(inactif);
+        inactif.addActionListener(ctrl);
+        JRadioButtonMenuItem parcourus = new JRadioButtonMenuItem("Parcourus");
+        choixEtat.add(parcourus);
+        groupe.add(parcourus);
+        JRadioButtonMenuItem actif = new JRadioButtonMenuItem("Actif");
+        choixEtat.add(actif);
+        groupe.add(actif);
+        JRadioButtonMenuItem solution = new JRadioButtonMenuItem("Solution");
+        choixEtat.add(solution);
+        groupe.add(solution);
+        JRadioButtonMenuItem nonSolution = new JRadioButtonMenuItem("Non solution");
+        choixEtat.add(nonSolution);
+        groupe.add(nonSolution);
+        for (int i = 0; i < choixEtat.getItemCount(); i++) {
+            choixEtat.getItem(i).addActionListener(ctrl);
+        }
+        return choixEtat;
+    }
+
+    /**
      * Initialise le menu contextuel par défaut
      */
     private void initContextMenuGraph() {
@@ -64,6 +104,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
      */
     private void initContextMenuLink() {
         contextMenuLink = new JPopupMenu();
+        contextMenuLink.add(getStateChoiceMenu(1));
         ControleurGraphContextMenuLink ctrl = new ControleurGraphContextMenuLink(contextMenuLink, graph);
         JMenuItem supprimer = new JMenuItem("Supprimer ce lien");
         supprimer.addActionListener(ctrl);
@@ -76,6 +117,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
      */
     private void initContextMenuNode() {
         contextMenuNode = new JPopupMenu();
+        contextMenuNode.add(getStateChoiceMenu(0));
         ControleurGraphContextMenuNode ctrl = new ControleurGraphContextMenuNode(contextMenuNode, graph);
         JMenuItem supprimer = new JMenuItem("Supprimer ce noeud");
         supprimer.addActionListener(ctrl);
@@ -88,6 +130,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent arg0) {
+        graph.setLastClick(arg0.getPoint());
         if (graph.updateTargetedLink(arg0.getPoint()) != null) {
             graph.updateSelectedLink(arg0.getPoint());
             graph.resetSelectedNode();
@@ -128,6 +171,7 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent arg0) {
+        graph.setLastClick(arg0.getPoint());
         if (graph.updateTargetedNode(arg0.getPoint()) != null) {
             previousPoint = arg0.getPoint();
             offsetX = graph.getTargetedNode().getX() - previousPoint.x;

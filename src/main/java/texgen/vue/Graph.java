@@ -25,8 +25,8 @@ import texgen.utilities.DrawUtilities;
 public class Graph extends JPanel {
 
     /** Représente l'état d'un noeud/lien */
-    private enum EtatParcours {
-        Inactif, Actif, Parcourus, Solution, Erreur
+    public enum EtatParcours {
+        Inactif, Actif, Parcourus, Solution, NonSolution, Erreur
     }
 
     /** La fenetre princiapale de l'application */
@@ -49,8 +49,12 @@ public class Graph extends JPanel {
     private Noeud                                   nodeCreatingLink;
     /** Référence au lien sélectionné */
     private Lien                                    selectedLink;
+    /** Référence au lien ciblé */
     private Lien                                    targetedLink;
+    /** Constant définissant la taille de la zone de sélection des liens */
     private final int                               LINK_SELECTION_SHAPE_SIZE = 15;
+    /** position du dernier clic de souris */
+    private Point                                   lastClick;
 
     /**
      * Constructeur de la classe
@@ -73,7 +77,92 @@ public class Graph extends JPanel {
         nodeCreatingLink = null;
         selectedLink = null;
         targetedLink = null;
+        lastClick = null;
         setFocusable(true);
+    }
+
+    /**
+     * Définis la position du dernier clic de souris à la position donnée
+     * 
+     * @param p
+     *            la nouvelle position du dernier clic de souris
+     */
+    public void setLastClick(Point p) {
+        if (lastClick == null) {
+            lastClick = new Point();
+        }
+        lastClick.setLocation(p);
+    }
+
+    /**
+     * Retourne la position du dernier clic de souris
+     * 
+     * @return la position du dernier clic de souris ou null
+     */
+    public Point getLastClick() {
+        return lastClick;
+    }
+
+    /**
+     * Changer l'état du noeud n (s'il existe) à la diapo courante par l'etat donné
+     * 
+     * @param n
+     *            le noeud
+     * @param etatl'état
+     *            cible
+     */
+    public void changerEtatNoeudDiapoCourante(Noeud n, EtatParcours etat) {
+        changerEtatNoeud(n, diapoCourante, etat);
+    }
+
+    /**
+     * Changer l'état du noeud n (s'il existe) à la diapo donnée (si elle existe) par l'état donné.
+     * 
+     * @param n
+     *            le noeud
+     * @param diapo
+     *            la diapo
+     * @param etat
+     *            l'état cible
+     */
+    public void changerEtatNoeud(Noeud n, int diapo, EtatParcours etat) {
+        if (etat == null || n == null || diapo < 1 || diapo > nombreDiapos) {
+            System.out.println("noeud ou diapo inexistante");
+            return;
+        }
+
+        noeuds.get(n).set(diapo - 1, etat);
+    }
+
+    /**
+     * Changer l'état du lien l (s'il existe) à la diapo courante par l'etat donné
+     * 
+     * @param l
+     *            le lien
+     * @param etatl'état
+     *            cible
+     */
+    public void changerEtatLienDiapoCourante(Lien l, EtatParcours etat) {
+        changerEtatLien(l, diapoCourante, etat);
+    }
+
+    /**
+     * Changer l'état du lien l (s'il existe) à la diapo donnée (si elle existe) par l'état donné.
+     * 
+     * @param l
+     *            le lien
+     * @param diapo
+     *            la diapo
+     * @param etat
+     *            l'état cible
+     */
+    public void changerEtatLien(Lien l, int diapo, EtatParcours etat) {
+        if (etat == null || l == null || diapo < 1 || diapo > nombreDiapos) {
+            System.out.println("Lien ou diapo inexistante");
+            return;
+        }
+
+        liens.get(l).set(diapo - 1, etat);
     }
 
     /**
@@ -140,6 +229,8 @@ public class Graph extends JPanel {
      * @return le lien ciblé ou null
      */
     public Lien mouseTargetingLink(Point p) {
+        if (p == null)
+            return null;
         for (Lien l : liens.keySet()) {
             if (l.contientPoint(this, LINK_SELECTION_SHAPE_SIZE, p)) {
                 return l;
@@ -256,10 +347,10 @@ public class Graph extends JPanel {
      */
     public void ajouterDiapo() {
         for (Noeud n : getNoeuds()) {
-            noeuds.get(n).add(getEtatCourantNoeud(n));
+            noeuds.get(n).add((getEtatCourantNoeud(n) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
         }
         for (Lien l : getLiens()) {
-            liens.get(l).add(getEtatCourantLien(l));
+            liens.get(l).add((getEtatCourantLien(l) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
         }
         nombreDiapos++;
         diapoSuivante();
@@ -588,6 +679,8 @@ public class Graph extends JPanel {
      * @return le Noeud ciblé ou null si aucun ne l'est
      */
     public Noeud mouseTargetingNode(Point p) {
+        if (p == null)
+            return null;
         for (Noeud n : noeuds.keySet()) {
             if (n.contientPoint(p)) {
                 return n;
@@ -687,6 +780,12 @@ public class Graph extends JPanel {
             }
                 break;
 
+            case NonSolution: {
+                g.setColor(Color.BLACK);
+                // TODO dessiner une croix rouge
+            }
+                break;
+
             case Erreur: {
                 g.setColor(Color.BLUE);
             }
@@ -726,6 +825,12 @@ public class Graph extends JPanel {
 
             case Solution: {
                 g.setColor(Color.GREEN);
+            }
+                break;
+
+            case NonSolution: {
+                g.setColor(Color.BLACK);
+                // TODO dessiner une croix rouge
             }
                 break;
 

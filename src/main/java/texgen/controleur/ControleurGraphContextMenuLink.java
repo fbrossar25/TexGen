@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -49,11 +50,52 @@ public class ControleurGraphContextMenuLink extends MouseAdapter implements Acti
         popupEventHandler(e);
     }
 
+    /**
+     * Définis l'élément sélectionné en fonction de l'état du noeud
+     */
+    private void setSelectedState() {
+        JMenu choixEtat = (JMenu) popup.getComponent(0);
+        switch (graph.getEtatCourantLien(l)) {
+            case Inactif: {
+                choixEtat.getItem(0).setSelected(true);
+            }
+                break;
+            case Parcourus: {
+                choixEtat.getItem(1).setSelected(true);
+            }
+                break;
+            case Actif: {
+                choixEtat.getItem(2).setSelected(true);
+            }
+                break;
+            case Solution: {
+                choixEtat.getItem(3).setSelected(true);
+            }
+                break;
+
+            case NonSolution: {
+                choixEtat.getItem(4).setSelected(true);
+            }
+                break;
+            default: {
+                for (int i = 0; i < choixEtat.getItemCount(); i++)
+                    choixEtat.getItem(i).setSelected(false);
+            }
+        }
+    }
+
+    /**
+     * Gère les événements
+     *
+     * @param e
+     *            l'évenement
+     */
     private void popupEventHandler(MouseEvent e) {
         if (e.isPopupTrigger()) {
             // On sauvegarde le lien pour y avoir accès si suppression
             l = graph.mouseTargetingLink(e.getPoint());
             if (l != null) {
+                setSelectedState();
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
