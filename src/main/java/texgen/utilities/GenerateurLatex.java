@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 import texgen.vue.FenetrePrincipale;
+import texgen.vue.Graph;
 import texgen.vue.PseudoCode;
 import texgen.vue.Tableau;
 
@@ -25,14 +26,80 @@ public class GenerateurLatex {
      */
     public static String generer(FenetrePrincipale fenetrePrincipale) {
         String string = genererEntete() + "\n\n";
+        string += genererTikz() + "\n\n";
+        string += genererBeamer() + "\n\n";
+        string += genererPiedDePage() + "\n\n";
+        string += genererInfosAuteur() + "\n\n";
         string += genererColorCode() + "\n\n";
         string += "\\begin{document}\n";
         string += "\\begin{frame}\n";
         string += genererPseudoCode(fenetrePrincipale.getPseudoCode()) + "\n";
         string += genererTableau(fenetrePrincipale.getTableau());
+        string += genererGraph(fenetrePrincipale.getGraph());
         string += "\\end{frame}\n";
         string += "\\end{document}\n";
         return string;
+    }
+
+    public static String genererInfosAuteur() {
+        return "%about author not implemented yet";
+    }
+
+    public static String genererPiedDePage() {
+        return "%footnote not implemented yet";
+    }
+
+    public static String genererTikz() {
+        String res = "\\tikzset{\n";
+        res += "\tlien/.style={->,thick,color=#1},\n";
+        res += "\tlien/.default={black!21},\n";
+        res += "\tetat/.style={draw,thick,circle,color=#1},\n";
+        res += "\tetat/.default={black!21},\n";
+        res += "\tetat_init/.style={draw,circle,thick,color=#1},\n";
+        res += "\tetat_init/.default={orange},\n";
+        res += "\tetat_final/.style={draw,double,circle,color=#1},\n";
+        res += "\tetat_final/.default={blue!21}\n";
+        return res + "}";
+    }
+
+    /**
+     * Generer l'initialisation de beamer
+     * 
+     * @return le code généré
+     */
+    public static String genererBeamer() {
+        return "\\setbeamertemplate{navigation symbols}{}";
+    }
+
+    /**
+     * Fonction générant la partie du code correspondant au graph
+     * 
+     * @param g
+     *            le graph
+     * @return code généré
+     */
+    public static String genererGraph(Graph g) {
+        String res = "\\begin{center}\n";
+        res += "\\begin{tikzpicture}[remember picture]\n";
+        res += "\\begin{scope}\n\n";
+        res += genererNoeudGraph(g);
+        res += genererLienGraph(g);
+        res += "\\end{scope}\n";
+        res += "\\end{tikzpicture}\n";
+        res += "\\end{center}\n";
+        return res;
+    }
+
+    public static String genererNoeudGraph(Graph g) {
+        String res = "";
+        // TODO
+        return res;
+    }
+
+    public static String genererLienGraph(Graph g) {
+        String res = "";
+        // TODO
+        return res;
     }
 
     /**
@@ -43,7 +110,7 @@ public class GenerateurLatex {
     public static String genererEntete() {
         return "\\documentclass[hyperref={pdfpagemode=FullScreen,colorlinks=true}]{beamer}\n" + "\\usepackage{kpfonts}\n" + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage[T1]{fontenc}\n"
                 + "\\usepackage{pdfpages}\n" + "\\usetheme{Boadilla}\n" + "\\usepackage{tikz}\n" + "\\usepackage[frenchb]{babel}\n"
-                + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}";
+                + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n" + "\\newcounter{MyAlgoStep}\n" + "\\makeatletter";
     }
 
     /**
