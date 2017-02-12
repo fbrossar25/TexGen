@@ -85,6 +85,27 @@ public class ControleurGraphContextMenuNode extends MouseAdapter implements Acti
     }
 
     /**
+     * Définis l'élément sélectionné en fonction de la forme du noeud
+     */
+    private void setSelectedShape() {
+        JMenu choixForme = (JMenu) popup.getComponent(1);
+        switch (n.getForme()) {
+            case Simple: {
+                choixForme.getItem(0).setSelected(true);
+            }
+                break;
+            case Double: {
+                choixForme.getItem(1).setSelected(true);
+            }
+                break;
+            default: {
+                for (int i = 0; i < choixForme.getItemCount(); i++)
+                    choixForme.getItem(i).setSelected(false);
+            }
+        }
+    }
+
+    /**
      * Gère les événements
      *
      * @param e
@@ -96,6 +117,7 @@ public class ControleurGraphContextMenuNode extends MouseAdapter implements Acti
             n = graph.mouseTargetingNode(e.getPoint());
             if (n != null) {
                 setSelectedState();
+                setSelectedShape();
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }

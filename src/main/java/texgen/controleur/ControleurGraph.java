@@ -68,7 +68,6 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
         JRadioButtonMenuItem inactif = new JRadioButtonMenuItem("Inactif");
         choixEtat.add(inactif);
         groupe.add(inactif);
-        inactif.addActionListener(ctrl);
         JRadioButtonMenuItem parcourus = new JRadioButtonMenuItem("Parcourus");
         choixEtat.add(parcourus);
         groupe.add(parcourus);
@@ -112,12 +111,28 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
         graph.addMouseListener(ctrl);
     }
 
+    private JMenu getNodeShapeMenu() {
+        ActionListener ctrl = new ControleurChoixFormeNoeud(graph);
+        ButtonGroup groupe = new ButtonGroup();
+        JMenu menu = new JMenu("Forme");
+        JRadioButtonMenuItem simple = new JRadioButtonMenuItem("Simple");
+        groupe.add(simple);
+        menu.add(simple);
+        simple.addActionListener(ctrl);
+        JRadioButtonMenuItem formeDouble = new JRadioButtonMenuItem("Double");
+        groupe.add(formeDouble);
+        menu.add(formeDouble);
+        formeDouble.addActionListener(ctrl);
+        return menu;
+    }
+
     /**
      * Initialise le menu contextuel des noeuds
      */
     private void initContextMenuNode() {
         contextMenuNode = new JPopupMenu();
         contextMenuNode.add(getStateChoiceMenu(0));
+        contextMenuNode.add(getNodeShapeMenu());
         ControleurGraphContextMenuNode ctrl = new ControleurGraphContextMenuNode(contextMenuNode, graph);
         JMenuItem supprimer = new JMenuItem("Supprimer ce noeud");
         supprimer.addActionListener(ctrl);

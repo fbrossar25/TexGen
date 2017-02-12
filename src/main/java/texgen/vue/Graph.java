@@ -957,7 +957,20 @@ public class Graph extends JPanel {
             // On replace les Noeuds aux points sauvegardés manuelement pour éviter qu'ils se déplacent au redimensionnement du panel
             n.replacer();
             setColorForNode(g, n);
-            DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
+            switch (n.getForme()) {
+                case Simple: {
+                    DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
+                }
+                    break;
+                case Double: {
+                    DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
+                    DrawUtilities.drawCenteredCircle(g, n.getCentre(), (int) (n.getRayon() * 0.8));
+                }
+                    break;
+                default: {
+                }
+            }
+
             if (n == selectedNode) {
                 Color prev = g.getColor();
                 g.setColor(Color.GRAY);

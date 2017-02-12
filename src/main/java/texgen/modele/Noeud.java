@@ -17,6 +17,14 @@ public class Noeud extends JTextField {
     /** la position du noeud */
     private Point position;
 
+    /** Type énuméré qui donne les formes possible */
+    public enum TypeForme {
+        Simple, Double,
+    }
+
+    /** la forme du noeud */
+    private TypeForme forme;
+
     /**
      * Constructeur de la classe avec comme position par défaut (0,0)
      * 
@@ -38,6 +46,29 @@ public class Noeud extends JTextField {
     public Noeud(String label, Point p) {
         super(label);
         position = p;
+        forme = TypeForme.Simple;
+    }
+
+    /**
+     * Retourne le type de la forme du noeud
+     * 
+     * @return la forme du noeud
+     */
+    public TypeForme getForme() {
+        return forme;
+    }
+
+    /**
+     * Permet de changer la forme du noeud
+     * 
+     * @param f
+     *            la forme voulue
+     */
+    public void changerForme(TypeForme f) {
+        if (f == null) {
+            return;
+        }
+        forme = f;
     }
 
     /**
