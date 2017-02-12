@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 import javax.swing.JPanel;
 
@@ -77,6 +78,44 @@ public class Graph extends JPanel {
         targetedLink = null;
         lastClick = null;
         setFocusable(true);
+    }
+
+    /**
+     * Retourne la couleur correspondant à l'état donné
+     * 
+     * @param etat
+     *            l'état
+     * @return la couleur
+     */
+    public Color getColorForEtat(EtatParcours etat) {
+        switch (etat) {
+            case Actif: {
+                return Color.RED;
+            }
+
+            case Inactif: {
+                return Color.LIGHT_GRAY;
+            }
+
+            case Parcourus: {
+                return Color.BLACK;
+            }
+
+            case Solution: {
+                return Color.GREEN;
+            }
+
+            case NonSolution: {
+                return Color.MAGENTA;
+            }
+
+            case Erreur: {
+                return Color.BLUE;
+            }
+
+            default:
+                return Color.ORANGE;
+        }
     }
 
     /**
@@ -160,6 +199,38 @@ public class Graph extends JPanel {
             return null;
         }
         return liens.get(l);
+    }
+
+    /**
+     * Retourne tout les états distincts du lien l
+     * 
+     * @param l
+     *            le lien
+     * @return les états sans doublons
+     */
+    public TreeSet<EtatParcours> getEtatsLienDistinct(Lien l) {
+        if (l == null) {
+            return null;
+        }
+        TreeSet<EtatParcours> list = new TreeSet<>();
+        list.addAll(liens.get(l));
+        return list;
+    }
+
+    /**
+     * Retourne tout les états distincts du noeud n
+     * 
+     * @param n
+     *            le noeud
+     * @return les états sans doublons
+     */
+    public TreeSet<EtatParcours> getEtatsNoeudDistinct(Noeud n) {
+        if (n == null) {
+            return null;
+        }
+        TreeSet<EtatParcours> list = new TreeSet<>();
+        list.addAll(noeuds.get(n));
+        return list;
     }
 
     /**

@@ -1,11 +1,16 @@
 package texgen.utilities;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import texgen.modele.Lien;
+import texgen.modele.Noeud;
+import texgen.modele.Noeud.TypeForme;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph;
+import texgen.vue.Graph.EtatParcours;
 import texgen.vue.PseudoCode;
 import texgen.vue.Tableau;
 
@@ -90,15 +95,125 @@ public class GenerateurLatex {
         return res;
     }
 
-    public static String genererNoeudGraph(Graph g) {
-        String res = "";
-        // TODO
+    /**
+     * Retourne la chaîne de caractère LaTeX correspondant à la couleur utilisé avec Tikz
+     * 
+     * @param c
+     *            la couleur
+     * @return la chaîne correspondante (ex : "rgb:red,20;green,30;blue,50")
+     */
+    public static String getColorString(Color c) {
+        int r = (int) ((c.getRed() / 255.0) * 100);
+        int g = (int) ((c.getGreen() / 255.0) * 100);
+        int b = (int) ((c.getBlue() / 255.0) * 100);
+        // FIXME entraine des erreurs LaTeX
+        String res = "rgb:red," + r + ";green," + g + ";blue," + b;
+        return "";
+    }
+
+    /**
+     * Normalise un label (de lien ou de noeud) pour être utilisé avec le graphe au format LaTeX (retire certains caractères)
+     * 
+     * @param label
+     *            le label
+     * @return le label normalisée (sans caractère à protégé)
+     * @see GenerateurLatex#isProtectedChar(char)
+     */
+    public static String normalizeLabelForGraph(String label) {
+        String res = label;
         return res;
     }
 
+    /**
+     * Génère la liste des diapos pour un couple de noeud et d'état
+     * 
+     * @param g
+     *            le graph
+     * @param n
+     *            le noeud
+     * @param etat
+     *            l'état
+     * @return la liste des diapos (ex : "<1,2,4>")
+     */
+    public static String getDiapoNoeudString(Graph g, Noeud n, EtatParcours etat) {
+        String res = "";
+
+        return "<" + res + ">";
+    }
+
+    /**
+     * Retourne la chaîne correspondant aux coordonnées du noeud n pour le graphe au format LaTeX
+     * 
+     * @param g
+     *            le graph
+     * @param n
+     *            le noeud
+     * @return les coordonnées (ex : "(0,3)")
+     */
+    public static String getCoordonneeString(Graph g, Noeud n) {
+        int x = 0;
+        int y = 0;
+        return "(" + x + "," + y + ")";
+    }
+
+    /**
+     * Génère tout les noeuds du graph au format LaTeX
+     * 
+     * @param g
+     *            le graph
+     * @return la chaîne contenant tout les noeuds du graph
+     */
+    public static String genererNoeudGraph(Graph g) {
+        String res = "";
+        for (Noeud n : g.getNoeuds()) {
+            String normalizedLabel = normalizeLabelForGraph(n.getText());
+            String typeNoeud = (n.getForme() == TypeForme.Simple) ? "etat" : "etat_final";
+            String coordonnees = getCoordonneeString(g, n);
+            for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
+                String listeDiapos = getDiapoNoeudString(g, n, etat);
+                String couleur = getColorString(g.getColorForEtat(etat));
+                res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + "{\\scriptsize " + normalizedLabel
+                        + "};\n";
+            }
+        }
+        return res;
+
+    }
+
+    /**
+     * Génère la liste des diapos pour un couple de lien et d'état
+     * 
+     * @param g
+     *            le graph
+     * @param l
+     *            le lien
+     * @param etat
+     *            l'état
+     * @return la liste des diapos (ex : "<1,2,4>")
+     */
+    public static String getDiapoLienString(Graph g, Lien l, EtatParcours etat) {
+        String res = "";
+
+        return "<" + res + ">";
+    }
+
+    /**
+     * Génèrer tout les liens du graphe au format LaTeX
+     * 
+     * @param g
+     *            le graph
+     * @return la chaîne contenant tout les liens
+     */
     public static String genererLienGraph(Graph g) {
         String res = "";
-        // TODO
+        for (Lien l : g.getLiens()) {
+            String depart = "(" + normalizeLabelForGraph(l.getDepart().getText()) + ")";
+            String arrive = "(" + normalizeLabelForGraph(l.getArrive().getText()) + ")";
+            for (EtatParcours etat : g.getEtatsLienDistinct(l)) {
+                String couleur = getColorString(g.getColorForEtat(etat));
+                res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien=" + couleur + "] " + depart + " -> " + arrive + ";\n";
+            }
+        }
         return res;
     }
 
@@ -245,7 +360,7 @@ public class GenerateurLatex {
         String res = "";
         res += "\\begin{minipage}[t]{3.5cm}\n" + "\\begin{scriptsize}\n";
         res += genererEnteteTableau(tableau) + "\n";
-        res += genererCorpsTableau(tableau) + "\n";
+        res += genererCorpsTableau(tableau) + "\\hline \n";
         res += "\\end{tabular}\\\\\n" + "\\end{scriptsize}\n" + "\\end{minipage}\n";
         return res;
     }
