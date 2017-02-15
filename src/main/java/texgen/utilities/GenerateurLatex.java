@@ -21,6 +21,8 @@ import texgen.vue.Tableau;
  * @author Fanny MILLOTTE
  */
 public class GenerateurLatex {
+    /** la liste des caractères à protéger dans le LaTeX */
+    public static char[] protectedChar = { '&', '\\', ';', '{', '}' };
 
     /**
      * Fonction générant le code LaTeX
@@ -86,7 +88,7 @@ public class GenerateurLatex {
     public static String genererGraph(Graph g) {
         String res = "\\begin{center}\n";
         res += "\\begin{tikzpicture}[remember picture]\n";
-        res += "\\begin{scope}\n\n";
+        res += "\\begin{scope}[yscale=-1]\n\n";
         res += genererNoeudGraph(g);
         res += genererLienGraph(g);
         res += "\\end{scope}\n";
@@ -106,7 +108,7 @@ public class GenerateurLatex {
         int r = (int) ((c.getRed() / 255.0) * 100);
         int g = (int) ((c.getGreen() / 255.0) * 100);
         int b = (int) ((c.getBlue() / 255.0) * 100);
-        // FIXME entraine des erreurs LaTeX
+        // FIXME entraine des erreurs LaTeX, du coup c'est pas ça
         String res = "rgb:red," + r + ";green," + g + ";blue," + b;
         return "";
     }
@@ -120,7 +122,10 @@ public class GenerateurLatex {
      * @see GenerateurLatex#isProtectedChar(char)
      */
     public static String normalizeLabelForGraph(String label) {
-        String res = label;
+        String res = "";
+        for (char c : label.toCharArray()) {
+            res += (isProtectedChar(c)) ? "" : c;
+        }
         return res;
     }
 
@@ -137,7 +142,15 @@ public class GenerateurLatex {
      */
     public static String getDiapoNoeudString(Graph g, Noeud n, EtatParcours etat) {
         String res = "";
-
+        ArrayList<EtatParcours> list = g.getEtatsNoeud(n);
+        int size = list.size();
+        boolean first = true;
+        for (int i = 0; i < size; i++) {
+            if (list.get(i) == etat) {
+                res += ((first) ? "" : ",") + (i + 1);
+                first = false;
+            }
+        }
         return "<" + res + ">";
     }
 
@@ -151,8 +164,9 @@ public class GenerateurLatex {
      * @return les coordonnées (ex : "(0,3)")
      */
     public static String getCoordonneeString(Graph g, Noeud n) {
-        int x = 0;
-        int y = 0;
+        // FIXME réduire à un entier simple
+        int x = n.getCentre().x - (g.getWidth() / 2);
+        int y = n.getCentre().y;
         return "(" + x + "," + y + ")";
     }
 
@@ -193,7 +207,15 @@ public class GenerateurLatex {
      */
     public static String getDiapoLienString(Graph g, Lien l, EtatParcours etat) {
         String res = "";
-
+        ArrayList<EtatParcours> list = g.getEtatsLien(l);
+        int size = list.size();
+        boolean first = true;
+        for (int i = 0; i < size; i++) {
+            if (list.get(i) == etat) {
+                res += ((first) ? "" : ",") + (i + 1);
+                first = false;
+            }
+        }
         return "<" + res + ">";
     }
 
@@ -211,7 +233,7 @@ public class GenerateurLatex {
             String arrive = "(" + normalizeLabelForGraph(l.getArrive().getText()) + ")";
             for (EtatParcours etat : g.getEtatsLienDistinct(l)) {
                 String couleur = getColorString(g.getColorForEtat(etat));
-                res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien=" + couleur + "] " + depart + " -> " + arrive + ";\n";
+                res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien" + ((couleur.equals("")) ? "" : "=") + couleur + "] " + depart + " -> " + arrive + ";\n";
             }
         }
         return res;
@@ -265,7 +287,6 @@ public class GenerateurLatex {
      * @return true si le caractère doit être protégé, false sinon
      */
     public static boolean isProtectedChar(char c) {
-        char[] protectedChar = { '&', '\\', ';', '{', '}' };
         for (char o : protectedChar) {
             if (o == c) {
                 return true;
