@@ -870,142 +870,7 @@
 
 	<graph styleLien="1">
 		<noeuds>
-			<noeud id="0" x="233" y="367">
-				<label><![CDATA[I]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
-				</etats>
-			</noeud>
-			<noeud id="1" x="318" y="373" forme = "1">
-				<label><![CDATA[J]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
-				</etats>
-			</noeud>
-			<noeud id="2" x="167" y="364">
-				<label><![CDATA[H]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
-				</etats>
-			</noeud>
-			<noeud id="3" x="234" y="178">
+			<noeud id="0" x="258" y="218">
 				<label><![CDATA[B]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1050,8 +915,8 @@
 					<diapo_g numero="40">1</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="4" x="175" y="273">
-				<label><![CDATA[D]]></label>
+			<noeud id="1" x="256" y="407">
+				<label><![CDATA[I]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
 					<diapo_g numero="2">0</diapo_g>
@@ -1095,52 +960,7 @@
 					<diapo_g numero="40">0</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="5" x="512" y="264">
-				<label><![CDATA[G]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
-				</etats>
-			</noeud>
-			<noeud id="6" x="352" y="82">
+			<noeud id="2" x="372" y="122">
 				<label><![CDATA[A]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1185,8 +1005,8 @@
 					<diapo_g numero="40">1</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="7" x="286" y="276">
-				<label><![CDATA[E]]></label>
+			<noeud id="3" x="191" y="404">
+				<label><![CDATA[H]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
 					<diapo_g numero="2">0</diapo_g>
@@ -1230,7 +1050,7 @@
 					<diapo_g numero="40">0</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="8" x="405" y="267" forme = "1">
+			<noeud id="4" x="425" y="319" forme = "1">
 				<label><![CDATA[F]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1275,7 +1095,7 @@
 					<diapo_g numero="40">3</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="9" x="461" y="181">
+			<noeud id="5" x="485" y="221">
 				<label><![CDATA[C]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1320,8 +1140,188 @@
 					<diapo_g numero="40">1</diapo_g>
 				</etats>
 			</noeud>
-			<noeud id="10" x="407" y="362">
+			<noeud id="6" x="199" y="313">
+				<label><![CDATA[D]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="7" x="540" y="318">
+				<label><![CDATA[G]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="8" x="310" y="316">
+				<label><![CDATA[E]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="9" x="426" y="410">
 				<label><![CDATA[K]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="10" x="339" y="408" forme = "1">
+				<label><![CDATA[J]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
 					<diapo_g numero="2">0</diapo_g>
@@ -1367,7 +1367,322 @@
 			</noeud>
 		</noeuds>
 		<liens>
-			<lien depart="7" arrive="1">
+			<lien depart="5" arrive="4">
+				<label><![CDATA[2]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">2</diapo_g>
+					<diapo_g numero="32">2</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">3</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="5" arrive="7">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">2</diapo_g>
+					<diapo_g numero="35">2</diapo_g>
+					<diapo_g numero="36">2</diapo_g>
+					<diapo_g numero="37">2</diapo_g>
+					<diapo_g numero="38">2</diapo_g>
+					<diapo_g numero="39">2</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="2" arrive="0">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">2</diapo_g>
+					<diapo_g numero="6">2</diapo_g>
+					<diapo_g numero="7">2</diapo_g>
+					<diapo_g numero="8">2</diapo_g>
+					<diapo_g numero="9">1</diapo_g>
+					<diapo_g numero="10">1</diapo_g>
+					<diapo_g numero="11">1</diapo_g>
+					<diapo_g numero="12">1</diapo_g>
+					<diapo_g numero="13">1</diapo_g>
+					<diapo_g numero="14">1</diapo_g>
+					<diapo_g numero="15">1</diapo_g>
+					<diapo_g numero="16">1</diapo_g>
+					<diapo_g numero="17">1</diapo_g>
+					<diapo_g numero="18">1</diapo_g>
+					<diapo_g numero="19">1</diapo_g>
+					<diapo_g numero="20">1</diapo_g>
+					<diapo_g numero="21">1</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="0" arrive="8">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">2</diapo_g>
+					<diapo_g numero="23">2</diapo_g>
+					<diapo_g numero="24">2</diapo_g>
+					<diapo_g numero="25">2</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="4" arrive="9">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="2" arrive="5">
+				<label><![CDATA[1]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">2</diapo_g>
+					<diapo_g numero="10">2</diapo_g>
+					<diapo_g numero="11">2</diapo_g>
+					<diapo_g numero="12">2</diapo_g>
+					<diapo_g numero="13">1</diapo_g>
+					<diapo_g numero="14">1</diapo_g>
+					<diapo_g numero="15">1</diapo_g>
+					<diapo_g numero="16">1</diapo_g>
+					<diapo_g numero="17">1</diapo_g>
+					<diapo_g numero="18">1</diapo_g>
+					<diapo_g numero="19">1</diapo_g>
+					<diapo_g numero="20">1</diapo_g>
+					<diapo_g numero="21">1</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">3</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="6" arrive="3">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="8" arrive="1">
 				<label><![CDATA[]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1457,7 +1772,7 @@
 					<diapo_g numero="40">0</diapo_g>
 				</etats>
 			</lien>
-			<lien depart="3" arrive="4">
+			<lien depart="0" arrive="6">
 				<label><![CDATA[]]></label>
 				<etats>
 					<diapo_g numero="1">0</diapo_g>
@@ -1500,321 +1815,6 @@
 					<diapo_g numero="38">1</diapo_g>
 					<diapo_g numero="39">1</diapo_g>
 					<diapo_g numero="40">1</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="9" arrive="5">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">2</diapo_g>
-					<diapo_g numero="35">2</diapo_g>
-					<diapo_g numero="36">2</diapo_g>
-					<diapo_g numero="37">2</diapo_g>
-					<diapo_g numero="38">2</diapo_g>
-					<diapo_g numero="39">2</diapo_g>
-					<diapo_g numero="40">1</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="4" arrive="2">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="3" arrive="7">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">2</diapo_g>
-					<diapo_g numero="23">2</diapo_g>
-					<diapo_g numero="24">2</diapo_g>
-					<diapo_g numero="25">2</diapo_g>
-					<diapo_g numero="26">1</diapo_g>
-					<diapo_g numero="27">1</diapo_g>
-					<diapo_g numero="28">1</diapo_g>
-					<diapo_g numero="29">1</diapo_g>
-					<diapo_g numero="30">1</diapo_g>
-					<diapo_g numero="31">1</diapo_g>
-					<diapo_g numero="32">1</diapo_g>
-					<diapo_g numero="33">1</diapo_g>
-					<diapo_g numero="34">1</diapo_g>
-					<diapo_g numero="35">1</diapo_g>
-					<diapo_g numero="36">1</diapo_g>
-					<diapo_g numero="37">1</diapo_g>
-					<diapo_g numero="38">1</diapo_g>
-					<diapo_g numero="39">1</diapo_g>
-					<diapo_g numero="40">1</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="6" arrive="3">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">2</diapo_g>
-					<diapo_g numero="6">2</diapo_g>
-					<diapo_g numero="7">2</diapo_g>
-					<diapo_g numero="8">2</diapo_g>
-					<diapo_g numero="9">1</diapo_g>
-					<diapo_g numero="10">1</diapo_g>
-					<diapo_g numero="11">1</diapo_g>
-					<diapo_g numero="12">1</diapo_g>
-					<diapo_g numero="13">1</diapo_g>
-					<diapo_g numero="14">1</diapo_g>
-					<diapo_g numero="15">1</diapo_g>
-					<diapo_g numero="16">1</diapo_g>
-					<diapo_g numero="17">1</diapo_g>
-					<diapo_g numero="18">1</diapo_g>
-					<diapo_g numero="19">1</diapo_g>
-					<diapo_g numero="20">1</diapo_g>
-					<diapo_g numero="21">1</diapo_g>
-					<diapo_g numero="22">1</diapo_g>
-					<diapo_g numero="23">1</diapo_g>
-					<diapo_g numero="24">1</diapo_g>
-					<diapo_g numero="25">1</diapo_g>
-					<diapo_g numero="26">1</diapo_g>
-					<diapo_g numero="27">1</diapo_g>
-					<diapo_g numero="28">1</diapo_g>
-					<diapo_g numero="29">1</diapo_g>
-					<diapo_g numero="30">1</diapo_g>
-					<diapo_g numero="31">1</diapo_g>
-					<diapo_g numero="32">1</diapo_g>
-					<diapo_g numero="33">1</diapo_g>
-					<diapo_g numero="34">1</diapo_g>
-					<diapo_g numero="35">1</diapo_g>
-					<diapo_g numero="36">1</diapo_g>
-					<diapo_g numero="37">1</diapo_g>
-					<diapo_g numero="38">1</diapo_g>
-					<diapo_g numero="39">1</diapo_g>
-					<diapo_g numero="40">1</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="9" arrive="8">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">2</diapo_g>
-					<diapo_g numero="32">2</diapo_g>
-					<diapo_g numero="33">1</diapo_g>
-					<diapo_g numero="34">1</diapo_g>
-					<diapo_g numero="35">1</diapo_g>
-					<diapo_g numero="36">1</diapo_g>
-					<diapo_g numero="37">1</diapo_g>
-					<diapo_g numero="38">1</diapo_g>
-					<diapo_g numero="39">1</diapo_g>
-					<diapo_g numero="40">3</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="6" arrive="9">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">2</diapo_g>
-					<diapo_g numero="10">2</diapo_g>
-					<diapo_g numero="11">2</diapo_g>
-					<diapo_g numero="12">2</diapo_g>
-					<diapo_g numero="13">1</diapo_g>
-					<diapo_g numero="14">1</diapo_g>
-					<diapo_g numero="15">1</diapo_g>
-					<diapo_g numero="16">1</diapo_g>
-					<diapo_g numero="17">1</diapo_g>
-					<diapo_g numero="18">1</diapo_g>
-					<diapo_g numero="19">1</diapo_g>
-					<diapo_g numero="20">1</diapo_g>
-					<diapo_g numero="21">1</diapo_g>
-					<diapo_g numero="22">1</diapo_g>
-					<diapo_g numero="23">1</diapo_g>
-					<diapo_g numero="24">1</diapo_g>
-					<diapo_g numero="25">1</diapo_g>
-					<diapo_g numero="26">1</diapo_g>
-					<diapo_g numero="27">1</diapo_g>
-					<diapo_g numero="28">1</diapo_g>
-					<diapo_g numero="29">1</diapo_g>
-					<diapo_g numero="30">1</diapo_g>
-					<diapo_g numero="31">1</diapo_g>
-					<diapo_g numero="32">1</diapo_g>
-					<diapo_g numero="33">1</diapo_g>
-					<diapo_g numero="34">1</diapo_g>
-					<diapo_g numero="35">1</diapo_g>
-					<diapo_g numero="36">1</diapo_g>
-					<diapo_g numero="37">1</diapo_g>
-					<diapo_g numero="38">1</diapo_g>
-					<diapo_g numero="39">1</diapo_g>
-					<diapo_g numero="40">3</diapo_g>
-				</etats>
-			</lien>
-			<lien depart="7" arrive="0">
-				<label><![CDATA[]]></label>
-				<etats>
-					<diapo_g numero="1">0</diapo_g>
-					<diapo_g numero="2">0</diapo_g>
-					<diapo_g numero="3">0</diapo_g>
-					<diapo_g numero="4">0</diapo_g>
-					<diapo_g numero="5">0</diapo_g>
-					<diapo_g numero="6">0</diapo_g>
-					<diapo_g numero="7">0</diapo_g>
-					<diapo_g numero="8">0</diapo_g>
-					<diapo_g numero="9">0</diapo_g>
-					<diapo_g numero="10">0</diapo_g>
-					<diapo_g numero="11">0</diapo_g>
-					<diapo_g numero="12">0</diapo_g>
-					<diapo_g numero="13">0</diapo_g>
-					<diapo_g numero="14">0</diapo_g>
-					<diapo_g numero="15">0</diapo_g>
-					<diapo_g numero="16">0</diapo_g>
-					<diapo_g numero="17">0</diapo_g>
-					<diapo_g numero="18">0</diapo_g>
-					<diapo_g numero="19">0</diapo_g>
-					<diapo_g numero="20">0</diapo_g>
-					<diapo_g numero="21">0</diapo_g>
-					<diapo_g numero="22">0</diapo_g>
-					<diapo_g numero="23">0</diapo_g>
-					<diapo_g numero="24">0</diapo_g>
-					<diapo_g numero="25">0</diapo_g>
-					<diapo_g numero="26">0</diapo_g>
-					<diapo_g numero="27">0</diapo_g>
-					<diapo_g numero="28">0</diapo_g>
-					<diapo_g numero="29">0</diapo_g>
-					<diapo_g numero="30">0</diapo_g>
-					<diapo_g numero="31">0</diapo_g>
-					<diapo_g numero="32">0</diapo_g>
-					<diapo_g numero="33">0</diapo_g>
-					<diapo_g numero="34">0</diapo_g>
-					<diapo_g numero="35">0</diapo_g>
-					<diapo_g numero="36">0</diapo_g>
-					<diapo_g numero="37">0</diapo_g>
-					<diapo_g numero="38">0</diapo_g>
-					<diapo_g numero="39">0</diapo_g>
-					<diapo_g numero="40">0</diapo_g>
 				</etats>
 			</lien>
 		</liens>

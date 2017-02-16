@@ -23,6 +23,8 @@ import texgen.vue.Tableau;
 public class GenerateurLatex {
     /** la liste des caractères à protéger dans le LaTeX */
     public static char[] protectedChar = { '&', '\\', '{', '}' };
+    /** Indique le nombre de noeud sans nom trouvés pendant la génération */
+    public static int    noeudSansNom  = 0;
 
     /**
      * Fonction générant le code LaTeX
@@ -46,6 +48,7 @@ public class GenerateurLatex {
         string += genererGraph(fenetrePrincipale.getGraph());
         string += "\\end{frame}\n";
         string += "\\end{document}\n";
+        noeudSansNom = 0;
         return string;
     }
 
@@ -174,13 +177,18 @@ public class GenerateurLatex {
         String res = "";
         for (Noeud n : g.getNoeuds()) {
             String normalizedLabel = normalizeLabelForGraph(n.getText());
+            if (normalizedLabel.equals("")) {// On génère un nom automatique
+                normalizedLabel = "None" + noeudSansNom;
+                n.setText(normalizedLabel);
+                noeudSansNom++;
+            }
+            String label = "{\\scriptsize " + normalizedLabel + "}";
             String typeNoeud = (n.getForme() == TypeForme.Simple) ? "etat" : "etatFinal";
             String coordonnees = getCoordonneeString(g, n);
             for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
                 String listeDiapos = getDiapoNoeudString(g, n, etat);
                 String couleur = etat.toString();
-                res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + "{\\scriptsize " + normalizedLabel
-                        + "};\n";
+                res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + label + ";\n";
             }
         }
         return res;
@@ -220,11 +228,13 @@ public class GenerateurLatex {
     public static String genererLienGraph(Graph g) {
         String res = "";
         for (Lien l : g.getLiens()) {
+            String normalizedLabel = normalizeLabelForGraph(l.getText());
             String depart = "(" + normalizeLabelForGraph(l.getDepart().getText()) + ")";
             String arrive = "(" + normalizeLabelForGraph(l.getArrive().getText()) + ")";
+            String label = normalizedLabel.equals("") ? "" : " node[midway, above] {\\scriptsize " + normalizedLabel + "}";
             for (EtatParcours etat : g.getEtatsLienDistinct(l)) {
                 String couleur = etat.toString();
-                res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien" + ((couleur.equals("")) ? "" : "=") + couleur + "] " + depart + " -> " + arrive + ";\n";
+                res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien" + ((couleur.equals("")) ? "" : "=") + couleur + "] " + depart + " -> " + arrive + label + ";\n";
             }
         }
         return res;
