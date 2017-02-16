@@ -159,8 +159,7 @@ public class GenerateurLatex {
      * @return les coordonnées (ex : "(0,3)")
      */
     public static String getCoordonneeString(Graph g, Noeud n) {
-        // TODO utiliser un 'classement' --> ne pas oublié d'enlever l'inversion de l'axe y LaTeX
-        int unit = 80;
+        double unit = 100.0;
         int x = n.getCentre().x - (g.getWidth() / 2);
         int y = n.getCentre().y;
         return "(" + (x / unit) + "," + (y / unit) + ")";
@@ -249,7 +248,6 @@ public class GenerateurLatex {
         res += "\\usepackage[frenchb]{babel}\n";
         res += "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n";
         res += "\\newcounter{MyAlgoStep}\n";
-        res += "\\makeatletter";
         return res;
     }
 
@@ -336,10 +334,14 @@ public class GenerateurLatex {
         for (char c : protectedLine.toCharArray()) {
             // On cherche à protégé uniquement le ';' quand il est en bout de ligne, ce qui permet
             // d'enchaîner plusieurs fois ce caractères sans que LaTeX ne sautes de lignes à chaque fois
-            if (i == (protectedLine.length() - 1) && c == ';') {
-                ligneString += "\\;";
+            if (i == (protectedLine.length() - 1)) {
+                if (c == ';') {
+                    ligneString += "\\;";
+                } else {
+                    ligneString += c + "\\newline";
+                }
             } else {
-                ligneString += c;
+                ligneString += (c != '\\') ? c : "";
                 i++;
             }
         }
@@ -358,14 +360,14 @@ public class GenerateurLatex {
     public static String genererPseudoCode(PseudoCode pseudoCode) {
         String res = "";
 
-        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
+        res += "\\hspace*{-0.3cm}\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
 
         ArrayList<String> lignes = separerLignes(pseudoCode.getTextArea().getText());
         for (int i = 1; i <= lignes.size(); i++) {
             res += genererColorCode(pseudoCode, lignes.get(i - 1), i);
         }
 
-        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\\hspace*{0.2cm}\n";
+        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\\hspace*{0.05cm}\n";
         return res;
     }
 
