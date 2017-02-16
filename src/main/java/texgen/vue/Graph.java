@@ -54,6 +54,8 @@ public class Graph extends JPanel {
     private final int                               LINK_SELECTION_SHAPE_SIZE = 25;
     /** position du dernier clic de souris */
     private Point                                   lastClick;
+    /** Indique si les liens sont sous forme de flêche (true) ou de simple ligne (false) */
+    private boolean                                 arrow                     = false;
 
     /**
      * Constructeur de la classe
@@ -78,6 +80,20 @@ public class Graph extends JPanel {
         targetedLink = null;
         lastClick = null;
         setFocusable(true);
+    }
+
+    public void setArrow(boolean b) {
+        arrow = b;
+        refresh();
+    }
+
+    /**
+     * Renvois si les liens sont des flêches ou des lignes simples
+     * 
+     * @return true sir les liens sont des flêches, false sinon
+     */
+    public boolean isArrow() {
+        return arrow;
     }
 
     /**
@@ -1056,7 +1072,7 @@ public class Graph extends JPanel {
             l.updateLocation();
 
             setColorForLink(g, l);
-            DrawUtilities.drawLink(g, l, false);
+            DrawUtilities.drawLink(g, l, arrow);
 
             // Color c = g.getColor();
             // g.setColor(Color.CYAN);

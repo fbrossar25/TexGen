@@ -73,10 +73,10 @@ public class ControleurBarreMenu implements ActionListener {
         } else if (source.getText().equals("Supprimer noeud")) {
             Graph graph = barreMenu.getFenetre().getGraph();
             graph.supprimerNoeudSelectionne();
-        } else if (source.getText().equals("Créer lien")) {
-
-        } else if (source.getText().equals("Supprimer lien")) {
-
+        } else if (source.getText().equals("Flêches")) {
+            barreMenu.getFenetre().getGraph().setArrow(true);
+        } else if (source.getText().equals("Lignes")) {
+            barreMenu.getFenetre().getGraph().setArrow(false);
         }
     }
 

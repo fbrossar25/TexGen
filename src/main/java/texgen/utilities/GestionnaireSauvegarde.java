@@ -68,6 +68,7 @@ public class GestionnaireSauvegarde {
         s += "\t<!ELEMENT case (#PCDATA) >\n";
         s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT graph (noeuds, liens) >\n";
+        s += "\t<!ATTLIST graph styleLien (0|1) \"0\" >\n";
         s += "\t<!ELEMENT noeuds (noeud)* >\n";
         s += "\t<!ELEMENT noeud (label,etats) >\n";
         s += "\t<!ELEMENT label (#PCDATA) >\n";
@@ -118,7 +119,7 @@ public class GestionnaireSauvegarde {
      * @return la chaine XML du graph
      */
     public static String sauvegarderGraph(Graph g) {
-        String res = "\t<graph>\n";
+        String res = "\t<graph" + ((g.isArrow()) ? " styleLien=\"1\"" : "") + ">\n";
         res += "\t\t<noeuds>\n";
         int i = 0;
         for (Noeud n : g.getNoeuds()) {
@@ -340,6 +341,11 @@ public class GestionnaireSauvegarde {
                     g.changerEtatLien(l, j, g.getEtatForInt(etat));
                 }
             }
+
+            expression = "/projet/graph/@styleLien";
+            int style = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+            g.setArrow(style == 1);
+            g.getFenetre().refreshLinkStyleSelection();
         } catch (XPathExpressionException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(g.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);

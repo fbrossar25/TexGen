@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
@@ -24,25 +26,29 @@ import texgen.controleur.ControleurTableau;
 public class FenetrePrincipale extends JFrame {
 
     /** Barre de menu */
-    private BarreMenu  menuBar;
+    private BarreMenu            menuBar;
 
     /** Panel où est placé le pseudo code */
-    private PseudoCode pseudoCode;
+    private PseudoCode           pseudoCode;
 
     /** Séparateur verticale */
-    private JSplitPane separateurV;
+    private JSplitPane           separateurV;
 
     /** Séparateur horizontale */
-    private JSplitPane separateurH;
+    private JSplitPane           separateurH;
 
     /** Panel où est placé le tableau */
-    private Tableau    tableau;
+    private Tableau              tableau;
 
     /** La barre d'outil */
-    private ToolBar    toolBar;
+    private ToolBar              toolBar;
 
     /** Le graph */
-    private Graph      graph;
+    private Graph                graph;
+    /** Le bouton radio "Flêches" dans le menu Graph -> Style des lien */
+    private JRadioButtonMenuItem styleFleche;
+    /** Le bouton radio "Lignes" dans le menu Graph -> Style des lien */
+    private JRadioButtonMenuItem styleLigne;
 
     /**
      * Constructeur de la classe
@@ -86,6 +92,17 @@ public class FenetrePrincipale extends JFrame {
         int dx = centerPoint.x - windowSize.width / 2;
         int dy = centerPoint.y - windowSize.height / 2;
         setLocation(dx, dy);
+    }
+
+    /**
+     * Met à jour la sélection du style des liens dans la barre de menu
+     */
+    public void refreshLinkStyleSelection() {
+        if (getGraph().isArrow()) {
+            styleFleche.setSelected(true);
+        } else {
+            styleLigne.setSelected(true);
+        }
     }
 
     /**
@@ -158,12 +175,18 @@ public class FenetrePrincipale extends JFrame {
         JMenuItem supprimerNoeud = new JMenuItem("Supprimer noeud");
         supprimerNoeud.addActionListener(ctrlMenuBar);
         graph.add(supprimerNoeud);
-        JMenuItem creerLien = new JMenuItem("Créer lien");
-        creerLien.addActionListener(ctrlMenuBar);
-        graph.add(creerLien);
-        JMenuItem supprimerLien = new JMenuItem("Supprimer lien");
-        supprimerLien.addActionListener(ctrlMenuBar);
-        graph.add(supprimerLien);
+        JMenu styleLiens = new JMenu("Style des liens");
+        graph.add(styleLiens);
+        ButtonGroup btnGroup = new ButtonGroup();
+        styleFleche = new JRadioButtonMenuItem("Flêches");
+        btnGroup.add(styleFleche);
+        styleFleche.addActionListener(ctrlMenuBar);
+        styleLiens.add(styleFleche);
+        styleLigne = new JRadioButtonMenuItem("Lignes");
+        btnGroup.add(styleLigne);
+        styleLigne.addActionListener(ctrlMenuBar);
+        styleLiens.add(styleLigne);
+        refreshLinkStyleSelection();
         menuBar.add(graph);
 
         // Menu Aide

@@ -57,3 +57,4 @@ Temporary Items
 *.out
 *.snm
 *.toc
+*.synctex.gz

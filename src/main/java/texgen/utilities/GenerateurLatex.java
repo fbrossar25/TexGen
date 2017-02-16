@@ -34,11 +34,11 @@ public class GenerateurLatex {
     public static String generer(FenetrePrincipale fenetrePrincipale) {
         String string = genererEntete() + "\n\n";
         string += genererCouleurs(fenetrePrincipale.getGraph()) + "\n\n";
-        string += genererTikz() + "\n\n";
+        string += genererTikz(fenetrePrincipale.getGraph().isArrow() ? "->" : "-") + "\n\n";
         string += genererBeamer() + "\n\n";
         string += genererPiedDePage() + "\n\n";
         string += genererInfosAuteur() + "\n\n";
-        string += genererColorCode() + "\n\n";
+        string += genererMacroColorCode() + "\n\n";
         string += "\\begin{document}\n";
         string += "\\begin{frame}\n";
         string += genererPseudoCode(fenetrePrincipale.getPseudoCode()) + "\n";
@@ -69,16 +69,14 @@ public class GenerateurLatex {
         return "%footnote not implemented yet";
     }
 
-    public static String genererTikz() {
+    public static String genererTikz(String tikzLinkStyle) {
         String res = "\\tikzset{\n";
-        res += "\tlien/.style={->,thick,color=#1},\n";
+        res += "\tlien/.style={" + tikzLinkStyle + ",thick,color=#1},\n";
         res += "\tlien/.default={black!21},\n";
         res += "\tetat/.style={draw,thick,circle,color=#1},\n";
         res += "\tetat/.default={black!21},\n";
-        res += "\tetat_init/.style={draw,circle,thick,color=#1},\n";
-        res += "\tetat_init/.default={orange},\n";
-        res += "\tetat_final/.style={draw,double,circle,color=#1},\n";
-        res += "\tetat_final/.default={blue!21}\n";
+        res += "\tetatFinal/.style={draw,double,circle,color=#1},\n";
+        res += "\tetatFinal/.default={blue!21}\n";
         return res + "}";
     }
 
@@ -176,7 +174,7 @@ public class GenerateurLatex {
         String res = "";
         for (Noeud n : g.getNoeuds()) {
             String normalizedLabel = normalizeLabelForGraph(n.getText());
-            String typeNoeud = (n.getForme() == TypeForme.Simple) ? "etat" : "etat_final";
+            String typeNoeud = (n.getForme() == TypeForme.Simple) ? "etat" : "etatFinal";
             String coordonnees = getCoordonneeString(g, n);
             for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
                 String listeDiapos = getDiapoNoeudString(g, n, etat);
@@ -328,24 +326,13 @@ public class GenerateurLatex {
 
         // Chaine de la ligne
         // On protège les caractères nécessaires et on supprime tout les caractères séparateurs en fin de chaînes
+        // On replace également les '\' par des '/' pour éviter des erreurs de compilation LaTeX
+        // Un remplacement possible serait '\' -> "$\backslahs$"
+        // Mais en JAVA l'utilisation des caracteres $ et \ nécessite l'utilisation de Matcher.quoteReplacement()
+        // Ce qui donne, une fois générée, une chaîne de remplacement type $\\backslash$
+        // ce qui provoque aussi une erreur de compilation LaTeX
         String protectedLine = protegerCaracteres(ligne).replaceFirst("\\s++$", "");
-        String ligneString = "{";
-        int i = 0;
-        for (char c : protectedLine.toCharArray()) {
-            // On cherche à protégé uniquement le ';' quand il est en bout de ligne, ce qui permet
-            // d'enchaîner plusieurs fois ce caractères sans que LaTeX ne sautes de lignes à chaque fois
-            if (i == (protectedLine.length() - 1)) {
-                if (c == ';') {
-                    ligneString += "\\;";
-                } else {
-                    ligneString += c + "\\newline";
-                }
-            } else {
-                ligneString += (c != '\\') ? c : "";
-                i++;
-            }
-        }
-        ligneString += "}\n";
+        String ligneString = "{" + protectedLine + "\\newline" + "}";
 
         return res + unmarkedString + markedString + ligneString;
     }
@@ -360,15 +347,15 @@ public class GenerateurLatex {
     public static String genererPseudoCode(PseudoCode pseudoCode) {
         String res = "";
 
-        res += "\\hspace*{-0.3cm}\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
+        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
 
         ArrayList<String> lignes = separerLignes(pseudoCode.getTextArea().getText());
         for (int i = 1; i <= lignes.size(); i++) {
             res += genererColorCode(pseudoCode, lignes.get(i - 1), i);
         }
 
-        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\\hspace*{0.05cm}\n";
-        return res;
+        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\n";
+        return res.replaceAll("ﬁ", "fi");
     }
 
     /**
@@ -587,7 +574,7 @@ public class GenerateurLatex {
      * 
      * @return la macro colorCode
      */
-    public static String genererColorCode() {
-        return "\\newcommand{    \\colorCode}[3]{%\n\\only<#1>{\\textcolor{black}{#3}}\\only<#2>{\\textcolor{red}{#3}}\n}";
+    public static String genererMacroColorCode() {
+        return "\\newcommand{\\colorCode}[3]{\\only<#1>{\\textcolor{black}{#3}}\\only<#2>{\\textcolor{red}{#3}}}";
     }
 }
