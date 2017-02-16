@@ -99,7 +99,6 @@ public class GenerateurLatex {
      * @return code généré
      */
     public static String genererGraph(Graph g) {
-        // TODO dimension et position LaTeX
         String res = "\\begin{center}\n";
         res += "\\begin{tikzpicture}[remember picture]\n";
         res += "\\begin{scope}[yscale=-1]\n\n";
@@ -144,10 +143,9 @@ public class GenerateurLatex {
         ArrayList<Integer> diapos = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             if (list.get(i) == etat) {
-                diapos.add(i);
+                diapos.add(i + 1);
             }
         }
-        // FIXME la derniere diapos manque
         return "<" + convertIntArrayToRangesSet(diapos) + ">";
     }
 
@@ -161,10 +159,11 @@ public class GenerateurLatex {
      * @return les coordonnées (ex : "(0,3)")
      */
     public static String getCoordonneeString(Graph g, Noeud n) {
-        // FIXME réduire à un entier simple
+        // TODO utiliser un 'classement' --> ne pas oublié d'enlever l'inversion de l'axe y LaTeX
+        int unit = 80;
         int x = n.getCentre().x - (g.getWidth() / 2);
         int y = n.getCentre().y;
-        return "(" + x / 80 + "," + y / 80 + ")";
+        return "(" + (x / unit) + "," + (y / unit) + ")";
     }
 
     /**
@@ -208,10 +207,9 @@ public class GenerateurLatex {
         ArrayList<Integer> diapos = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             if (list.get(i) == etat) {
-                diapos.add(i);
+                diapos.add(i + 1);
             }
         }
-        // FIXME la derniere diapos manque
         return "<" + convertIntArrayToRangesSet(diapos) + ">";
     }
 
@@ -380,9 +378,9 @@ public class GenerateurLatex {
      */
     public static String genererTableau(Tableau tableau) {
         String res = "";
-        res += "\\begin{minipage}[t]{0.48\\textspace}\n" + "\\begin{scriptsize}\n";
+        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{scriptsize}\n";
         res += genererEnteteTableau(tableau) + "\n";
-        res += genererCorpsTableau(tableau) + "\\hline \n";
+        res += genererCorpsTableau(tableau) + "\\hline\n";
         res += "\\end{tabular}\\\\\n" + "\\end{scriptsize}\n" + "\\end{minipage}\n";
         return res;
     }
@@ -489,57 +487,41 @@ public class GenerateurLatex {
      */
     public static String convertIntArrayToRangesSet(ArrayList<Integer> list) {
         int size = list.size();
-        if (size <= 0) {
+        if (size < 1) {
             return "";
         } else if (size == 1) {
             return "" + list.get(0);
         }
-        ArrayList<String> ranges = new ArrayList<>();
-        int cur = 0, begin = list.get(0), prev = 0;
+        StringBuilder sb = new StringBuilder();
+        int rangeStart = list.get(0);
+        int previous = rangeStart;
+        int current, expected;
         for (int i = 1; i < size; i++) {
-            cur = list.get(i);
-            prev = list.get(i - 1);
-            if (cur != (prev + 1)) {
-                if (begin == prev) {
-                    ranges.add("" + begin);
-                } else if (begin == (prev - 1)) {
-                    ranges.add("" + begin);
-                    ranges.add("" + prev);
-                } else {
-                    ranges.add(begin + "-" + prev);
-                }
-                begin = list.get(i);
-            } else if (i == (size - 1)) {
-                if (begin == cur) {
-                    ranges.add("" + begin);
-                } else if (begin == (cur - 1)) {
-                    ranges.add("" + begin);
-                    ranges.add("" + cur);
-                } else {
-                    ranges.add(begin + "-" + cur);
-                }
+            current = list.get(i);
+            expected = previous + 1;
+            if (current != expected) {
+                addRange(sb, rangeStart, previous);
+                rangeStart = current;
             }
+            previous = current;
+        }
+        addRange(sb, rangeStart, previous);
+        return sb.toString();
+    }
 
+    private static void addRange(StringBuilder sb, int from, int to) {
+        if (sb.length() > 0) {
+            sb.append(",");
         }
-        size = ranges.size();
-        if (size > 0) {
-            // évite que le dernier élément se 'perde' dans certains cas
-            // notament quand le dernier élément est à ajouter à ranges est un entier simple
-            String last = ranges.get(size - 1);
-            if (!last.contains("" + list.get(list.size() - 1))) {
-                ranges.add("" + list.get(list.size() - 1));
-                size++;
-            }
+        if (from == to) {
+            sb.append(from);
+        } else {
+            sb.append(from + "-" + to);
         }
-        String res = "";
-        for (int i = 0; i < size; i++) {
-            res += ranges.get(i) + ((i == size - 1) ? "" : ",");
-        }
-        return res;
     }
 
     public static String genererColorCodeTableau(Tableau tableau, int ligne, int colonne, String s) {
-        String res = "\\colorCode";
+        String res = "\n\\colorCode";
         ArrayList<Integer> marked = new ArrayList<>();
         ArrayList<Integer> unmarked = new ArrayList<>();
         int nbDiapo = tableau.getNombreDiapos();

@@ -46,6 +46,14 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /target/
-*.tex
-generated.*
 /bin/
+
+#LaTeX compilation files
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.snm
+*.toc
