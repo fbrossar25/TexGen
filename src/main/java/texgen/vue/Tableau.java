@@ -203,7 +203,7 @@ public class Tableau extends JPanel {
         }
         enableAllModelListener();
         li++;
-
+        refresh();
     }
 
     /**
@@ -218,6 +218,7 @@ public class Tableau extends JPanel {
             }
             enableAllModelListener();
             li--;
+            refresh();
         }
     }
 
@@ -225,8 +226,22 @@ public class Tableau extends JPanel {
      * Fonction permettant l'ajout d'une colonne dans le tableau
      */
     public void ajouterColonne() {
-        getDiapo(diapoCourante).addColumn("");
+        disableAllModelListener();
         col++;
+        for (DefaultTableModel model : diapos) {
+            model.addColumn("");
+            for (int i = 0; i < li; i++) {
+                try {
+                    model.setValueAt("", i, col - 1);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    System.out.println("li : " + li + ", col-1 : " + (col - 1) + ", i : " + i);
+                    System.exit(-1);
+                }
+            }
+        }
+        enableAllModelListener();
+        refresh();
     }
 
     /**
@@ -235,7 +250,12 @@ public class Tableau extends JPanel {
     public void supprimerColonne() {
         if (col > 1) {
             col--;
-            getDiapo(diapoCourante).setColumnCount(col);
+            disableAllModelListener();
+            for (DefaultTableModel model : diapos) {
+                model.setColumnCount(col);
+            }
+            enableAllModelListener();
+            refresh();
         }
     }
 

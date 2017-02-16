@@ -22,7 +22,7 @@ import texgen.vue.Tableau;
  */
 public class GenerateurLatex {
     /** la liste des caractères à protéger dans le LaTeX */
-    public static char[] protectedChar = { '&', '\\', ';', '{', '}' };
+    public static char[] protectedChar = { '&', '\\', '{', '}' };
 
     /**
      * Fonction générant le code LaTeX
@@ -33,6 +33,7 @@ public class GenerateurLatex {
      */
     public static String generer(FenetrePrincipale fenetrePrincipale) {
         String string = genererEntete() + "\n\n";
+        string += genererCouleurs(fenetrePrincipale.getGraph()) + "\n\n";
         string += genererTikz() + "\n\n";
         string += genererBeamer() + "\n\n";
         string += genererPiedDePage() + "\n\n";
@@ -46,6 +47,18 @@ public class GenerateurLatex {
         string += "\\end{frame}\n";
         string += "\\end{document}\n";
         return string;
+    }
+
+    public static String genererCouleurs(Graph graph) {
+        String res = "";
+        for (EtatParcours etat : EtatParcours.values()) {
+            Color c = graph.getColorForEtat(etat);
+            int r = c.getRed();
+            int g = c.getGreen();
+            int b = c.getBlue();
+            res += "\\definecolor{" + etat.toString() + "}{RGB}{" + r + "," + g + "," + b + "}\n";
+        }
+        return res;
     }
 
     public static String genererInfosAuteur() {
@@ -86,6 +99,7 @@ public class GenerateurLatex {
      * @return code généré
      */
     public static String genererGraph(Graph g) {
+        // TODO dimension et position LaTeX
         String res = "\\begin{center}\n";
         res += "\\begin{tikzpicture}[remember picture]\n";
         res += "\\begin{scope}[yscale=-1]\n\n";
@@ -95,22 +109,6 @@ public class GenerateurLatex {
         res += "\\end{tikzpicture}\n";
         res += "\\end{center}\n";
         return res;
-    }
-
-    /**
-     * Retourne la chaîne de caractère LaTeX correspondant à la couleur utilisé avec Tikz
-     * 
-     * @param c
-     *            la couleur
-     * @return la chaîne correspondante (ex : "rgb:red,20;green,30;blue,50")
-     */
-    public static String getColorString(Color c) {
-        int r = (int) ((c.getRed() / 255.0) * 100);
-        int g = (int) ((c.getGreen() / 255.0) * 100);
-        int b = (int) ((c.getBlue() / 255.0) * 100);
-        // FIXME entraine des erreurs LaTeX, du coup c'est pas ça
-        String res = "rgb:red," + r + ";green," + g + ";blue," + b;
-        return "";
     }
 
     /**
@@ -141,17 +139,16 @@ public class GenerateurLatex {
      * @return la liste des diapos (ex : "<1,2,4>")
      */
     public static String getDiapoNoeudString(Graph g, Noeud n, EtatParcours etat) {
-        String res = "";
         ArrayList<EtatParcours> list = g.getEtatsNoeud(n);
         int size = list.size();
-        boolean first = true;
+        ArrayList<Integer> diapos = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             if (list.get(i) == etat) {
-                res += ((first) ? "" : ",") + (i + 1);
-                first = false;
+                diapos.add(i);
             }
         }
-        return "<" + res + ">";
+        // FIXME la derniere diapos manque
+        return "<" + convertIntArrayToRangesSet(diapos) + ">";
     }
 
     /**
@@ -167,7 +164,7 @@ public class GenerateurLatex {
         // FIXME réduire à un entier simple
         int x = n.getCentre().x - (g.getWidth() / 2);
         int y = n.getCentre().y;
-        return "(" + x + "," + y + ")";
+        return "(" + x / 80 + "," + y / 80 + ")";
     }
 
     /**
@@ -185,7 +182,7 @@ public class GenerateurLatex {
             String coordonnees = getCoordonneeString(g, n);
             for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
                 String listeDiapos = getDiapoNoeudString(g, n, etat);
-                String couleur = getColorString(g.getColorForEtat(etat));
+                String couleur = etat.toString();
                 res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + "{\\scriptsize " + normalizedLabel
                         + "};\n";
             }
@@ -206,17 +203,16 @@ public class GenerateurLatex {
      * @return la liste des diapos (ex : "<1,2,4>")
      */
     public static String getDiapoLienString(Graph g, Lien l, EtatParcours etat) {
-        String res = "";
         ArrayList<EtatParcours> list = g.getEtatsLien(l);
         int size = list.size();
-        boolean first = true;
+        ArrayList<Integer> diapos = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             if (list.get(i) == etat) {
-                res += ((first) ? "" : ",") + (i + 1);
-                first = false;
+                diapos.add(i);
             }
         }
-        return "<" + res + ">";
+        // FIXME la derniere diapos manque
+        return "<" + convertIntArrayToRangesSet(diapos) + ">";
     }
 
     /**
@@ -232,7 +228,7 @@ public class GenerateurLatex {
             String depart = "(" + normalizeLabelForGraph(l.getDepart().getText()) + ")";
             String arrive = "(" + normalizeLabelForGraph(l.getArrive().getText()) + ")";
             for (EtatParcours etat : g.getEtatsLienDistinct(l)) {
-                String couleur = getColorString(g.getColorForEtat(etat));
+                String couleur = etat.toString();
                 res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien" + ((couleur.equals("")) ? "" : "=") + couleur + "] " + depart + " -> " + arrive + ";\n";
             }
         }
@@ -245,9 +241,18 @@ public class GenerateurLatex {
      * @return entête du code
      */
     public static String genererEntete() {
-        return "\\documentclass[hyperref={colorlinks=true}]{beamer}\n" + "\\usepackage{kpfonts}\n" + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage[T1]{fontenc}\n" + "\\usepackage{pdfpages}\n"
-                + "\\usetheme{Boadilla}\n" + "\\usepackage{tikz}\n" + "\\usepackage[frenchb]{babel}\n" + "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n"
-                + "\\newcounter{MyAlgoStep}\n" + "\\makeatletter";
+        String res = "\\documentclass[hyperref={colorlinks=true}]{beamer}\n";
+        res += "\\usepackage{kpfonts}\n";
+        res += "\\usepackage[utf8]{inputenc}\n";
+        res += "\\usepackage[T1]{fontenc}\n";
+        res += "\\usepackage{pdfpages}\n";
+        res += "\\usetheme{Boadilla}\n";
+        res += "\\usepackage{tikz}\n";
+        res += "\\usepackage[frenchb]{babel}\n";
+        res += "\\usepackage[ruled,vlined,linesnumberedhidden,french,slide]{algorithm2e}\n\n";
+        res += "\\newcounter{MyAlgoStep}\n";
+        res += "\\makeatletter";
+        return res;
     }
 
     /**
@@ -320,29 +325,25 @@ public class GenerateurLatex {
         }
 
         // Chaine représentant les numéros des diapos marquées
-        String markedString = "{";
-        int markedSize = marked.size();
-        if (markedSize > 0) {
-            for (int i = 0; i < markedSize; i++) {
-                markedString += marked.get(i) + ((i == (markedSize - 1)) ? "" : ",");
-            }
-        }
-        markedString += "}";
+        String markedString = "{" + convertIntArrayToRangesSet(marked) + "}";
 
         // Chaine représentant les numéros des diapos non marquées
-        String unmarkedString = "{";
-        int unmarkedSize = unmarked.size();
-        if (unmarkedSize > 0) {
-            for (int i = 0; i < unmarkedSize; i++) {
-                unmarkedString += unmarked.get(i) + ((i == (unmarkedSize - 1)) ? "" : ",");
-            }
-        }
-        unmarkedString += "}";
+        String unmarkedString = "{" + convertIntArrayToRangesSet(unmarked) + "}";
 
         // Chaine de la ligne
+        // On protège les caractères nécessaires et on supprime tout les caractères séparateurs en fin de chaînes
+        String protectedLine = protegerCaracteres(ligne).replaceFirst("\\s++$", "");
         String ligneString = "{";
-        for (char c : ligne.toCharArray()) {
-            ligneString += (c == '\n') ? "" : (isProtectedChar(c)) ? "\\" + c : c;
+        int i = 0;
+        for (char c : protectedLine.toCharArray()) {
+            // On cherche à protégé uniquement le ';' quand il est en bout de ligne, ce qui permet
+            // d'enchaîner plusieurs fois ce caractères sans que LaTeX ne sautes de lignes à chaque fois
+            if (i == (protectedLine.length() - 1) && c == ';') {
+                ligneString += "\\;";
+            } else {
+                ligneString += c;
+                i++;
+            }
         }
         ligneString += "}\n";
 
@@ -359,7 +360,7 @@ public class GenerateurLatex {
     public static String genererPseudoCode(PseudoCode pseudoCode) {
         String res = "";
 
-        res += "\\begin{minipage}[t]{6.2cm}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
+        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
 
         ArrayList<String> lignes = separerLignes(pseudoCode.getTextArea().getText());
         for (int i = 1; i <= lignes.size(); i++) {
@@ -379,7 +380,7 @@ public class GenerateurLatex {
      */
     public static String genererTableau(Tableau tableau) {
         String res = "";
-        res += "\\begin{minipage}[t]{3.5cm}\n" + "\\begin{scriptsize}\n";
+        res += "\\begin{minipage}[t]{0.48\\textspace}\n" + "\\begin{scriptsize}\n";
         res += genererEnteteTableau(tableau) + "\n";
         res += genererCorpsTableau(tableau) + "\\hline \n";
         res += "\\end{tabular}\\\\\n" + "\\end{scriptsize}\n" + "\\end{minipage}\n";
@@ -471,13 +472,68 @@ public class GenerateurLatex {
 
         for (String val : cell.keySet()) {
             res += "\\only<";
-            TreeSet<Integer> diapos = cell.get(val);
-            int i = 0;
-            for (int diapo : diapos) {
-                res += "" + diapo + ((i == diapos.size() - 1) ? "" : ",");
-                i++;
-            }
+            ArrayList<Integer> diapos = new ArrayList<>();
+            diapos.addAll(cell.get(val));
+            res += convertIntArrayToRangesSet(diapos);
             res += ">{" + ((val == null || val.equals("")) ? "" : genererColorCodeTableau(tableau, ligne, colonne, val)) + "}";
+        }
+        return res;
+    }
+
+    /**
+     * Transforme une liste d'entier en une chaine de représentant les plages d'entiers correspondantes
+     * 
+     * @param list
+     *            la liste des entiers
+     * @return la chaînes des plages d'entiers (ex : {1,3,4,5,7} -> "1,3-5,7")
+     */
+    public static String convertIntArrayToRangesSet(ArrayList<Integer> list) {
+        int size = list.size();
+        if (size <= 0) {
+            return "";
+        } else if (size == 1) {
+            return "" + list.get(0);
+        }
+        ArrayList<String> ranges = new ArrayList<>();
+        int cur = 0, begin = list.get(0), prev = 0;
+        for (int i = 1; i < size; i++) {
+            cur = list.get(i);
+            prev = list.get(i - 1);
+            if (cur != (prev + 1)) {
+                if (begin == prev) {
+                    ranges.add("" + begin);
+                } else if (begin == (prev - 1)) {
+                    ranges.add("" + begin);
+                    ranges.add("" + prev);
+                } else {
+                    ranges.add(begin + "-" + prev);
+                }
+                begin = list.get(i);
+            } else if (i == (size - 1)) {
+                if (begin == cur) {
+                    ranges.add("" + begin);
+                } else if (begin == (cur - 1)) {
+                    ranges.add("" + begin);
+                    ranges.add("" + cur);
+                } else {
+                    ranges.add(begin + "-" + cur);
+                }
+            }
+
+        }
+        size = ranges.size();
+        if (size > 0) {
+            // évite que le dernier élément se 'perde' dans certains cas
+            // notament quand le dernier élément est à ajouter à ranges est un entier simple
+            String last = ranges.get(size - 1);
+            if (!last.contains("" + list.get(list.size() - 1))) {
+                ranges.add("" + list.get(list.size() - 1));
+                size++;
+            }
+        }
+        String res = "";
+        for (int i = 0; i < size; i++) {
+            res += ranges.get(i) + ((i == size - 1) ? "" : ",");
         }
         return res;
     }
@@ -496,24 +552,10 @@ public class GenerateurLatex {
         }
 
         // Chaine représentant les numéros des diapos marquées
-        String markedString = "{";
-        int markedSize = marked.size();
-        if (markedSize > 0) {
-            for (int i = 0; i < markedSize; i++) {
-                markedString += marked.get(i) + ((i == (markedSize - 1)) ? "" : ",");
-            }
-        }
-        markedString += "}";
+        String markedString = "{" + convertIntArrayToRangesSet(marked) + "}";
 
         // Chaine représentant les numéros des diapos non marquées
-        String unmarkedString = "{";
-        int unmarkedSize = unmarked.size();
-        if (unmarkedSize > 0) {
-            for (int i = 0; i < unmarkedSize; i++) {
-                unmarkedString += unmarked.get(i) + ((i == (unmarkedSize - 1)) ? "" : ",");
-            }
-        }
-        unmarkedString += "}";
+        String unmarkedString = "{" + convertIntArrayToRangesSet(unmarked) + "}";
 
         // Chaine de la ligne
         String ligneString = "{" + protegerCaracteresTableau(s) + "}";

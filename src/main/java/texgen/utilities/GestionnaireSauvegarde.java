@@ -23,6 +23,7 @@ import org.xml.sax.SAXParseException;
 
 import texgen.modele.Lien;
 import texgen.modele.Noeud;
+import texgen.modele.Noeud.TypeForme;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph;
 import texgen.vue.Graph.EtatParcours;
@@ -76,6 +77,7 @@ public class GestionnaireSauvegarde {
         s += "\t<!ATTLIST noeud x CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud y CDATA #REQUIRED >\n";
         s += "\t<!ATTLIST noeud id CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST noeud forme (0|1) \"0\" >\n";
         s += "\t<!ELEMENT liens (lien)* >\n";
         s += "\t<!ELEMENT lien (label,etats) >\n";
         s += "\t<!ATTLIST lien depart CDATA #REQUIRED >\n";
@@ -120,12 +122,14 @@ public class GestionnaireSauvegarde {
         res += "\t\t<noeuds>\n";
         int i = 0;
         for (Noeud n : g.getNoeuds()) {
-            res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\">\n";
+            String forme = (n.getForme() == TypeForme.Double) ? " forme = \"1\"" : "";
+            res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\"" + forme + ">\n";
             res += "\t\t\t\t<label><![CDATA[" + n.getText() + "]]></label>\n";
             res += "\t\t\t\t<etats>\n";
             int j = 1;
             for (EtatParcours etat : g.getEtatsNoeud(n)) {
                 res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+                j++;
             }
             res += "\t\t\t\t</etats>\n";
             res += "\t\t\t</noeud>\n";
@@ -145,6 +149,7 @@ public class GestionnaireSauvegarde {
             int j = 1;
             for (EtatParcours etat : g.getEtatsLien(l)) {
                 res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+                j++;
             }
             res += "\t\t\t\t</etats>\n";
             res += "\t\t\t</lien>\n";
@@ -300,7 +305,11 @@ public class GestionnaireSauvegarde {
                 expression = xpathNode + "/@id";
                 String id = (String) path.evaluate(expression, root, XPathConstants.STRING);
                 noeuds.put(id, g.creerNoeud(value, x, y));
-
+                expression = xpathNode + "/@forme";
+                String forme = (String) path.evaluate(expression, root, XPathConstants.STRING);
+                if (forme.equals("1")) {
+                    noeuds.get(id).changerForme(TypeForme.Double);
+                }
                 for (int j = 1; j <= nombreDiapos; j++) {
                     expression = xpathNode + "/etats/diapo_g[" + j + "]";
                     int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();

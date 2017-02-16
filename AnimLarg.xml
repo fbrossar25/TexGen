@@ -1,0 +1,1821 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE projet [
+	<!ELEMENT projet (pseudocode, tableau, graph) >
+	<!ATTLIST projet diapos CDATA #REQUIRED >
+
+	<!ELEMENT pseudocode (texte, marqueurs) >
+	<!ELEMENT texte (ligne_p)* >
+	<!ELEMENT ligne_p (#PCDATA) >
+	<!ELEMENT marqueurs (diapo_p)+ >
+	<!ELEMENT diapo_p (marqueur)* >
+	<!ATTLIST diapo_p numero CDATA #REQUIRED >
+	<!ELEMENT marqueur (#PCDATA) >
+
+	<!ELEMENT tableau (colonnes, diapos_t) >
+	<!ATTLIST tableau lignes CDATA #REQUIRED >
+	<!ATTLIST tableau colonnes CDATA #REQUIRED >
+	<!ELEMENT colonnes (colonne)+ >
+	<!ELEMENT colonne (#PCDATA) >
+	<!ATTLIST colonne numero CDATA #REQUIRED >
+	<!ELEMENT diapos_t (diapo_t)+ >
+	<!ELEMENT diapo_t (ligne_t)+ >
+	<!ATTLIST diapo_t numero CDATA #REQUIRED >
+	<!ELEMENT ligne_t (case)* >
+	<!ATTLIST ligne_t numero CDATA #REQUIRED >
+	<!ELEMENT case (#PCDATA) >
+	<!ATTLIST case numero CDATA #REQUIRED >
+
+	<!ELEMENT graph (noeuds, liens) >
+	<!ELEMENT noeuds (noeud)* >
+	<!ELEMENT noeud (label,etats) >
+	<!ELEMENT label (#PCDATA) >
+	<!ELEMENT etats (diapo_g)+ >
+	<!ELEMENT diapo_g (#PCDATA) >
+	<!ATTLIST diapo_g numero CDATA #REQUIRED >
+	<!ATTLIST noeud x CDATA #REQUIRED >
+	<!ATTLIST noeud y CDATA #REQUIRED >
+	<!ATTLIST noeud id CDATA #REQUIRED >
+	<!ATTLIST noeud forme (0|1) "0" >
+	<!ELEMENT liens (lien)* >
+	<!ELEMENT lien (label,etats) >
+	<!ATTLIST lien depart CDATA #REQUIRED >
+	<!ATTLIST lien arrive CDATA #REQUIRED >
+]>
+<projet diapos="40">
+	<pseudocode>
+		<texte>
+			<ligne_p><![CDATA[Ch <- Premier(Liste); ﬁn <- Faux;]]></ligne_p>
+			<ligne_p><![CDATA[while Ch != {} et non(ﬁn) do	]]></ligne_p>
+			<ligne_p><![CDATA[   Liste <-  Liste \ {Ch}; n <- dernierNoeud(Ch);]]></ligne_p>
+			<ligne_p><![CDATA[   n1  <- successeur(n);]]></ligne_p>
+			<ligne_p><![CDATA[   while non(ﬁn) et n1 est valide do]]></ligne_p>
+			<ligne_p><![CDATA[      if n1 est solution then]]></ligne_p>
+			<ligne_p><![CDATA[         Sol Ch Uf {n1}; ﬁn <- Vrai;]]></ligne_p>
+			<ligne_p><![CDATA[      else Liste <- Liste Uf {(Ch Uf {n1})};]]></ligne_p>
+			<ligne_p><![CDATA[      n1 <- successeur(n);]]></ligne_p>
+			<ligne_p><![CDATA[   Ch Premier(Liste);]]></ligne_p>
+			<ligne_p><![CDATA[return ﬁn;]]></ligne_p>
+		</texte>
+		<marqueurs>
+			<diapo_p numero="1">
+			</diapo_p>
+			<diapo_p numero="2">
+				<marqueur>1</marqueur>
+			</diapo_p>
+			<diapo_p numero="3">
+				<marqueur>2</marqueur>
+			</diapo_p>
+			<diapo_p numero="4">
+				<marqueur>3</marqueur>
+			</diapo_p>
+			<diapo_p numero="5">
+				<marqueur>4</marqueur>
+			</diapo_p>
+			<diapo_p numero="6">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="7">
+				<marqueur>6</marqueur>
+			</diapo_p>
+			<diapo_p numero="8">
+				<marqueur>8</marqueur>
+			</diapo_p>
+			<diapo_p numero="9">
+				<marqueur>9</marqueur>
+			</diapo_p>
+			<diapo_p numero="10">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="11">
+				<marqueur>6</marqueur>
+			</diapo_p>
+			<diapo_p numero="12">
+				<marqueur>8</marqueur>
+			</diapo_p>
+			<diapo_p numero="13">
+				<marqueur>9</marqueur>
+			</diapo_p>
+			<diapo_p numero="14">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="15">
+				<marqueur>10</marqueur>
+			</diapo_p>
+			<diapo_p numero="16">
+				<marqueur>2</marqueur>
+			</diapo_p>
+			<diapo_p numero="17">
+				<marqueur>3</marqueur>
+			</diapo_p>
+			<diapo_p numero="18">
+				<marqueur>4</marqueur>
+			</diapo_p>
+			<diapo_p numero="19">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="20">
+				<marqueur>6</marqueur>
+			</diapo_p>
+			<diapo_p numero="21">
+				<marqueur>8</marqueur>
+			</diapo_p>
+			<diapo_p numero="22">
+				<marqueur>9</marqueur>
+			</diapo_p>
+			<diapo_p numero="23">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="24">
+				<marqueur>6</marqueur>
+			</diapo_p>
+			<diapo_p numero="25">
+				<marqueur>8</marqueur>
+			</diapo_p>
+			<diapo_p numero="26">
+				<marqueur>9</marqueur>
+			</diapo_p>
+			<diapo_p numero="27">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="28">
+				<marqueur>10</marqueur>
+			</diapo_p>
+			<diapo_p numero="29">
+				<marqueur>2</marqueur>
+			</diapo_p>
+			<diapo_p numero="30">
+				<marqueur>3</marqueur>
+			</diapo_p>
+			<diapo_p numero="31">
+				<marqueur>4</marqueur>
+			</diapo_p>
+			<diapo_p numero="32">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="33">
+				<marqueur>6</marqueur>
+			</diapo_p>
+			<diapo_p numero="34">
+				<marqueur>7</marqueur>
+			</diapo_p>
+			<diapo_p numero="35">
+				<marqueur>9</marqueur>
+			</diapo_p>
+			<diapo_p numero="36">
+				<marqueur>5</marqueur>
+			</diapo_p>
+			<diapo_p numero="37">
+				<marqueur>10</marqueur>
+			</diapo_p>
+			<diapo_p numero="38">
+				<marqueur>2</marqueur>
+			</diapo_p>
+			<diapo_p numero="39">
+				<marqueur>11</marqueur>
+			</diapo_p>
+			<diapo_p numero="40">
+			</diapo_p>
+		</marqueurs>
+	</pseudocode>
+
+	<tableau lignes="4" colonnes="6">
+		<colonnes>
+			<colonne numero="0"><![CDATA[Ch]]></colonne>
+			<colonne numero="1"><![CDATA[n]]></colonne>
+			<colonne numero="2"><![CDATA[n1]]></colonne>
+			<colonne numero="3"><![CDATA[fin]]></colonne>
+			<colonne numero="4"><![CDATA[Liste]]></colonne>
+			<colonne numero="5"><![CDATA[Sol]]></colonne>
+		</colonnes>
+		<diapos_t>
+			<diapo_t numero="1">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[-]]></case>
+					<case numero="1"><![CDATA[-]]></case>
+					<case numero="2"><![CDATA[-]]></case>
+					<case numero="3"><![CDATA[-]]></case>
+					<case numero="4"><![CDATA[{{A}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="2">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[-]]></case>
+					<case numero="2"><![CDATA[-]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{A}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="3">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[-]]></case>
+					<case numero="2"><![CDATA[-]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{A}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="4">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[-]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="5">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[B]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="6">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[B]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="7">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[B]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="8">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[B]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="9">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[C]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="10">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[C]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="11">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[C]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="12">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[C]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="13">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="14">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="15">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="16">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="17">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="4"><![CDATA[{AC}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="18">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[D]]></case>
+					<case numero="4"><![CDATA[{AC}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="19">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[D]]></case>
+					<case numero="4"><![CDATA[{AC}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="20">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[D]]></case>
+					<case numero="4"><![CDATA[{AC}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="21">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[D]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="22">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[E]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="23">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[E]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="24">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[E]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="25">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[E]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="26">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="27">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="28">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="29">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="30">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="31">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[F]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="32">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[F]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="33">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[F]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="34">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[F]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="35">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="36">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="37">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="38">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="39">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+			<diapo_t numero="40">
+				<ligne_t numero="1">
+					<case numero="0"><![CDATA[{A}]]></case>
+					<case numero="1"><![CDATA[A]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="3"><![CDATA[Faux]]></case>
+					<case numero="4"><![CDATA[{{AB},{AC}}]]></case>
+				</ligne_t>
+				<ligne_t numero="2">
+					<case numero="0"><![CDATA[{AB}]]></case>
+					<case numero="1"><![CDATA[B]]></case>
+					<case numero="2"><![CDATA[⊥]]></case>
+					<case numero="4"><![CDATA[{{AC},{ABD},{ABE}}]]></case>
+				</ligne_t>
+				<ligne_t numero="3">
+					<case numero="0"><![CDATA[{AC}]]></case>
+					<case numero="1"><![CDATA[C]]></case>
+					<case numero="2"><![CDATA[G]]></case>
+					<case numero="3"><![CDATA[Vrai]]></case>
+					<case numero="4"><![CDATA[{{ABD},{ABE}}]]></case>
+					<case numero="5"><![CDATA[{A,C,F}]]></case>
+				</ligne_t>
+			</diapo_t>
+		</diapos_t>
+	</tableau>
+
+	<graph>
+		<noeuds>
+			<noeud id="0" x="133" y="378">
+				<label><![CDATA[H]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="1" x="439" y="199">
+				<label><![CDATA[C]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">2</diapo_g>
+					<diapo_g numero="31">2</diapo_g>
+					<diapo_g numero="32">2</diapo_g>
+					<diapo_g numero="33">2</diapo_g>
+					<diapo_g numero="34">2</diapo_g>
+					<diapo_g numero="35">2</diapo_g>
+					<diapo_g numero="36">2</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="2" x="388" y="378">
+				<label><![CDATA[K]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="3" x="295" y="379" forme = "1">
+				<label><![CDATA[J]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="4" x="324" y="106">
+				<label><![CDATA[A]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">2</diapo_g>
+					<diapo_g numero="5">2</diapo_g>
+					<diapo_g numero="6">2</diapo_g>
+					<diapo_g numero="7">2</diapo_g>
+					<diapo_g numero="8">2</diapo_g>
+					<diapo_g numero="9">2</diapo_g>
+					<diapo_g numero="10">2</diapo_g>
+					<diapo_g numero="11">2</diapo_g>
+					<diapo_g numero="12">2</diapo_g>
+					<diapo_g numero="13">2</diapo_g>
+					<diapo_g numero="14">2</diapo_g>
+					<diapo_g numero="15">2</diapo_g>
+					<diapo_g numero="16">2</diapo_g>
+					<diapo_g numero="17">1</diapo_g>
+					<diapo_g numero="18">1</diapo_g>
+					<diapo_g numero="19">1</diapo_g>
+					<diapo_g numero="20">1</diapo_g>
+					<diapo_g numero="21">1</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="5" x="197" y="202">
+				<label><![CDATA[B]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">2</diapo_g>
+					<diapo_g numero="18">2</diapo_g>
+					<diapo_g numero="19">2</diapo_g>
+					<diapo_g numero="20">2</diapo_g>
+					<diapo_g numero="21">2</diapo_g>
+					<diapo_g numero="22">2</diapo_g>
+					<diapo_g numero="23">2</diapo_g>
+					<diapo_g numero="24">2</diapo_g>
+					<diapo_g numero="25">2</diapo_g>
+					<diapo_g numero="26">2</diapo_g>
+					<diapo_g numero="27">2</diapo_g>
+					<diapo_g numero="28">2</diapo_g>
+					<diapo_g numero="29">2</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="6" x="133" y="290">
+				<label><![CDATA[D]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="7" x="493" y="279">
+				<label><![CDATA[G]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="8" x="384" y="278" forme = "1">
+				<label><![CDATA[F]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">3</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="9" x="254" y="288">
+				<label><![CDATA[E]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+			<noeud id="10" x="187" y="378">
+				<label><![CDATA[I]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</noeud>
+		</noeuds>
+		<liens>
+			<lien depart="6" arrive="0">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="4" arrive="5">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">2</diapo_g>
+					<diapo_g numero="6">2</diapo_g>
+					<diapo_g numero="7">2</diapo_g>
+					<diapo_g numero="8">2</diapo_g>
+					<diapo_g numero="9">1</diapo_g>
+					<diapo_g numero="10">1</diapo_g>
+					<diapo_g numero="11">1</diapo_g>
+					<diapo_g numero="12">1</diapo_g>
+					<diapo_g numero="13">1</diapo_g>
+					<diapo_g numero="14">1</diapo_g>
+					<diapo_g numero="15">1</diapo_g>
+					<diapo_g numero="16">1</diapo_g>
+					<diapo_g numero="17">1</diapo_g>
+					<diapo_g numero="18">1</diapo_g>
+					<diapo_g numero="19">1</diapo_g>
+					<diapo_g numero="20">1</diapo_g>
+					<diapo_g numero="21">1</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="8" arrive="2">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="4" arrive="1">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">2</diapo_g>
+					<diapo_g numero="10">2</diapo_g>
+					<diapo_g numero="11">2</diapo_g>
+					<diapo_g numero="12">2</diapo_g>
+					<diapo_g numero="13">1</diapo_g>
+					<diapo_g numero="14">1</diapo_g>
+					<diapo_g numero="15">1</diapo_g>
+					<diapo_g numero="16">1</diapo_g>
+					<diapo_g numero="17">1</diapo_g>
+					<diapo_g numero="18">1</diapo_g>
+					<diapo_g numero="19">1</diapo_g>
+					<diapo_g numero="20">1</diapo_g>
+					<diapo_g numero="21">1</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">3</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="1" arrive="7">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">2</diapo_g>
+					<diapo_g numero="35">2</diapo_g>
+					<diapo_g numero="36">2</diapo_g>
+					<diapo_g numero="37">2</diapo_g>
+					<diapo_g numero="38">2</diapo_g>
+					<diapo_g numero="39">2</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="5" arrive="9">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">2</diapo_g>
+					<diapo_g numero="23">2</diapo_g>
+					<diapo_g numero="24">2</diapo_g>
+					<diapo_g numero="25">2</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="9" arrive="10">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="5" arrive="6">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">2</diapo_g>
+					<diapo_g numero="19">2</diapo_g>
+					<diapo_g numero="20">2</diapo_g>
+					<diapo_g numero="21">2</diapo_g>
+					<diapo_g numero="22">1</diapo_g>
+					<diapo_g numero="23">1</diapo_g>
+					<diapo_g numero="24">1</diapo_g>
+					<diapo_g numero="25">1</diapo_g>
+					<diapo_g numero="26">1</diapo_g>
+					<diapo_g numero="27">1</diapo_g>
+					<diapo_g numero="28">1</diapo_g>
+					<diapo_g numero="29">1</diapo_g>
+					<diapo_g numero="30">1</diapo_g>
+					<diapo_g numero="31">1</diapo_g>
+					<diapo_g numero="32">1</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">1</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="9" arrive="3">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">0</diapo_g>
+					<diapo_g numero="32">0</diapo_g>
+					<diapo_g numero="33">0</diapo_g>
+					<diapo_g numero="34">0</diapo_g>
+					<diapo_g numero="35">0</diapo_g>
+					<diapo_g numero="36">0</diapo_g>
+					<diapo_g numero="37">0</diapo_g>
+					<diapo_g numero="38">0</diapo_g>
+					<diapo_g numero="39">0</diapo_g>
+					<diapo_g numero="40">0</diapo_g>
+				</etats>
+			</lien>
+			<lien depart="1" arrive="8">
+				<label><![CDATA[]]></label>
+				<etats>
+					<diapo_g numero="1">0</diapo_g>
+					<diapo_g numero="2">0</diapo_g>
+					<diapo_g numero="3">0</diapo_g>
+					<diapo_g numero="4">0</diapo_g>
+					<diapo_g numero="5">0</diapo_g>
+					<diapo_g numero="6">0</diapo_g>
+					<diapo_g numero="7">0</diapo_g>
+					<diapo_g numero="8">0</diapo_g>
+					<diapo_g numero="9">0</diapo_g>
+					<diapo_g numero="10">0</diapo_g>
+					<diapo_g numero="11">0</diapo_g>
+					<diapo_g numero="12">0</diapo_g>
+					<diapo_g numero="13">0</diapo_g>
+					<diapo_g numero="14">0</diapo_g>
+					<diapo_g numero="15">0</diapo_g>
+					<diapo_g numero="16">0</diapo_g>
+					<diapo_g numero="17">0</diapo_g>
+					<diapo_g numero="18">0</diapo_g>
+					<diapo_g numero="19">0</diapo_g>
+					<diapo_g numero="20">0</diapo_g>
+					<diapo_g numero="21">0</diapo_g>
+					<diapo_g numero="22">0</diapo_g>
+					<diapo_g numero="23">0</diapo_g>
+					<diapo_g numero="24">0</diapo_g>
+					<diapo_g numero="25">0</diapo_g>
+					<diapo_g numero="26">0</diapo_g>
+					<diapo_g numero="27">0</diapo_g>
+					<diapo_g numero="28">0</diapo_g>
+					<diapo_g numero="29">0</diapo_g>
+					<diapo_g numero="30">0</diapo_g>
+					<diapo_g numero="31">2</diapo_g>
+					<diapo_g numero="32">2</diapo_g>
+					<diapo_g numero="33">1</diapo_g>
+					<diapo_g numero="34">1</diapo_g>
+					<diapo_g numero="35">1</diapo_g>
+					<diapo_g numero="36">1</diapo_g>
+					<diapo_g numero="37">1</diapo_g>
+					<diapo_g numero="38">1</diapo_g>
+					<diapo_g numero="39">1</diapo_g>
+					<diapo_g numero="40">3</diapo_g>
+				</etats>
+			</lien>
+		</liens>
+	</graph>
+</projet>
