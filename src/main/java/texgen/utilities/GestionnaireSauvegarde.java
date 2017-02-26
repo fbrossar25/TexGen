@@ -1,5 +1,6 @@
 package texgen.utilities;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import texgen.modele.InfosPresentation;
 import texgen.modele.Lien;
 import texgen.modele.Noeud;
 import texgen.modele.Noeud.TypeForme;
@@ -45,8 +47,24 @@ public class GestionnaireSauvegarde {
      */
     public static String enteteDTD() {
         String s = "<!DOCTYPE projet [\n";
-        s += "\t<!ELEMENT projet (pseudocode, tableau, graph) >\n";
+        s += "\t<!ELEMENT projet (infos, pseudocode, tableau, graph) >\n";
         s += "\t<!ATTLIST projet diapos CDATA #REQUIRED >\n\n";
+        s += "\t<!ELEMENT infos (auteur, titre, titreCourt, sousTitre, algo, institut, date, couleurs) >\n";
+        s += "\t<!ELEMENT auteur (#PCDATA) >\n";
+        s += "\t<!ELEMENT titre (#PCDATA) >\n";
+        s += "\t<!ELEMENT titreCourt (#PCDATA) >\n";
+        s += "\t<!ELEMENT sousTitre (#PCDATA) >\n";
+        s += "\t<!ELEMENT algo (#PCDATA) >\n";
+        s += "\t<!ELEMENT institut (#PCDATA) >\n";
+        s += "\t<!ELEMENT date (#PCDATA) >\n";
+        s += "\t<!ELEMENT couleurs (couleursNoeuds, couleursLiens) >\n";
+        s += "\t<!ELEMENT couleursNoeuds (couleur)* >\n";
+        s += "\t<!ELEMENT couleursLiens (couleur)* >\n";
+        s += "\t<!ELEMENT couleur EMPTY >\n";
+        s += "\t<!ATTLIST couleur etat CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST couleur r CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST couleur g CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST couleur b CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT pseudocode (texte, marqueurs) >\n";
         s += "\t<!ELEMENT texte (ligne_p)* >\n";
         s += "\t<!ELEMENT ligne_p (#PCDATA) >\n";
@@ -101,14 +119,48 @@ public class GestionnaireSauvegarde {
      * @param fullPath
      *            le chemin du fichier de sauvegarde
      */
-    public static void sauvegarder(int nombreDiapos, PseudoCode p, Tableau t, Graph g, String fullPath) {
+    public static void sauvegarder(int nombreDiapos, InfosPresentation i, PseudoCode p, Tableau t, Graph g, String fullPath) {
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
         // TODO utiliser un schema plutôt qu'un DTD dans l'entête
         s += enteteDTD();
-        s += "<projet diapos=\"" + nombreDiapos + "\">\n";
-        s += sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t) + "\n\n" + sauvegarderGraph(g);
+        s += "<projet diapos=\"" + nombreDiapos + "\">\n\n";
+        s += sauvegarderInfos(i) + "\n\n" + sauvegarderPseudoCode(p) + "\n\n" + sauvegarderTableau(t) + "\n\n" + sauvegarderGraph(g);
         s += "\n</projet>";
         FileUtilities.writeStringInFile(s, fullPath, false);
+    }
+
+    /**
+     * Sauvegarde les informations (nom de l'auteur, de la présentation,...) et les couleurs utilisés dans le graph
+     * 
+     * @param i
+     *            le modèles correspondant aux informations
+     * @return la chaîne XML correspondant aux informations
+     */
+    public static String sauvegarderInfos(InfosPresentation i) {
+        String res = "\t<infos>\n";
+        res += "\t\t<auteur>" + i.getNomAuteur() + "</auteur>\n";
+        res += "\t\t<titre>" + i.getTitrePresentation() + "</titre>\n";
+        res += "\t\t<titreCourt>" + i.getTitrePresentationCourt() + "</titreCourt>\n";
+        res += "\t\t<sousTitre>" + i.getSousTitrePresentation() + "</sousTitre>\n";
+        res += "\t\t<algo>" + i.getTitreAlgo() + "</algo>\n";
+        res += "\t\t<institut>" + i.getInstitut() + "</institut>\n";
+        res += "\t\t<date>" + i.getDate() + "</date>\n";
+        res += "\t\t<couleurs>\n";
+        res += "\t\t\t<couleursNoeuds>\n";
+        Color c;
+        for (EtatParcours etat : EtatParcours.values()) {
+            c = i.getCouleursNoeuds().get(etat);
+            res += "\t\t\t\t<couleur etat=\"" + i.getIntForEtat(etat) + "\" r=\"" + c.getRed() + "\" g=\"" + c.getGreen() + "\" b=\"" + c.getBlue() + "\"/>\n";
+        }
+        res += "\t\t\t</couleursNoeuds>\n";
+        res += "\t\t\t<couleursLiens>\n";
+        for (EtatParcours etat : EtatParcours.values()) {
+            c = i.getCouleursLiens().get(etat);
+            res += "\t\t\t\t<couleur etat=\"" + i.getIntForEtat(etat) + "\" r=\"" + c.getRed() + "\" g=\"" + c.getGreen() + "\" b=\"" + c.getBlue() + "\"/>\n";
+        }
+        res += "\t\t\t</couleursLiens>\n";
+        res += "\t\t</couleurs>\n";
+        return res + "\t</infos>";
     }
 
     /**
@@ -261,6 +313,7 @@ public class GestionnaireSauvegarde {
                 XPathFactory xpf = XPathFactory.newInstance();
                 XPath path = xpf.newXPath();
                 chargerReset(root, f, path);
+                chargerInfos(root, f.getInfos(), path);
                 chargerTextePseudoCode(root, f.getPseudoCode(), path);
                 chargerMarqueursPseudoCode(root, f.getPseudoCode(), path);
                 chargerTableau(root, f.getTableau(), path);
@@ -277,6 +330,53 @@ public class GestionnaireSauvegarde {
     }
 
     /**
+     * Fonction permettant de charger les informations de la présentation d'un fichier de sauvegarde
+     * 
+     * @param root
+     *            l'element racine de la sauvegarde
+     * @param infos
+     *            les informations de la présentation
+     * @param path
+     *            une instance de XPath
+     */
+    public static void chargerInfos(Element root, InfosPresentation infos, XPath path) {
+        String infosPath = "/projet/infos";
+        try {
+            // On récupère les informations de la présentation
+            infos.setNomAuteur((String) path.evaluate(infosPath + "/auteur/text()", root, XPathConstants.STRING));
+            infos.setTitrePresentation((String) path.evaluate(infosPath + "/titre/text()", root, XPathConstants.STRING));
+            infos.setTitrePresentationCourt((String) path.evaluate(infosPath + "/titreCourt/text()", root, XPathConstants.STRING));
+            infos.setSousTitrePresentation((String) path.evaluate(infosPath + "sousTitre/text()", root, XPathConstants.STRING));
+            infos.setTitreAlgo((String) path.evaluate(infosPath + "algo/text()", root, XPathConstants.STRING));
+            infos.setInstitut((String) path.evaluate(infosPath + "institut/text()", root, XPathConstants.STRING));
+            infos.setDate((String) path.evaluate(infosPath + "date/text()", root, XPathConstants.STRING));
+            int r, g, b, intEtat;
+            String infosColorPath;
+            // On récupère les couleurs des états
+            for (EtatParcours etat : EtatParcours.values()) {
+                intEtat = infos.getIntForEtat(etat);
+                infosColorPath = infosPath + "/couleurs/couleursNoeuds/couleur[@etat=\"" + intEtat + "\"]";
+                r = ((Double) path.evaluate(infosColorPath + "/@r", root, XPathConstants.NUMBER)).intValue();
+                g = ((Double) path.evaluate(infosColorPath + "/@g", root, XPathConstants.NUMBER)).intValue();
+                b = ((Double) path.evaluate(infosColorPath + "/@b", root, XPathConstants.NUMBER)).intValue();
+                infos.getCouleursNoeuds().put(etat, new Color(r, g, b));
+            }
+            // On récupère les couleurs des liens
+            for (EtatParcours etat : EtatParcours.values()) {
+                intEtat = infos.getIntForEtat(etat);
+                infosColorPath = infosPath + "/couleurs/couleursLiens/couleur[@etat=\"" + intEtat + "\"]";
+                r = ((Double) path.evaluate(infosColorPath + "/@r", root, XPathConstants.NUMBER)).intValue();
+                g = ((Double) path.evaluate(infosColorPath + "/@g", root, XPathConstants.NUMBER)).intValue();
+                b = ((Double) path.evaluate(infosColorPath + "/@b", root, XPathConstants.NUMBER)).intValue();
+                infos.getCouleursLiens().put(etat, new Color(r, g, b));
+            }
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(infos.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
      * Fonction permettant de charger les données du graph d'un fichier de sauvegarde
      * 
      * @param root
@@ -287,7 +387,6 @@ public class GestionnaireSauvegarde {
      *            une instance de XPath
      */
     public static void chargerGraph(Element root, Graph g, XPath path) {
-        // FIXME Mauvaise restitution des labels
         try {
             // Chargement des noeuds
             String expression = "count(/projet/graph/noeuds/*)";

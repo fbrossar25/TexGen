@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 
 import texgen.utilities.FileUtilities;
-import texgen.utilities.GenerateurLatex;
 import texgen.utilities.GestionnaireSauvegarde;
 import texgen.vue.BarreMenu;
 import texgen.vue.FenetrePrincipale;
@@ -43,11 +42,7 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().reset();
             barreMenu.getFenetre().refresh();
         } else if (source.getText().equals("Générer")) {
-            String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier LaTeX .tex", "tex");
-            if (fullPath == null || fullPath.equals("")) {
-                return;
-            }
-            FileUtilities.writeStringInFile(GenerateurLatex.generer(barreMenu.getFenetre()), fullPath, true);
+            barreMenu.getFenetre().saisieInfos();
         } else if (source.getText().equals("Diapo suivante")) {
             barreMenu.getFenetre().diapoSuivante();
         } else if (source.getText().equals("Diapo precedente")) {
@@ -60,7 +55,7 @@ public class ControleurBarreMenu implements ActionListener {
                 return;
             }
             FenetrePrincipale f = barreMenu.getFenetre();
-            GestionnaireSauvegarde.sauvegarder(f.getNombreDiapos(), f.getPseudoCode(), f.getTableau(), f.getGraph(), fullPath);
+            GestionnaireSauvegarde.sauvegarder(f.getNombreDiapos(), f.getInfos(), f.getPseudoCode(), f.getTableau(), f.getGraph(), fullPath);
         } else if (source.getText().equals("Ouvrir")) {
             String fullPath = FileUtilities.selectFileWithFilter(barreMenu.getFenetre(), "Fichier XML .xml", "xml");
             if (fullPath == null || fullPath.equals("")) {
@@ -77,6 +72,8 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().getGraph().setArrow(true);
         } else if (source.getText().equals("Lignes")) {
             barreMenu.getFenetre().getGraph().setArrow(false);
+        } else if (source.getText().equals("Changer couleurs")) {
+            barreMenu.getFenetre().choixCouleurs();
         }
     }
 

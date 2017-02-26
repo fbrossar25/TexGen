@@ -1,5 +1,7 @@
 package texgen;
 
+import javax.swing.SwingUtilities;
+
 import texgen.vue.FenetrePrincipale;
 
 /**
@@ -21,6 +23,11 @@ public class MainApp {
      *            arguments
      */
     public static void main(String[] args) {
-        new FenetrePrincipale();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new FenetrePrincipale();
+            }
+        });
     }
 }

@@ -942,40 +942,10 @@ public class Graph extends JPanel {
      *            le noeud
      */
     public void setColorForNode(Graphics g, Noeud n) {
-        switch (getEtatCourantNoeud(n)) {
-            case Actif: {
-                g.setColor(Color.RED);
-            }
-                break;
-
-            case Inactif: {
-                g.setColor(Color.LIGHT_GRAY);
-            }
-                break;
-
-            case Parcourus: {
-                g.setColor(Color.BLACK);
-            }
-                break;
-
-            case Solution: {
-                g.setColor(Color.GREEN);
-            }
-                break;
-
-            case NonSolution: {
-                g.setColor(Color.MAGENTA);
-                // TODO dessiner une croix rouge
-            }
-                break;
-
-            case Erreur: {
-                g.setColor(Color.BLUE);
-            }
-                break;
-            default:
-                g.setColor(Color.ORANGE);
+        if (n == null) {
+            return;
         }
+        g.setColor(fenetre.getInfos().getCouleursNoeuds().get(getEtatCourantNoeud(n)));
     }
 
     /**
@@ -990,41 +960,7 @@ public class Graph extends JPanel {
         if (l == null) {
             return;
         }
-        switch (getEtatCourantLien(l)) {
-            case Actif: {
-                g.setColor(Color.RED);
-            }
-                break;
-
-            case Inactif: {
-                g.setColor(Color.LIGHT_GRAY);
-            }
-                break;
-
-            case Parcourus: {
-                g.setColor(Color.BLACK);
-            }
-                break;
-
-            case Solution: {
-                g.setColor(Color.GREEN);
-            }
-                break;
-
-            case NonSolution: {
-                g.setColor(Color.MAGENTA);
-                // TODO dessiner une croix rouge
-            }
-                break;
-
-            case Erreur: {
-                g.setColor(Color.BLUE);
-            }
-                break;
-
-            default:
-                g.setColor(Color.ORANGE);
-        }
+        g.setColor(fenetre.getInfos().getCouleursLiens().get(getEtatCourantLien(l)));
     }
 
     /**

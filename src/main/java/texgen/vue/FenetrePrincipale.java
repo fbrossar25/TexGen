@@ -15,6 +15,7 @@ import javax.swing.JSplitPane;
 
 import texgen.controleur.ControleurBarreMenu;
 import texgen.controleur.ControleurTableau;
+import texgen.modele.InfosPresentation;
 
 /**
  * Classe gérant la vue de la fenêtre principale
@@ -49,6 +50,8 @@ public class FenetrePrincipale extends JFrame {
     private JRadioButtonMenuItem styleFleche;
     /** Le bouton radio "Lignes" dans le menu Graph -> Style des lien */
     private JRadioButtonMenuItem styleLigne;
+    /** Les informations de la présentation */
+    private InfosPresentation    infos;
 
     /**
      * Constructeur de la classe
@@ -63,6 +66,7 @@ public class FenetrePrincipale extends JFrame {
         add(menuBar, BorderLayout.NORTH);
         tableau = new Tableau(this);
         graph = new Graph(this);
+        infos = new InfosPresentation(this);
 
         initMenuBar();
 
@@ -186,6 +190,9 @@ public class FenetrePrincipale extends JFrame {
         btnGroup.add(styleLigne);
         styleLigne.addActionListener(ctrlMenuBar);
         styleLiens.add(styleLigne);
+        JMenuItem changerCouleurs = new JMenuItem("Changer couleurs");
+        changerCouleurs.addActionListener(ctrlMenuBar);
+        graph.add(changerCouleurs);
         refreshLinkStyleSelection();
         menuBar.add(graph);
 
@@ -347,12 +354,33 @@ public class FenetrePrincipale extends JFrame {
      * Fonction permettant de rafraichir les informations de chaque panels au niveau graphique
      */
     public void refresh() {
-        // On définis manuellement le model du JTable pour s'assurer que la vue est mise à jour
         tableau.refresh();
         pseudoCode.refresh();
         graph.refresh();
         toolBar.refresh();
         revalidate();
         repaint();
+    }
+
+    /**
+     * Retourne le modèle des informations de la présentation
+     * 
+     * @return le modèle des informations de la présentation
+     */
+    public InfosPresentation getInfos() {
+        return infos;
+    }
+
+    /**
+     * Ouvre une boîte de dialogue permettant de saisir les informations de la présentation
+     */
+    public void saisieInfos() {
+        SaisieInfosPresentation infosDialog = new SaisieInfosPresentation(this, infos);
+        infosDialog.setVisible(true);
+    }
+
+    public void choixCouleurs() {
+        ColorChooser colChooser = new ColorChooser(infos);
+        colChooser.setVisible(true);
     }
 }
