@@ -82,6 +82,34 @@ public class Graph extends JPanel {
         setFocusable(true);
     }
 
+    /**
+     * Retourne la couleur d'un noeud pour l'état donné
+     * 
+     * @param etat
+     *            l'état du noeud
+     * @return la couleur du noeud
+     */
+    public Color getCouleurEtatNoeud(EtatParcours etat) {
+        return fenetre.getInfos().getCouleursNoeuds().get(etat);
+    }
+
+    /**
+     * Retourne la couleur d'un lien pour l'état donné
+     * 
+     * @param etat
+     *            l'état du lien
+     * @return la couleur du lien
+     */
+    public Color getCouleurEtatLien(EtatParcours etat) {
+        return fenetre.getInfos().getCouleursLiens().get(etat);
+    }
+
+    /**
+     * Définis les liens comme étant des flêches ou non
+     * 
+     * @param b
+     *            true si les liens doivent être dessinés comme des flêches, false sinon
+     */
     public void setArrow(boolean b) {
         arrow = b;
         refresh();
@@ -94,44 +122,6 @@ public class Graph extends JPanel {
      */
     public boolean isArrow() {
         return arrow;
-    }
-
-    /**
-     * Retourne la couleur correspondant à l'état donné
-     * 
-     * @param etat
-     *            l'état
-     * @return la couleur
-     */
-    public Color getColorForEtat(EtatParcours etat) {
-        switch (etat) {
-            case Actif: {
-                return Color.RED;
-            }
-
-            case Inactif: {
-                return Color.LIGHT_GRAY;
-            }
-
-            case Parcourus: {
-                return Color.BLACK;
-            }
-
-            case Solution: {
-                return Color.GREEN;
-            }
-
-            case NonSolution: {
-                return Color.MAGENTA;
-            }
-
-            case Erreur: {
-                return Color.BLUE;
-            }
-
-            default:
-                return Color.ORANGE;
-        }
     }
 
     /**
@@ -945,7 +935,7 @@ public class Graph extends JPanel {
         if (n == null) {
             return;
         }
-        g.setColor(fenetre.getInfos().getCouleursNoeuds().get(getEtatCourantNoeud(n)));
+        g.setColor(getCouleurEtatNoeud(getEtatCourantNoeud(n)));
     }
 
     /**
@@ -960,7 +950,7 @@ public class Graph extends JPanel {
         if (l == null) {
             return;
         }
-        g.setColor(fenetre.getInfos().getCouleursLiens().get(getEtatCourantLien(l)));
+        g.setColor(getCouleurEtatLien(getEtatCourantLien(l)));
     }
 
     /**

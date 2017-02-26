@@ -346,10 +346,10 @@ public class GestionnaireSauvegarde {
             infos.setNomAuteur((String) path.evaluate(infosPath + "/auteur/text()", root, XPathConstants.STRING));
             infos.setTitrePresentation((String) path.evaluate(infosPath + "/titre/text()", root, XPathConstants.STRING));
             infos.setTitrePresentationCourt((String) path.evaluate(infosPath + "/titreCourt/text()", root, XPathConstants.STRING));
-            infos.setSousTitrePresentation((String) path.evaluate(infosPath + "sousTitre/text()", root, XPathConstants.STRING));
-            infos.setTitreAlgo((String) path.evaluate(infosPath + "algo/text()", root, XPathConstants.STRING));
-            infos.setInstitut((String) path.evaluate(infosPath + "institut/text()", root, XPathConstants.STRING));
-            infos.setDate((String) path.evaluate(infosPath + "date/text()", root, XPathConstants.STRING));
+            infos.setSousTitrePresentation((String) path.evaluate(infosPath + "/sousTitre/text()", root, XPathConstants.STRING));
+            infos.setTitreAlgo((String) path.evaluate(infosPath + "/algo/text()", root, XPathConstants.STRING));
+            infos.setInstitut((String) path.evaluate(infosPath + "/institut/text()", root, XPathConstants.STRING));
+            infos.setDate((String) path.evaluate(infosPath + "/date/text()", root, XPathConstants.STRING));
             int r, g, b, intEtat;
             String infosColorPath;
             // On récupère les couleurs des états

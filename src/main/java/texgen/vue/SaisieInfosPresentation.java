@@ -11,10 +11,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 import texgen.modele.InfosPresentation;
 import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
+import texgen.utilities.SpringUtilities;
 
 @SuppressWarnings("serial")
 public class SaisieInfosPresentation extends JDialog {
@@ -33,7 +35,7 @@ public class SaisieInfosPresentation extends JDialog {
         this.infos = infos;
         this.fen = fen;
 
-        JPanel fieldsPane = new JPanel(new GridLayout(6, 2));
+        JPanel fieldsPane = new JPanel(new SpringLayout());
 
         JLabel jl1 = new JLabel("Auteur :");
         fieldsPane.add(jl1);
@@ -65,17 +67,23 @@ public class SaisieInfosPresentation extends JDialog {
         fieldsPane.add(tf5);
         fields.add(tf5);
 
-        JLabel jl6 = new JLabel("Date / Information complémentaire :");
+        JLabel jl6 = new JLabel("Institut :");
         fieldsPane.add(jl6);
-        JTextField tf6 = new JTextField(infos.getDate());
+        JTextField tf6 = new JTextField(infos.getInstitut());
         fieldsPane.add(tf6);
         fields.add(tf6);
 
+        JLabel jl7 = new JLabel("Date / Information complémentaire :");
+        fieldsPane.add(jl7);
+        JTextField tf7 = new JTextField(infos.getDate());
+        fieldsPane.add(tf7);
+        fields.add(tf7);
+
+        SpringUtilities.makeGrid(fieldsPane, fields.size(), 2, 0, 0, 5, 2);
         add(fieldsPane, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
 
-        initForm();
         valider = new JButton("Valider");
         valider.addActionListener(new ActionListener() {
             @Override
@@ -100,6 +108,7 @@ public class SaisieInfosPresentation extends JDialog {
         });
         buttonsPanel.add(reset);
         add(buttonsPanel, BorderLayout.SOUTH);
+        pack();
     }
 
     public FenetrePrincipale getFenetre() {
@@ -126,8 +135,12 @@ public class SaisieInfosPresentation extends JDialog {
         return fields.get(4).getText();
     }
 
-    public String getDate() {
+    public String getInstitut() {
         return fields.get(5).getText();
+    }
+
+    public String getDate() {
+        return fields.get(6).getText();
     }
 
     public void updateInfos() {
@@ -136,17 +149,8 @@ public class SaisieInfosPresentation extends JDialog {
         infos.setTitrePresentationCourt(getTitreCourt());
         infos.setSousTitrePresentation(getSousTitre());
         infos.setTitreAlgo(getTitreAlgo());
+        infos.setInstitut(getInstitut());
         infos.setDate(getDate());
-    }
-
-    private void initForm() {
-        fields.get(0).setText(infos.getNomAuteur());
-        fields.get(1).setText(infos.getTitrePresentation());
-        fields.get(2).setText(infos.getTitrePresentationCourt());
-        fields.get(3).setText(infos.getSousTitrePresentation());
-        fields.get(4).setText(infos.getTitreAlgo());
-        fields.get(5).setText(infos.getDate());
-        pack();
     }
 
     public void reset() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import texgen.modele.InfosPresentation;
 import texgen.modele.Lien;
 import texgen.modele.Noeud;
 import texgen.modele.Noeud.TypeForme;
@@ -29,23 +30,23 @@ public class GenerateurLatex {
     /**
      * Fonction générant le code LaTeX
      * 
-     * @param fenetrePrincipale
+     * @param fen
      *            fenêtre principale de l'aplication
      * @return code généré
      */
-    public static String generer(FenetrePrincipale fenetrePrincipale) {
+    public static String generer(FenetrePrincipale fen) {
         String string = genererEntete() + "\n\n";
-        string += genererCouleurs(fenetrePrincipale.getGraph()) + "\n\n";
-        string += genererTikz(fenetrePrincipale.getGraph().isArrow() ? "->" : "-") + "\n\n";
+        string += genererCouleurs(fen.getGraph()) + "\n\n";
+        string += genererTikz(fen.getGraph().isArrow() ? "->" : "-") + "\n\n";
         string += genererBeamer() + "\n\n";
         string += genererPiedDePage() + "\n\n";
-        string += genererInfosAuteur() + "\n\n";
+        string += genererInfosAuteur(fen.getInfos()) + "\n\n";
         string += genererMacroColorCode() + "\n\n";
         string += "\\begin{document}\n";
         string += "\\begin{frame}\n";
-        string += genererPseudoCode(fenetrePrincipale.getPseudoCode()) + "\n";
-        string += genererTableau(fenetrePrincipale.getTableau());
-        string += genererGraph(fenetrePrincipale.getGraph());
+        string += genererPseudoCode(fen.getPseudoCode(), fen.getInfos().getTitreAlgo()) + "\n";
+        string += genererTableau(fen.getTableau());
+        string += genererGraph(fen.getGraph());
         string += "\\end{frame}\n";
         string += "\\end{document}\n";
         noeudSansNom = 0;
@@ -54,22 +55,53 @@ public class GenerateurLatex {
 
     public static String genererCouleurs(Graph graph) {
         String res = "";
+        Color c;
+        int r, g, b;
         for (EtatParcours etat : EtatParcours.values()) {
-            Color c = graph.getColorForEtat(etat);
-            int r = c.getRed();
-            int g = c.getGreen();
-            int b = c.getBlue();
-            res += "\\definecolor{" + etat.toString() + "}{RGB}{" + r + "," + g + "," + b + "}\n";
+            c = graph.getCouleurEtatNoeud(etat);
+            r = c.getRed();
+            g = c.getGreen();
+            b = c.getBlue();
+            res += "\\definecolor{noeud" + etat.toString() + "}{RGB}{" + r + "," + g + "," + b + "}\n";
+            c = graph.getCouleurEtatLien(etat);
+            r = c.getRed();
+            g = c.getGreen();
+            b = c.getBlue();
+            res += "\\definecolor{lien" + etat.toString() + "}{RGB}{" + r + "," + g + "," + b + "}\n";
         }
         return res;
     }
 
-    public static String genererInfosAuteur() {
-        return "%about author not implemented yet";
+    public static String genererInfosAuteur(InfosPresentation infos) {
+        String res = "";
+        res += "\\author{" + infos.getNomAuteur() + "}\n";
+        res += "\\title[\\textcolor{black}{" + infos.getTitrePresentation() + "}]{" + infos.getTitrePresentationCourt() + "}\n";
+        res += "\\subtitle{ " + infos.getSousTitrePresentation() + "}\n";
+        res += "\\institute{ " + infos.getInstitut() + "}\n";
+        res += "\\date{ " + infos.getDate() + "}\n";
+        return res;
     }
 
     public static String genererPiedDePage() {
-        return "%footnote not implemented yet";
+        String res = "\\makeatletter\n";
+        res += "\\setbeamertemplate{footline}\n";
+        res += "{\n";
+        res += "  \\leavevmode\n";
+        res += "  \\hbox{\n";
+        res += "  \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}\n";
+        res += "  \\usebeamerfont{author in head/foot}\\insertshortauthor~~\\beamer@ifempty{\\insertshortinstitute}{}{(\\insertshortinstitute)}\n";
+        res += "  \\end{beamercolorbox}\n";
+        res += "  \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}\n";
+        res += "  \\usebeamerfont{title in head/foot}\\insertshorttitle\n";
+        res += "  \\end{beamercolorbox}\n";
+        res += "  \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}\n";
+        res += "    \\usebeamerfont{date in head/foot}\\insertshortdate{}~--~pas\n";
+        res += "    \\theMyAlgoStep\\hspace*{2em}\n";
+        res += "  \\end{beamercolorbox}}\n";
+        res += "  \\vskip0pt\n";
+        res += "  \\addtocounter{MyAlgoStep}{1}\n";
+        return res + "}\n" + "\\makeatother\n";
+
     }
 
     public static String genererTikz(String tikzLinkStyle) {
@@ -187,7 +219,7 @@ public class GenerateurLatex {
             String coordonnees = getCoordonneeString(g, n);
             for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
                 String listeDiapos = getDiapoNoeudString(g, n, etat);
-                String couleur = etat.toString();
+                String couleur = "noeud" + etat.toString();
                 res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + label + ";\n";
             }
         }
@@ -233,7 +265,7 @@ public class GenerateurLatex {
             String arrive = "(" + normalizeLabelForGraph(l.getArrive().getText()) + ")";
             String label = normalizedLabel.equals("") ? "" : " node[midway, above] {\\scriptsize " + normalizedLabel + "}";
             for (EtatParcours etat : g.getEtatsLienDistinct(l)) {
-                String couleur = etat.toString();
+                String couleur = "lien" + etat.toString();
                 res += "\t\\draw" + getDiapoLienString(g, l, etat) + "[lien" + ((couleur.equals("")) ? "" : "=") + couleur + "] " + depart + " -> " + arrive + label + ";\n";
             }
         }
@@ -352,19 +384,23 @@ public class GenerateurLatex {
      * 
      * @param pseudoCode
      *            Pseudo code
+     * @param titreAlgo
+     *            titre de l'algorithme
      * @return code généré
      */
-    public static String genererPseudoCode(PseudoCode pseudoCode) {
+    public static String genererPseudoCode(PseudoCode pseudoCode, String titreAlgo) {
         String res = "";
 
-        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n\n";
+        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n";
+        res += "\\caption{" + titreAlgo + "}\n\n";
 
         ArrayList<String> lignes = separerLignes(pseudoCode.getTextArea().getText());
         for (int i = 1; i <= lignes.size(); i++) {
-            res += genererColorCode(pseudoCode, lignes.get(i - 1), i);
+            res += genererColorCode(pseudoCode, lignes.get(i - 1), i) + "\n";
         }
 
         res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\n";
+        // Un bug peu faire apparaitre le caractère 'fi' plutot que la chaine "fi", ceci permet de le résoudre
         return res.replaceAll("ﬁ", "fi");
     }
 
