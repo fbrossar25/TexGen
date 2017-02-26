@@ -14,6 +14,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 
 import texgen.modele.Lien;
+import texgen.modele.Noeud;
 import texgen.vue.Graph;
 
 /**
@@ -187,8 +188,8 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent arg0) {
         graph.setLastClick(arg0.getPoint());
+        previousPoint = arg0.getPoint();
         if (graph.updateTargetedNode(arg0.getPoint()) != null) {
-            previousPoint = arg0.getPoint();
             offsetX = graph.getTargetedNode().getX() - previousPoint.x;
             offsetY = graph.getTargetedNode().getY() - previousPoint.y;
             if (arg0.isPopupTrigger()) {
@@ -213,6 +214,16 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
                 l.updateLocation();
             }
             graph.repaint();
+        } else if (graph.getTargetedLink() == null) {
+            // Permet de bouger le graph entier si rien n'est ciblé
+            int offsetX = arg0.getPoint().x - previousPoint.x;
+            int offsetY = arg0.getPoint().y - previousPoint.y;
+            for (Noeud n : graph.getNoeuds()) {
+                n.setLocation((int) (n.getPosition().getX() + offsetX), (int) (n.getPosition().getY() + offsetY));
+                n.updatePosition();
+            }
+            previousPoint = arg0.getPoint();
+            graph.refresh();
         }
     }
 
