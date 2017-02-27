@@ -25,6 +25,18 @@ public class ControleurToolBar implements ActionListener {
             toolBar.getFenetre().ajouterDiapo();
         } else if (source == toolBar.getBoutonInserer()) {
             toolBar.getFenetre().insererDiapo();
+        } else if (source == toolBar.getBoutonSupprimer()) {
+            toolBar.getFenetre().supprimerDiapoCourante();
+        } else if (source == toolBar.getBoutonAjouterColonne()) {
+            toolBar.getFenetre().getTableau().ajouterColonne();
+        } else if (source == toolBar.getBoutonSupprimerColonne()) {
+            toolBar.getFenetre().getTableau().supprimerColonne();
+        } else if (source == toolBar.getBoutonAjouterLigne()) {
+            toolBar.getFenetre().getTableau().ajouterLigne();
+        } else if (source == toolBar.getBoutonSupprimerLigne()) {
+            toolBar.getFenetre().getTableau().supprimerLigne();
+        } else if (source == toolBar.getBoutonGenerer()) {
+            toolBar.getFenetre().saisieInfos();
         }
     }
 }

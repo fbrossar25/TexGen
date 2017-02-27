@@ -503,7 +503,18 @@ public class Graph extends JPanel {
      *            la diapo
      */
     public void insererDiapo(int i) {
-        // TODO
+        if (i < getNombreDiapos()) {
+            for (Lien l : liens.keySet()) {
+                liens.get(l).add(i, getEtatLienDiapo(l, i));
+            }
+            for (Noeud n : noeuds.keySet()) {
+                noeuds.get(n).add(i, getEtatNoeudDiapo(n, i));
+            }
+            nombreDiapos++;
+        } else {
+            ajouterDiapo();
+            diapoCourante--;
+        }
     }
 
     /**
@@ -1021,6 +1032,21 @@ public class Graph extends JPanel {
         // Dessin d'un lien entre le noeud de départ et la souris pendant la créationd d'un lien
         if (nodeCreatingLink != null) {
             DrawUtilities.drawLink(g, nodeCreatingLink, getMousePosition(), false);
+        }
+    }
+
+    public void supprimerDiapo(int i) {
+        if (getNombreDiapos() > 1 && (i > 0) && (i <= getNombreDiapos())) {
+            for (Lien l : liens.keySet()) {
+                liens.get(l).remove(i - 1);
+            }
+            for (Noeud n : noeuds.keySet()) {
+                noeuds.get(n).remove(i - 1);
+            }
+            if (i == getNombreDiapos()) {
+                diapoCourante--;
+            }
+            nombreDiapos--;
         }
     }
 }

@@ -204,6 +204,13 @@ public class FenetrePrincipale extends JFrame {
         menuBar.add(aide);
     }
 
+    public void supprimerDiapoCourante() {
+        pseudoCode.supprimerDiapo(pseudoCode.getDiapoCourante());
+        tableau.supprimerDiapo(tableau.getDiapoCourante());
+        graph.supprimerDiapo(graph.getDiapoCourante());
+        refresh();
+    }
+
     /**
      * Fonction permettant l'ajout d'une diapo
      */
@@ -313,7 +320,7 @@ public class FenetrePrincipale extends JFrame {
         pseudoCode.insererDiapo(pseudoCode.getDiapoCourante());
         tableau.insererDiapo(tableau.getDiapoCourante());
         graph.insererDiapo(graph.getDiapoCourante());
-        toolBar.updateCompteursDiapo();
+        refresh();
     }
 
     /**
@@ -379,6 +386,9 @@ public class FenetrePrincipale extends JFrame {
         infosDialog.setVisible(true);
     }
 
+    /**
+     * Ouvre une boîte de dialogue permettant de choisir les couleurs utilisés dans le graph
+     */
     public void choixCouleurs() {
         ColorChooser colChooser = new ColorChooser(infos);
         colChooser.setVisible(true);

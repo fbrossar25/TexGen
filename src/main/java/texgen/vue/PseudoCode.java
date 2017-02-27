@@ -289,8 +289,11 @@ public class PseudoCode extends JPanel {
      *            Numéro de la diapo à supprimer
      */
     public void supprimerDiapo(int i) {
-        if ((i >= 0) && (i < marqueurs.size())) {
-            marqueurs.remove(i);
+        if (getNombreDiapos() > 1 && (i >= 0) && (i < marqueurs.size())) {
+            if (i == getNombreDiapos()) {
+                diapoCourante--;
+            }
+            marqueurs.remove(i - 1);
         }
     }
 
@@ -387,14 +390,21 @@ public class PseudoCode extends JPanel {
     }
 
     /**
-     * NON IMPLEMENTÉE !!<br>
      * Fonction permettant d'inserer une diapo juste avant la diapo i
      * 
      * @param i
      *            Le numero de la diapo à insérer
      */
     public void insererDiapo(int i) {
-        // TODO
+        if (i < getNombreDiapos()) {// On copie l'état suivant s'il existe
+            TreeSet<Integer> cpy = new TreeSet<>();
+            for (Integer n : getDiapo(i)) {
+                cpy.add(n);
+            }
+            marqueurs.add(i - 1, cpy);
+        } else {
+            ajouterDiapo();
+        }
     }
 
     /**

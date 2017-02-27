@@ -1,4 +1,6 @@
-precedant, suivant : fait avec paint
-add, remove_last : Créée par madebyolivier sur flaticon
+precedent, suivant : fait avec paint
+add : Créée par madebyolivier sur flaticon
 insert : Créee par freepik sur flaticon
-remove_current: Créée par Dario Ferrando sur flaticon
+remove: Créée par Dario Ferrando sur flaticon
+remove_row, remove_column : Everaldo Coelho sur IconFinder (site : http://www.everaldo.com/)
+add_row, add_coumn, generate : Gnome Project sur IconFinder (site : http://art.gnome.org/themes/icon)

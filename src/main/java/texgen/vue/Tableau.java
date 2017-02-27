@@ -297,14 +297,23 @@ public class Tableau extends JPanel {
     }
 
     /**
-     * NON IMPLEMENTÉE !!<br>
      * Fonction permettant d'inserer une diapo juste avant la diapo i
      * 
      * @param i
      *            le numero de la diapo
      */
     public void insererDiapo(int i) {
-        // TODO
+        if (i < getNombreDiapos()) {
+            DefaultTableModel newModel = createNewVoidModel();
+            for (int l = 0; l < li; l++) {
+                for (int c = 0; c < col; c++) {
+                    newModel.setValueAt(getDiapo(i).getValueAt(l, c), l, c);
+                }
+            }
+            diapos.add(i, newModel);
+        } else {
+            ajouterDiapo();
+        }
     }
 
     /**
@@ -363,7 +372,10 @@ public class Tableau extends JPanel {
      *            Numéro de la diapo à supprimer
      */
     public void supprimerDiapo(int i) {
-        if ((i > 0) && (i <= getNombreDiapos())) {
+        if (getNombreDiapos() > 1 && (i > 0) && (i <= getNombreDiapos())) {
+            if (i == getNombreDiapos()) {
+                diapoCourante--;
+            }
             diapos.remove(i - 1);
         }
     }

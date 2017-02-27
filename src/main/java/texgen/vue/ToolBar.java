@@ -34,6 +34,24 @@ public class ToolBar extends JToolBar {
     /** Bouton insérer une diapo */
     private JButton           insererDiapo;
 
+    /** Bouton supprimer une diapo */
+    private JButton           supprimerDiapo;
+
+    /** Bouton ajouter ligne au tableau */
+    private JButton           ajouterLigne;
+
+    /** Bouton ajouter une colonne au tableau */
+    private JButton           ajouterColonne;
+
+    /** Bouton supprimer la derniere ligne au tableau */
+    private JButton           supprimerLigne;
+
+    /** Bouton syupprimer la derniere colonne au tableau */
+    private JButton           supprimerColonne;
+
+    /** Bouton generer */
+    private JButton           generer;
+
     /** Fenetre princiaple */
     private FenetrePrincipale fen;
 
@@ -134,6 +152,36 @@ public class ToolBar extends JToolBar {
         insererDiapo.setToolTipText("Insérer une diapo ici");
         insererDiapo.addActionListener(ctrl);
         add(insererDiapo);
+
+        supprimerDiapo = new JButton(new ImageIcon(cl.getResource(iconsDir + "remove.png")));
+        supprimerDiapo.setToolTipText("Supprimer cette diapo");
+        supprimerDiapo.addActionListener(ctrl);
+        add(supprimerDiapo);
+
+        ajouterLigne = new JButton(new ImageIcon(cl.getResource(iconsDir + "add_row.png")));
+        ajouterLigne.setToolTipText("Ajouter une ligne au tableau");
+        ajouterLigne.addActionListener(ctrl);
+        add(ajouterLigne);
+
+        supprimerLigne = new JButton(new ImageIcon(cl.getResource(iconsDir + "remove_row.png")));
+        supprimerLigne.setToolTipText("Supprimer la dernière ligne du tableau");
+        supprimerLigne.addActionListener(ctrl);
+        add(supprimerLigne);
+
+        ajouterColonne = new JButton(new ImageIcon(cl.getResource(iconsDir + "add_column.png")));
+        ajouterColonne.setToolTipText("Ajouter une colonne au tableau");
+        ajouterColonne.addActionListener(ctrl);
+        add(ajouterColonne);
+
+        supprimerColonne = new JButton(new ImageIcon(cl.getResource(iconsDir + "remove_column.png")));
+        supprimerColonne.setToolTipText("Supprimer la dernière colonne du tableau");
+        supprimerColonne.addActionListener(ctrl);
+        add(supprimerColonne);
+
+        generer = new JButton(new ImageIcon(cl.getResource(iconsDir + "generate.png")));
+        generer.setToolTipText("Générer");
+        generer.addActionListener(ctrl);
+        add(generer);
     }
 
     /**
@@ -215,6 +263,55 @@ public class ToolBar extends JToolBar {
      */
     public JButton getBoutonInserer() {
         return insererDiapo;
+    }
+
+    /**
+     * Retourne le bouton supprimer une diapo
+     * 
+     * @return le bouton supprimer une diapo
+     */
+    public JButton getBoutonSupprimer() {
+        return supprimerDiapo;
+    }
+
+    /**
+     * Retourne le bouton supprimer la derniere ligne du tableau
+     * 
+     * @return le bouton supprimer la derniere ligne du tableau
+     */
+    public JButton getBoutonSupprimerLigne() {
+        return supprimerLigne;
+    }
+
+    /**
+     * Retourne le bouton supprimer la derniere colonne du tableau
+     * 
+     * @return le bouton supprimer la derniere colonne du tableau
+     */
+    public JButton getBoutonSupprimerColonne() {
+        return supprimerColonne;
+    }
+
+    public JButton getBoutonGenerer() {
+        return generer;
+    }
+
+    /**
+     * Retourne le bouton ajouter une ligne du tableau
+     * 
+     * @return le bouton ajouter une ligne du tableau
+     */
+    public JButton getBoutonAjouterLigne() {
+        return ajouterLigne;
+    }
+
+    /**
+     * Retourne le bouton ajouter une colonne du tableau
+     * 
+     * @return le bouton ajouter une colonne du tableau
+     */
+    public JButton getBoutonAjouterColonne() {
+        return ajouterColonne;
     }
 
     /**
