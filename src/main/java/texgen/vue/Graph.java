@@ -24,6 +24,7 @@ import texgen.utilities.DrawUtilities;
 public class Graph extends JPanel {
 
     /** Représente l'état d'un noeud/lien */
+    @SuppressWarnings("javadoc")
     public enum EtatParcours {
         Inactif, Actif, Parcourus, Solution, NonSolution, Erreur
     }
@@ -280,8 +281,8 @@ public class Graph extends JPanel {
      * 
      * @param n
      *            le noeud
-     * @param etatl'état
-     *            cible
+     * @param etat
+     *            l'état cible
      */
     public void changerEtatNoeudDiapoCourante(Noeud n, EtatParcours etat) {
         changerEtatNoeud(n, diapoCourante, etat);
@@ -304,6 +305,11 @@ public class Graph extends JPanel {
         }
 
         noeuds.get(n).set(diapo - 1, etat);
+        for (int i = diapo + 1; i <= nombreDiapos; i++) {
+            if (getEtatNoeudDiapo(n, i) == EtatParcours.Inactif) {
+                changerEtatNoeud(n, i, EtatParcours.Parcourus);
+            }
+        }
         // System.out.println("node '" + n.getText() + "' set to state " + getIntForEtat(etat) + " at diapo " + diapo);
     }
 
@@ -312,8 +318,8 @@ public class Graph extends JPanel {
      * 
      * @param l
      *            le lien
-     * @param etatl'état
-     *            cible
+     * @param etat
+     *            l'état cible
      */
     public void changerEtatLienDiapoCourante(Lien l, EtatParcours etat) {
         changerEtatLien(l, diapoCourante, etat);
@@ -336,6 +342,11 @@ public class Graph extends JPanel {
         }
 
         liens.get(l).set(diapo - 1, etat);
+        for (int i = diapo + 1; i <= nombreDiapos; i++) {
+            if (getEtatLienDiapo(l, i) == EtatParcours.Inactif) {
+                changerEtatLien(l, i, EtatParcours.Parcourus);
+            }
+        }
     }
 
     /**
@@ -432,6 +443,9 @@ public class Graph extends JPanel {
 
     /**
      * Fonction permettant de remettre à son état initial le graph
+     * 
+     * @param nombreDiapos
+     *            le nombre de diapos vide voulus
      */
     public void reset(int nombreDiapos) {
         if (nombreDiapos < 1) {
@@ -496,7 +510,6 @@ public class Graph extends JPanel {
     }
 
     /**
-     * NON IMPLEMENTÉE !!<br>
      * Fonction permettant d'inserer une diapo juste avant la diapo i
      * 
      * @param i
@@ -1035,6 +1048,12 @@ public class Graph extends JPanel {
         }
     }
 
+    /**
+     * Supprime la diapo i et décale les autres diapos sur la gauche si elles existent.
+     * 
+     * @param i
+     *            le numéro de la diapo
+     */
     public void supprimerDiapo(int i) {
         if (getNombreDiapos() > 1 && (i > 0) && (i <= getNombreDiapos())) {
             for (Lien l : liens.keySet()) {

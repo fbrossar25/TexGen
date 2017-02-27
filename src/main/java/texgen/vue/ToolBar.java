@@ -292,6 +292,11 @@ public class ToolBar extends JToolBar {
         return supprimerColonne;
     }
 
+    /**
+     * Retourne le bouton générer
+     * 
+     * @return le bouton générer
+     */
     public JButton getBoutonGenerer() {
         return generer;
     }
@@ -325,11 +330,6 @@ public class ToolBar extends JToolBar {
 
     /**
      * Met à jour les compteurs de diapos
-     * 
-     * @param p
-     *            le pseudoCode de l'application
-     * @param t
-     *            le tableau de l'application
      */
     public void updateCompteursDiapo() {
         PseudoCode p = fen.getPseudoCode();

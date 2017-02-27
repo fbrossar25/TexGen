@@ -18,6 +18,7 @@ public class Noeud extends JTextField {
     private Point position;
 
     /** Type énuméré qui donne les formes possible */
+    @SuppressWarnings("javadoc")
     public enum TypeForme {
         Simple, Double,
     }

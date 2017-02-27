@@ -46,9 +46,9 @@ public class FenetrePrincipale extends JFrame {
 
     /** Le graph */
     private Graph                graph;
-    /** Le bouton radio "Flêches" dans le menu Graph -> Style des lien */
+    /** Le bouton radio "Flêches" dans le menu Graph/Style des lien */
     private JRadioButtonMenuItem styleFleche;
-    /** Le bouton radio "Lignes" dans le menu Graph -> Style des lien */
+    /** Le bouton radio "Lignes" dans le menu Graph/Style des lien */
     private JRadioButtonMenuItem styleLigne;
     /** Les informations de la présentation */
     private InfosPresentation    infos;
@@ -204,6 +204,9 @@ public class FenetrePrincipale extends JFrame {
         menuBar.add(aide);
     }
 
+    /**
+     * Supprime la diapoCourante pour chaque éléments
+     */
     public void supprimerDiapoCourante() {
         pseudoCode.supprimerDiapo(pseudoCode.getDiapoCourante());
         tableau.supprimerDiapo(tableau.getDiapoCourante());

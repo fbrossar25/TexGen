@@ -44,7 +44,7 @@ public class GenerateurLatex {
         string += genererMacroColorCode() + "\n\n";
         string += "\\begin{document}\n";
         string += "\\begin{frame}\n";
-        string += genererPseudoCode(fen.getPseudoCode(), fen.getInfos().getTitreAlgo()) + "\n";
+        string += genererPseudoCode(fen.getPseudoCode(), fen.getInfos().getTitreAlgo());
         string += genererTableau(fen.getTableau());
         string += genererGraph(fen.getGraph());
         string += "\\end{frame}\n";
@@ -53,6 +53,13 @@ public class GenerateurLatex {
         return string;
     }
 
+    /**
+     * Génère la liste des couleurs RGB utilisées en code LaTeX
+     * 
+     * @param graph
+     *            le graph
+     * @return la liste des couleurs sous forme de chaîne
+     */
     public static String genererCouleurs(Graph graph) {
         String res = "";
         Color c;
@@ -72,6 +79,13 @@ public class GenerateurLatex {
         return res;
     }
 
+    /**
+     * Génère la liste des informations sur la présentation
+     * 
+     * @param infos
+     *            les informations de la présentation
+     * @return la chaîne de caractère correspondante
+     */
     public static String genererInfosAuteur(InfosPresentation infos) {
         String res = "";
         res += "\\author{" + infos.getNomAuteur() + "}\n";
@@ -82,6 +96,11 @@ public class GenerateurLatex {
         return res;
     }
 
+    /**
+     * Génère un pied de page générique beamer utilisant les informations de la présentations
+     * 
+     * @return le pied de page sous forme de chaîne
+     */
     public static String genererPiedDePage() {
         String res = "\\makeatletter\n";
         res += "\\setbeamertemplate{footline}\n";
@@ -104,6 +123,13 @@ public class GenerateurLatex {
 
     }
 
+    /**
+     * Génère la configuration de tikz
+     * 
+     * @param tikzLinkStyle
+     *            le type du style des liens (simple ou flêche)
+     * @return la chaîne de configuration de tikz
+     */
     public static String genererTikz(String tikzLinkStyle) {
         String res = "\\tikzset{\n";
         res += "\tlien/.style={" + tikzLinkStyle + ",thick,color=#1},\n";
@@ -168,7 +194,7 @@ public class GenerateurLatex {
      *            le noeud
      * @param etat
      *            l'état
-     * @return la liste des diapos (ex : "<1,2,4>")
+     * @return la liste des diapos
      */
     public static String getDiapoNoeudString(Graph g, Noeud n, EtatParcours etat) {
         ArrayList<EtatParcours> list = g.getEtatsNoeud(n);
@@ -236,7 +262,7 @@ public class GenerateurLatex {
      *            le lien
      * @param etat
      *            l'état
-     * @return la liste des diapos (ex : "<1,2,4>")
+     * @return la liste des diapos
      */
     public static String getDiapoLienString(Graph g, Lien l, EtatParcours etat) {
         ArrayList<EtatParcours> list = g.getEtatsLien(l);
@@ -518,7 +544,7 @@ public class GenerateurLatex {
      * 
      * @param list
      *            la liste des entiers
-     * @return la chaînes des plages d'entiers (ex : {1,3,4,5,7} -> "1,3-5,7")
+     * @return la chaînes des plages d'entiers (ex : {1,3,4,5,7} devient "1,3-5,7")
      */
     public static String convertIntArrayToRangesSet(ArrayList<Integer> list) {
         int size = list.size();
@@ -555,6 +581,19 @@ public class GenerateurLatex {
         }
     }
 
+    /**
+     * Génère le colorCode du tableau pour une chaîne s à la ligne et la colonne donnée
+     * 
+     * @param tableau
+     *            le tableau
+     * @param ligne
+     *            la ligne
+     * @param colonne
+     *            la colonne
+     * @param s
+     *            la chaîne
+     * @return le colorCode correspondant
+     */
     public static String genererColorCodeTableau(Tableau tableau, int ligne, int colonne, String s) {
         String res = "\n\\colorCode";
         ArrayList<Integer> marked = new ArrayList<>();

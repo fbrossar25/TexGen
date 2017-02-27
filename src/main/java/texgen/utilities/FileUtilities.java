@@ -83,8 +83,8 @@ public class FileUtilities {
      *            la fenêtre principale de l'application
      * @param description
      *            la description du type de fichier voulu
-     * @param exts
-     *            l'extensions acceptée
+     * @param ext
+     *            l'extension acceptée
      * @return le chemin absolu du fichier selectionné
      */
     public static String selectFileWithFilter(FenetrePrincipale f, String description, String ext) {

@@ -6,18 +6,41 @@ import java.util.HashMap;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph.EtatParcours;
 
+/**
+ * Permet de stockées certaines informations (auteur, titre, couleurs,...) pour la présentation
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
+ *
+ */
 public class InfosPresentation {
+    /** le nom de l'auteur */
     private String                       nomAuteur;
+    /** le titre complet de la présentation */
     private String                       titrePresentation;
+    /** le titre de la présentation raccourcis */
     private String                       titrePresentationCourt;
+    /** le sous-titre de la présentation */
     private String                       sousTitrePresentation;
+    /** le tire de l'algorithme */
     private String                       titreAlgo;
+    /** le nom de l'institut */
     private String                       institut;
+    /** la date */
     private String                       date;
+    /** liste des couleurs des liens en fonction de leurs états */
     private HashMap<EtatParcours, Color> couleursLiens;
+    /** liste des couleurs des noeuds en fonction de leurs états */
     private HashMap<EtatParcours, Color> couleursNoeuds;
+    /** la fenêtre principale */
     private FenetrePrincipale            fen;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param fenetre
+     *            la fenêtre principale
+     */
     public InfosPresentation(FenetrePrincipale fenetre) {
         nomAuteur = "";
         titrePresentation = "";
@@ -30,10 +53,18 @@ public class InfosPresentation {
         initCouleurs();
     }
 
+    /**
+     * Retourne la fenêtre principale
+     * 
+     * @return la fenêtre principale
+     */
     public FenetrePrincipale getFenetre() {
         return fen;
     }
 
+    /**
+     * Initialise les valeurs par défauts des couleurs
+     */
     private void initCouleurs() {
         couleursLiens = new HashMap<>();
         couleursNoeuds = new HashMap<>();
@@ -43,10 +74,20 @@ public class InfosPresentation {
         }
     }
 
+    /**
+     * Retourne la HashMap des couleurs des noeuds
+     * 
+     * @return la HashMap des couleurs des noeuds
+     */
     public HashMap<EtatParcours, Color> getCouleursNoeuds() {
         return couleursNoeuds;
     }
 
+    /**
+     * Retourne la HashMap des couleurs des liens
+     * 
+     * @return la HashMap des couleurs des liens
+     */
     public HashMap<EtatParcours, Color> getCouleursLiens() {
         return couleursLiens;
     }
@@ -158,62 +199,142 @@ public class InfosPresentation {
         }
     }
 
+    /**
+     * Retourne le nom de l'auteur
+     * 
+     * @return le nom de l'auteur
+     */
     public String getNomAuteur() {
         return nomAuteur;
     }
 
+    /**
+     * Définis le nom de l'auteur
+     * 
+     * @param nomAuteur
+     *            le nom de l'auteur
+     */
     public void setNomAuteur(String nomAuteur) {
         this.nomAuteur = nomAuteur;
     }
 
+    /**
+     * Retourne le titre de la présentation
+     * 
+     * @return le titre de la présentation
+     */
     public String getTitrePresentation() {
         return titrePresentation;
     }
 
+    /**
+     * Définis le titre de la présentation
+     * 
+     * @param titrePresentation
+     *            le titre de la présentation
+     */
     public void setTitrePresentation(String titrePresentation) {
         this.titrePresentation = titrePresentation;
     }
 
+    /**
+     * Retourne le titre raccourcis de la présentation
+     * 
+     * @return le titre raccourcis de la présentation
+     */
     public String getTitrePresentationCourt() {
         return titrePresentationCourt;
     }
 
+    /**
+     * Définis le titre raccourcis de la présentation
+     * 
+     * @param titrePresentationCourt
+     *            le titre raccourcis de la présentation
+     */
     public void setTitrePresentationCourt(String titrePresentationCourt) {
         this.titrePresentationCourt = titrePresentationCourt;
     }
 
+    /**
+     * Retourne le sous-titre de la présentation
+     * 
+     * @return le sous-titre de la présentation
+     */
     public String getSousTitrePresentation() {
         return sousTitrePresentation;
     }
 
+    /**
+     * Définis le sous-titre de la présentation
+     * 
+     * @param sousTitrePresentation
+     *            le sous-titre de la présentation
+     */
     public void setSousTitrePresentation(String sousTitrePresentation) {
         this.sousTitrePresentation = sousTitrePresentation;
     }
 
+    /**
+     * Retourne le titre de l'algorithme
+     * 
+     * @return le titre de l'algorithme
+     */
     public String getTitreAlgo() {
         return titreAlgo;
     }
 
+    /**
+     * Définis le titre de l'algorithme
+     * 
+     * @param titreAlgo
+     *            le titre de l'algorithme
+     */
     public void setTitreAlgo(String titreAlgo) {
         this.titreAlgo = titreAlgo;
     }
 
+    /**
+     * Retourne le nom de l'institut
+     * 
+     * @return le nom de l'institut
+     */
     public String getInstitut() {
         return institut;
     }
 
+    /**
+     * Définis le nom de l'institut
+     * 
+     * @param institut
+     *            le nom de l'institut
+     */
     public void setInstitut(String institut) {
         this.institut = institut;
     }
 
+    /**
+     * Retourne la date
+     * 
+     * @return la date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * Définis la date
+     * 
+     * @param date
+     *            la date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * Redéfinis toutes les informations et les couleurs à leurs valeurs par défaut (chaîne vide et couleurs par défaut)
+     */
     public void reset() {
         nomAuteur = "";
         date = "";
@@ -221,5 +342,7 @@ public class InfosPresentation {
         sousTitrePresentation = "";
         titrePresentation = "";
         titrePresentationCourt = "";
+        institut = "";
+        initCouleurs();
     }
 }

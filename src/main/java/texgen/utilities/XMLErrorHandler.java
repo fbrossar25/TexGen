@@ -4,6 +4,13 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/**
+ * Classe permettant de gèrer les erreurs de parsing d'un fichier XML
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
+ *
+ */
 public class XMLErrorHandler implements ErrorHandler {
 
     @Override

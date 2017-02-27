@@ -151,7 +151,7 @@ public class DrawUtilities {
      *            l'element graphique
      * @param n
      *            le noeud
-     * @param p
+     * @param pos
      *            le point
      * @param fleche
      *            dessiner une fleche ?
@@ -191,8 +191,13 @@ public class DrawUtilities {
      * Dessine l'ellipse indiquant que le lien l est selectionné
      * 
      * @param g
+     *            l'élement graphique
      * @param graph
+     *            le graph
      * @param l
+     *            le lien
+     * @param taille
+     *            la taille de l'ellipse de sélection (hauteur)
      */
     public static void drawLinkSelection(Graphics g, Graph graph, Lien l, int taille) {
         Graphics2D g2d = (Graphics2D) g;

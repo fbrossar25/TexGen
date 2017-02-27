@@ -18,14 +18,34 @@ import texgen.utilities.FileUtilities;
 import texgen.utilities.GenerateurLatex;
 import texgen.utilities.SpringUtilities;
 
+/**
+ * Boîte de dialogue permettant de saisir les informations de la présentations (auteur, titre de l'algorithme,...)
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
+ *
+ */
 @SuppressWarnings("serial")
 public class SaisieInfosPresentation extends JDialog {
+    /** la liste des champs de saisie */
     private ArrayList<JTextField> fields;
+    /** le bouton valider */
     private JButton               valider;
+    /** le bouton reset */
     private JButton               reset;
+    /** les informations de la présentation */
     private InfosPresentation     infos;
+    /** la fenêtre principale */
     private FenetrePrincipale     fen;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param fen
+     *            la fenêtre principale
+     * @param infos
+     *            les informations de la présentation
+     */
     public SaisieInfosPresentation(FenetrePrincipale fen, InfosPresentation infos) {
         super();
         this.setTitle("Informations sur la présentation");
@@ -36,7 +56,7 @@ public class SaisieInfosPresentation extends JDialog {
         this.fen = fen;
 
         JPanel fieldsPane = new JPanel(new SpringLayout());
-
+        // définition des différents champs de saisie
         JLabel jl1 = new JLabel("Auteur :");
         fieldsPane.add(jl1);
         JTextField tf1 = new JTextField(infos.getNomAuteur());
@@ -82,8 +102,8 @@ public class SaisieInfosPresentation extends JDialog {
         SpringUtilities.makeGrid(fieldsPane, fields.size(), 2, 0, 0, 5, 2);
         add(fieldsPane, BorderLayout.CENTER);
 
+        // Définition des boutons valider et reset
         JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
-
         valider = new JButton("Valider");
         valider.addActionListener(new ActionListener() {
             @Override
@@ -111,38 +131,81 @@ public class SaisieInfosPresentation extends JDialog {
         pack();
     }
 
+    /**
+     * Retourne la fenêtre principale de l'application
+     * 
+     * @return la fenêtre principale de l'application
+     */
     public FenetrePrincipale getFenetre() {
         return fen;
     }
 
+    /**
+     * Retourne le nom de l'auteur saisis
+     * 
+     * @return le nom de l'auteur saisis
+     */
     public String getNomAuteur() {
         return fields.get(0).getText();
     }
 
+    /**
+     * Retourne le titre de la présentation saisis
+     * 
+     * @return le titre de la présentation saisis
+     */
     public String getTitre() {
         return fields.get(1).getText();
     }
 
+    /**
+     * Retourne le titre raccourcis de la présentation saisis
+     * 
+     * @return le titre raccourcis de la présentation saisis
+     */
     public String getTitreCourt() {
         return fields.get(2).getText();
     }
 
+    /**
+     * Retourne le sous-titre de la présentation saisis
+     * 
+     * @return le sous-titre de la présentation saisis
+     */
     public String getSousTitre() {
         return fields.get(3).getText();
     }
 
+    /**
+     * Retourne le titre de l'algorithme saisis
+     * 
+     * @return le titre de l'algorithme saisis
+     */
     public String getTitreAlgo() {
         return fields.get(4).getText();
     }
 
+    /**
+     * Retourne le nom de l'institut saisis
+     * 
+     * @return le nom de l'institut saisis
+     */
     public String getInstitut() {
         return fields.get(5).getText();
     }
 
+    /**
+     * Retourne la date saisie
+     * 
+     * @return la date saisie
+     */
     public String getDate() {
         return fields.get(6).getText();
     }
 
+    /**
+     * Met à jour les informations stockées
+     */
     public void updateInfos() {
         infos.setNomAuteur(getNomAuteur());
         infos.setTitrePresentation(getTitre());
@@ -153,13 +216,28 @@ public class SaisieInfosPresentation extends JDialog {
         infos.setDate(getDate());
     }
 
+    /**
+     * Redéfinis les informations saisies à la chaînes vide ainsi que leurs correspondance dans les informations<br>
+     * stockées (les couleurs ne sont pas modifiées)
+     */
     public void reset() {
-        infos.reset();
+        infos.setNomAuteur("");
+        infos.setDate("");
+        infos.setTitreAlgo("");
+        infos.setSousTitrePresentation("");
+        infos.setTitrePresentation("");
+        infos.setTitrePresentationCourt("");
+        infos.setInstitut("");
         for (JTextField f : fields) {
             f.setText("");
         }
     }
 
+    /**
+     * Retourne les informations de la présentation
+     * 
+     * @return les informations de la présentation
+     */
     public InfosPresentation getInfos() {
         return infos;
     }

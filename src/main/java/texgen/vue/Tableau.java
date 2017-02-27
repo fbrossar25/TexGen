@@ -536,15 +536,13 @@ public class Tableau extends JPanel {
             } else {
                 System.out.println("Diapo " + diapo + " inexistante");
             }
-        } else {
-            System.out.println("Erreur : mauvais arguments pour setValueAt(String,int,int,int)");
         }
     }
 
     /**
      * Créer une nouvelle diapo vide à l'aide de createNewVoidModel()
      * 
-     * @see Tableau.createNewVoidModel()
+     * @see Tableau#createNewVoidModel()
      */
     public void creerDiapoVide() {
         DefaultTableModel newModel = createNewVoidModel();

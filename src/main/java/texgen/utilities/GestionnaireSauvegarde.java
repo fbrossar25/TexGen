@@ -110,6 +110,8 @@ public class GestionnaireSauvegarde {
      * 
      * @param nombreDiapos
      *            le nombre de diapos
+     * @param i
+     *            les infos de la présentation
      * @param p
      *            le pseudoCode
      * @param t

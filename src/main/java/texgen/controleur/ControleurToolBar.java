@@ -7,9 +7,23 @@ import javax.swing.JButton;
 
 import texgen.vue.ToolBar;
 
+/**
+ * Contrôleur de la barre d'outils
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
+ *
+ */
 public class ControleurToolBar implements ActionListener {
+    /** la barre d'outil */
     private ToolBar toolBar;
 
+    /**
+     * Constructeur du contrôleur
+     * 
+     * @param toolBar
+     *            la barre d'outils
+     */
     public ControleurToolBar(ToolBar toolBar) {
         this.toolBar = toolBar;
     }

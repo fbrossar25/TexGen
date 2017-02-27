@@ -11,13 +11,18 @@ import java.util.TreeSet;
 import org.junit.Test;
 
 /**
- * @author Florian
+ * Ensembles de tests pour le pseudoCode
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
  */
 public class PseudoCodeTest {
 
+    /**
+     * Test la récuperation des lignes du pseudoCode
+     */
     @Test
     public void testGetLignes() {
-        // fail("Not yet implemented");
         ArrayList<String> stringArray = new ArrayList<String>();
         stringArray.add("Saisissez votre pseudo code ici.");
         PseudoCode p = new PseudoCode(null);
@@ -27,12 +32,18 @@ public class PseudoCodeTest {
         assertEquals("Test", p.getLigne(2));
     }
 
+    /**
+     * Test la récupération du nombre de ligne du pseudoCode
+     */
     @Test
     public void testGetNombreLignes() {
         PseudoCode p = new PseudoCode(null);
         assertEquals(1, p.getNombreLignes());
     }
 
+    /**
+     * test les différentes opérations sur les diapos
+     */
     @Test
     public void testDiapos() {
         PseudoCode p = new PseudoCode(null, 100);
@@ -62,6 +73,9 @@ public class PseudoCodeTest {
         assertEquals(t, p.getDiapo(1));
     }
 
+    /**
+     * Test la gestion du marquage des lignes
+     */
     @Test
     public void testMarquage() {
         PseudoCode p = new PseudoCode(null);

@@ -19,14 +19,32 @@ import javax.swing.event.ChangeListener;
 import texgen.modele.InfosPresentation;
 import texgen.vue.Graph.EtatParcours;
 
+/**
+ * Boîte de dialogue permettant de personnaliser les couleurs utilisées dans le graph
+ * 
+ * @author BROSSARD Florian
+ * @author MILLOTTE Fanny
+ *
+ */
 @SuppressWarnings("serial")
 public class ColorChooser extends JDialog implements ChangeListener, ActionListener {
+    /** les informations de la présentation */
     private InfosPresentation       infos;
+    /** le menu déroulant permettant de choisir un état */
     private JComboBox<EtatParcours> stateSelector;
+    /** le bouton radio permettant d'indiquer si l'on modifie la couleurs des noeuds */
     private JRadioButton            noeuds;
+    /** le bouton radio permettant d'indiquer si l'on modifie la couleurs des liens */
     private JRadioButton            liens;
+    /** le sélecteur de couleur JAVA */
     private JColorChooser           colorChooser;
 
+    /**
+     * Constructeur de la classe
+     * 
+     * @param infos
+     *            les informations de la présentation
+     */
     public ColorChooser(InfosPresentation infos) {
         super();
         setLayout(new BorderLayout());
@@ -34,6 +52,7 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         this.infos = infos;
+        // Panel permettant de sélectionner l'états et le type (noeuds ou liens) de couleursque l'on souhaite modifié
         JPanel selectorsPanel = new JPanel(new GridLayout(1, 3));
         ButtonGroup grp = new ButtonGroup();
         noeuds = new JRadioButton("noeuds");
@@ -50,13 +69,15 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
             stateSelector.addItem(etat);
         }
         stateSelector.addActionListener(this);
+        selectorsPanel.add(stateSelector);
+        add(selectorsPanel, BorderLayout.NORTH);
 
         colorChooser = new JColorChooser(infos.getCouleursNoeuds().get(stateSelector.getSelectedItem()));
         colorChooser.getSelectionModel().addChangeListener(this);
         add(colorChooser, BorderLayout.CENTER);
 
-        selectorsPanel.add(stateSelector);
-        add(selectorsPanel, BorderLayout.NORTH);
+        // Bouton permettant de fermer la boîte de dialogue
+        // les modifs sont enregistrer même si l'on ferme la boîte de dialogue autrement
         JButton valider = new JButton("Valider");
         valider.addActionListener(new ActionListener() {
             @Override
@@ -71,6 +92,8 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
 
     @Override
     public void stateChanged(ChangeEvent arg0) {
+        // Quelque soit la couleur et la sélection, on effectus le même traitement
+        // Pas besoin de connaître la source
         Color c = colorChooser.getColor();
         if (noeuds.isSelected()) {
             infos.getCouleursNoeuds().put((EtatParcours) stateSelector.getSelectedItem(), c);

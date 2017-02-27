@@ -97,6 +97,11 @@ public class PseudoCode extends JPanel {
         add(lineNumbersPanel, BorderLayout.WEST);
     }
 
+    /**
+     * Retourne la fenêtre principale de l'application
+     * 
+     * @return la fenêtre principale de l'application
+     */
     public FenetrePrincipale getFenetre() {
         return fen;
     }
