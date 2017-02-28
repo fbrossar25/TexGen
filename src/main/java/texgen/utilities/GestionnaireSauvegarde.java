@@ -289,6 +289,7 @@ public class GestionnaireSauvegarde {
                 res += "\t\t\t\t<ligne_t numero=\"" + j + "\">\n";
                 for (int k = 0; k < model.getColumnCount(); k++) {// case
                     String value = (String) model.getValueAt(j, k);
+                    // TODO optimisation
                     if ((value != null) && !value.equals("")) {
                         res += "\t\t\t\t\t<case numero=\"" + k + "\"><![CDATA[" + value + "]]></case>\n";
                     }

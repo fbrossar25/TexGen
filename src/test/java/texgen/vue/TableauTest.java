@@ -17,7 +17,7 @@ import org.junit.Test;
 public class TableauTest {
 
     /**
-     * Test la détection de changement de variables
+     * Test la détection des modifications des valeurs variables
      */
     @Test
     public void testMarquage() {
@@ -38,7 +38,7 @@ public class TableauTest {
     }
 
     /**
-     * Test la répercussion de modifications de valeurs
+     * Test la répercussion des modifications des valeurs des variables
      */
     @Test
     public void testModifs() {

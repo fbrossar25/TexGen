@@ -19,7 +19,7 @@ import org.junit.Test;
 public class PseudoCodeTest {
 
     /**
-     * Test la récuperation des lignes du pseudoCode
+     * Test la récuperation des lignes
      */
     @Test
     public void testGetLignes() {
@@ -33,7 +33,7 @@ public class PseudoCodeTest {
     }
 
     /**
-     * Test la récupération du nombre de ligne du pseudoCode
+     * Test la récupération du nombre de ligne
      */
     @Test
     public void testGetNombreLignes() {
@@ -42,7 +42,7 @@ public class PseudoCodeTest {
     }
 
     /**
-     * test les différentes opérations sur les diapos
+     * test de la gestion des diapos
      */
     @Test
     public void testDiapos() {
