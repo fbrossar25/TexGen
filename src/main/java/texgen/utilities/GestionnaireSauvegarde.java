@@ -49,7 +49,7 @@ public class GestionnaireSauvegarde {
         String s = "<!DOCTYPE projet [\n";
         s += "\t<!ELEMENT projet (infos, pseudocode, tableau, graph) >\n";
         s += "\t<!ATTLIST projet diapos CDATA #REQUIRED >\n\n";
-        s += "\t<!ELEMENT infos (auteur, titre, titreCourt, sousTitre, algo, institut, date, couleurs) >\n";
+        s += "\t<!ELEMENT infos (auteur, titre, titreCourt, sousTitre, algo, institut, date, sizes, couleurs) >\n";
         s += "\t<!ELEMENT auteur (#PCDATA) >\n";
         s += "\t<!ELEMENT titre (#PCDATA) >\n";
         s += "\t<!ELEMENT titreCourt (#PCDATA) >\n";
@@ -57,6 +57,13 @@ public class GestionnaireSauvegarde {
         s += "\t<!ELEMENT algo (#PCDATA) >\n";
         s += "\t<!ELEMENT institut (#PCDATA) >\n";
         s += "\t<!ELEMENT date (#PCDATA) >\n";
+        s += "\t<!ELEMENT sizes (hspaceCodeTab, codeSize, tabSize) >\n";
+        s += "\t<!ELEMENT hspaceCodeTab EMPTY >\n";
+        s += "\t<!ATTLIST hspaceCodeTab value CDATA #REQUIRED >\n";
+        s += "\t<!ELEMENT codeSize EMPTY >\n";
+        s += "\t<!ATTLIST codeSize value CDATA #REQUIRED >\n";
+        s += "\t<!ELEMENT tabSize EMPTY >\n";
+        s += "\t<!ATTLIST tabSize value CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT couleurs (couleursNoeuds, couleursLiens) >\n";
         s += "\t<!ELEMENT couleursNoeuds (couleur)* >\n";
         s += "\t<!ELEMENT couleursLiens (couleur)* >\n";
@@ -147,6 +154,11 @@ public class GestionnaireSauvegarde {
         res += "\t\t<algo>" + i.getTitreAlgo() + "</algo>\n";
         res += "\t\t<institut>" + i.getInstitut() + "</institut>\n";
         res += "\t\t<date>" + i.getDate() + "</date>\n";
+        res += "\t\t<sizes>\n";
+        res += "\t\t\t<hspaceCodeTab value=\"" + i.getHSpaceCodeTab() + "\" />\n";
+        res += "\t\t\t<codeSize value=\"" + i.getCodeSize() + "\" />\n";
+        res += "\t\t\t<tabSize value=\"" + i.getTabSize() + "\" />\n";
+        res += "\t\t</sizes>\n";
         res += "\t\t<couleurs>\n";
         res += "\t\t\t<couleursNoeuds>\n";
         Color c;
@@ -352,6 +364,9 @@ public class GestionnaireSauvegarde {
             infos.setTitreAlgo((String) path.evaluate(infosPath + "/algo/text()", root, XPathConstants.STRING));
             infos.setInstitut((String) path.evaluate(infosPath + "/institut/text()", root, XPathConstants.STRING));
             infos.setDate((String) path.evaluate(infosPath + "/date/text()", root, XPathConstants.STRING));
+            infos.setHSpaceCodeTab((Double) path.evaluate(infosPath + "/sizes/hspaceCodeTab/@value", root, XPathConstants.NUMBER));
+            infos.setCodeSize((Double) path.evaluate(infosPath + "/sizes/codeSize/@value", root, XPathConstants.NUMBER));
+            infos.setTabSize((Double) path.evaluate(infosPath + "/sizes/tabSize/@value", root, XPathConstants.NUMBER));
             int r, g, b, intEtat;
             String infosColorPath;
             // On récupère les couleurs des états

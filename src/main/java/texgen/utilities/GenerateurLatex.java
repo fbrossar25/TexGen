@@ -417,7 +417,7 @@ public class GenerateurLatex {
     public static String genererPseudoCode(PseudoCode pseudoCode, String titreAlgo) {
         String res = "";
 
-        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n";
+        res += "\\begin{minipage}[t]{" + pseudoCode.getFenetre().getInfos().getCodeSize() + "cm}\n" + "\\begin{tiny}\n" + "\\begin{algorithm*}[H]\n" + "\\NoCaptionOfAlgo\n";
         res += "\\caption{" + titreAlgo + "}\n\n";
 
         ArrayList<String> lignes = separerLignes(pseudoCode.getTextArea().getText());
@@ -425,7 +425,7 @@ public class GenerateurLatex {
             res += genererColorCode(pseudoCode, lignes.get(i - 1), i) + "\n";
         }
 
-        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\n";
+        res += "\n" + "\\end{algorithm*}\n" + "\\end{tiny}\n" + "\\end{minipage}\n\\hspace{" + pseudoCode.getFenetre().getInfos().getHSpaceCodeTab() + "cm}\n";
         // Un bug peu faire apparaitre le caractère 'fi' plutot que la chaine "fi", ceci permet de le résoudre
         return res.replaceAll("ﬁ", "fi");
     }
@@ -439,7 +439,7 @@ public class GenerateurLatex {
      */
     public static String genererTableau(Tableau tableau) {
         String res = "";
-        res += "\\begin{minipage}[t]{0.48\\textwidth}\n" + "\\begin{scriptsize}\n";
+        res += "\\begin{minipage}[t]{" + tableau.getFenetre().getInfos().getCodeSize() + "cm}\n" + "\\begin{scriptsize}\n";
         res += genererEnteteTableau(tableau) + "\n";
         res += genererCorpsTableau(tableau) + "\\hline\n";
         res += "\\end{tabular}\\\\\n" + "\\end{scriptsize}\n" + "\\end{minipage}\n";

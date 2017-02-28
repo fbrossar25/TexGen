@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
 
 import texgen.modele.InfosPresentation;
@@ -37,6 +39,12 @@ public class SaisieInfosPresentation extends JDialog {
     private InfosPresentation     infos;
     /** la fenêtre principale */
     private FenetrePrincipale     fen;
+    /** le champ de saisie de l'espacement entre le pseudoCode et le tableau */
+    private JSpinner              hspaceCodeTabField;
+    /** le champ de saisie de la taille du pseudoCode */
+    private JSpinner              codeSizeField;
+    /** le champ de saisie de la taille du tableau */
+    private JSpinner              tabSizeField;
 
     /**
      * Constructeur de la classe
@@ -99,7 +107,21 @@ public class SaisieInfosPresentation extends JDialog {
         fieldsPane.add(tf7);
         fields.add(tf7);
 
-        SpringUtilities.makeGrid(fieldsPane, fields.size(), 2, 0, 0, 5, 2);
+        JLabel jl8 = new JLabel("Espacement pseudoCode-tableau (0-15 cm) :");
+        fieldsPane.add(jl8);
+        hspaceCodeTabField = new JSpinner(new SpinnerNumberModel(infos.getHSpaceCodeTab(), 0.0, 15.0, 0.01));
+        fieldsPane.add(hspaceCodeTabField);
+        JLabel jl9 = new JLabel("Taille du pseudoCode (0-15 cm) :");
+        fieldsPane.add(jl9);
+        codeSizeField = new JSpinner(new SpinnerNumberModel(infos.getCodeSize(), 0.0, 15.0, 0.01));
+        fieldsPane.add(codeSizeField);
+        JLabel jl10 = new JLabel("Taille du tableau (0-15 cm) :");
+        fieldsPane.add(jl10);
+        tabSizeField = new JSpinner(new SpinnerNumberModel(infos.getTabSize(), 0.0, 15.0, 0.01));
+        fieldsPane.add(tabSizeField);
+
+        // fields.size() + 3 pour le nombre de champs de texte et les 3 JSpinner
+        SpringUtilities.makeGrid(fieldsPane, fields.size() + 3, 2, 0, 0, 5, 2);
         add(fieldsPane, BorderLayout.CENTER);
 
         // Définition des boutons valider et reset
@@ -214,6 +236,9 @@ public class SaisieInfosPresentation extends JDialog {
         infos.setTitreAlgo(getTitreAlgo());
         infos.setInstitut(getInstitut());
         infos.setDate(getDate());
+        infos.setHSpaceCodeTab((double) hspaceCodeTabField.getModel().getValue());
+        infos.setCodeSize((double) codeSizeField.getModel().getValue());
+        infos.setTabSize((double) tabSizeField.getModel().getValue());
     }
 
     /**
@@ -228,6 +253,12 @@ public class SaisieInfosPresentation extends JDialog {
         infos.setTitrePresentation("");
         infos.setTitrePresentationCourt("");
         infos.setInstitut("");
+        infos.setHSpaceCodeTab(0.0);
+        infos.setCodeSize(5.0);
+        infos.setTabSize(5.0);
+        hspaceCodeTabField.getModel().setValue(0.0);
+        codeSizeField.getModel().setValue(5.0);
+        tabSizeField.getModel().setValue(5.0);
         for (JTextField f : fields) {
             f.setText("");
         }

@@ -34,6 +34,12 @@ public class InfosPresentation {
     private HashMap<EtatParcours, Color> couleursNoeuds;
     /** la fenêtre principale */
     private FenetrePrincipale            fen;
+    /** Espace horizontale entre le pseudoCode et le tableau (en cm) */
+    private double                       hspace_code_tab;
+    /** Taille du pseudoCode en cm */
+    private double                       codeSize;
+    /** Taille du tableau en cm */
+    private double                       tabSize;
 
     /**
      * Constructeur de la classe
@@ -50,6 +56,9 @@ public class InfosPresentation {
         institut = "";
         date = "";
         fen = fenetre;
+        hspace_code_tab = 0.0;
+        codeSize = 5.0;
+        tabSize = 5.0;
         initCouleurs();
     }
 
@@ -333,7 +342,64 @@ public class InfosPresentation {
     }
 
     /**
-     * Redéfinis toutes les informations et les couleurs à leurs valeurs par défaut (chaîne vide et couleurs par défaut)
+     * Retourne la taille du pseudoCode en cm
+     * 
+     * @return la taille du pseudoCode en cm
+     */
+    public double getCodeSize() {
+        return codeSize;
+    }
+
+    /**
+     * Définis la taille du pseudoCode en cm
+     * 
+     * @param size
+     *            la taille du pseudoCode en cm
+     */
+    public void setCodeSize(double size) {
+        codeSize = size;
+    }
+
+    /**
+     * Retourne la taille du tableau en cm
+     * 
+     * @return la taille du tableau en cm
+     */
+    public double getTabSize() {
+        return tabSize;
+    }
+
+    /**
+     * Définis la taille du tableau en cm
+     * 
+     * @param size
+     *            la taille du tableau en cm
+     */
+    public void setTabSize(double size) {
+        tabSize = size;
+    }
+
+    /**
+     * Retourne l'espacement entre le pseudoCode et le tableau
+     * 
+     * @return l'espacement entre le pseudoCode et le tableau
+     */
+    public double getHSpaceCodeTab() {
+        return hspace_code_tab;
+    }
+
+    /**
+     * Définis l'espacement entre le pseudoCode et le tableau
+     * 
+     * @param hspace
+     *            l'espacement entre le pseudoCode et le tableau
+     */
+    public void setHSpaceCodeTab(double hspace) {
+        hspace_code_tab = hspace;
+    }
+
+    /**
+     * Redéfinis toutes les informations et les couleurs à leurs valeurs par défaut (chaîne vides, couleurs par défaut et 0.0 pour les tailles et expacements)
      */
     public void reset() {
         nomAuteur = "";
@@ -343,6 +409,9 @@ public class InfosPresentation {
         titrePresentation = "";
         titrePresentationCourt = "";
         institut = "";
+        hspace_code_tab = 0.0;
+        codeSize = 5.0;
+        tabSize = 5.0;
         initCouleurs();
     }
 }
