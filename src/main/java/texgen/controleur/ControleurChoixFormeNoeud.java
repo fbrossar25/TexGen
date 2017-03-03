@@ -38,10 +38,18 @@ public class ControleurChoixFormeNoeud implements ActionListener {
         if (n == null || p == null) {
             return;
         }
-        if (source.getText().equals("Simple")) {
-            n.changerForme(TypeForme.Simple);
-        } else if (source.getText().equals("Double")) {
-            n.changerForme(TypeForme.Double);
+        if (source.getText().equals("Initial")) {
+            n.changerForme(TypeForme.Initial);
+            graph.setNoeudInitial(n);
+        } else {
+            if (n == graph.getNoeudInitial()) {
+                graph.setNoeudInitial(null);
+            }
+            if (source.getText().equals("Simple")) {
+                n.changerForme(TypeForme.Simple);
+            } else if (source.getText().equals("Double")) {
+                n.changerForme(TypeForme.Double);
+            }
         }
         graph.refresh();
     }

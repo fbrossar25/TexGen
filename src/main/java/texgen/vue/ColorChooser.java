@@ -36,6 +36,8 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
     private JRadioButton            noeuds;
     /** le bouton radio permettant d'indiquer si l'on modifie la couleurs des liens */
     private JRadioButton            liens;
+    /** le bouton radio permettant d'indiquer si l'on modifi la couleur du noeud initial */
+    private JRadioButton            noeudInitial;
     /** le sélecteur de couleur JAVA */
     private JColorChooser           colorChooser;
 
@@ -53,7 +55,7 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
         setLayout(new BorderLayout());
         this.infos = infos;
         // Panel permettant de sélectionner l'états et le type (noeuds ou liens) de couleursque l'on souhaite modifié
-        JPanel selectorsPanel = new JPanel(new GridLayout(1, 3));
+        JPanel selectorsPanel = new JPanel(new GridLayout(1, 4));
         ButtonGroup grp = new ButtonGroup();
         noeuds = new JRadioButton("noeuds");
         grp.add(noeuds);
@@ -63,6 +65,10 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
         grp.add(liens);
         selectorsPanel.add(liens);
         liens.addActionListener(this);
+        noeudInitial = new JRadioButton("noeud initial");
+        grp.add(noeudInitial);
+        selectorsPanel.add(noeudInitial);
+        noeudInitial.addActionListener(this);
         noeuds.setSelected(true);
         stateSelector = new JComboBox<EtatParcours>();
         for (EtatParcours etat : EtatParcours.values()) {
@@ -99,6 +105,8 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
             infos.getCouleursNoeuds().put((EtatParcours) stateSelector.getSelectedItem(), c);
         } else if (liens.isSelected()) {
             infos.getCouleursLiens().put((EtatParcours) stateSelector.getSelectedItem(), c);
+        } else if (noeudInitial.isSelected()) {
+            infos.setCouleurNoeudInitial(c);
         }
         infos.getFenetre().repaint();
     }
@@ -109,6 +117,8 @@ public class ColorChooser extends JDialog implements ChangeListener, ActionListe
             colorChooser.setColor(infos.getCouleursNoeuds().get(stateSelector.getSelectedItem()));
         } else if (liens.isSelected()) {
             colorChooser.setColor(infos.getCouleursLiens().get(stateSelector.getSelectedItem()));
+        } else if (noeudInitial.isSelected()) {
+            colorChooser.setColor(infos.getCouleurNoeudInitial());
         }
     }
 }

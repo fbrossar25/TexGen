@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import texgen.controleur.ControleurGraph;
 import texgen.modele.Lien;
 import texgen.modele.Noeud;
+import texgen.modele.Noeud.TypeForme;
 import texgen.utilities.DrawUtilities;
 
 /**
@@ -57,6 +58,8 @@ public class Graph extends JPanel {
     private Point                                   lastClick;
     /** Indique si les liens sont sous forme de flêche (true) ou de simple ligne (false) */
     private boolean                                 arrow                     = false;
+    /** Référence au noeud initial */
+    private Noeud                                   noeudInitial;
 
     /**
      * Constructeur de la classe
@@ -80,6 +83,7 @@ public class Graph extends JPanel {
         selectedLink = null;
         targetedLink = null;
         lastClick = null;
+        noeudInitial = null;
         setFocusable(true);
     }
 
@@ -769,6 +773,10 @@ public class Graph extends JPanel {
      */
     public Noeud creerNoeud(String label) {
         Noeud n = new Noeud(label);
+        if (noeudInitial == null) {
+            noeudInitial = n;
+            n.changerForme(TypeForme.Initial);
+        }
         noeuds.put(n, getFullInactiveStates());
         add(n);
         refresh();
@@ -788,10 +796,33 @@ public class Graph extends JPanel {
      */
     public Noeud creerNoeud(String label, int x, int y) {
         Noeud n = new Noeud(label, new Point(x, y));
+        if (noeudInitial == null) {
+            noeudInitial = n;
+            n.changerForme(TypeForme.Initial);
+        }
         noeuds.put(n, getFullInactiveStates());
         add(n);
         refresh();
         return n;
+    }
+
+    /**
+     * Défnis le noeud donné comme initial
+     * 
+     * @param n
+     *            le noeud
+     */
+    public void setNoeudInitial(Noeud n) {
+        noeudInitial = n;
+    }
+
+    /**
+     * Retourne le noeud initial du graph s'il existe
+     * 
+     * @return le noeud initial ou null
+     */
+    public Noeud getNoeudInitial() {
+        return noeudInitial;
     }
 
     /**
@@ -816,12 +847,15 @@ public class Graph extends JPanel {
      */
     public void supprimerNoeud(Noeud n) {
         if (n != null) {
+            if (n == noeudInitial) {
+                noeudInitial = null;
+            }
             supprimerLienAvecNoeud(n);
             remove(n);
             noeuds.remove(n);
+            resetSelectedNode();
+            refresh();
         }
-        resetSelectedNode();
-        refresh();
     }
 
     /**
@@ -959,7 +993,13 @@ public class Graph extends JPanel {
         if (n == null) {
             return;
         }
-        g.setColor(getCouleurEtatNoeud(getEtatCourantNoeud(n)));
+        EtatParcours etat = getEtatCourantNoeud(n);
+        // Si le n est le noeud initial et qu'il est Inactif ou Parcourus
+        if (n == noeudInitial && (etat == EtatParcours.Inactif || etat == EtatParcours.Parcourus)) {
+            g.setColor(fenetre.getInfos().getCouleurNoeudInitial());
+        } else {
+            g.setColor(getCouleurEtatNoeud(etat));
+        }
     }
 
     /**
@@ -996,6 +1036,10 @@ public class Graph extends JPanel {
             setColorForNode(g, n);
             switch (n.getForme()) {
                 case Simple: {
+                    DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
+                }
+                    break;
+                case Initial: {
                     DrawUtilities.drawCenteredCircle(g, n.getCentre(), n.getRayon());
                 }
                     break;

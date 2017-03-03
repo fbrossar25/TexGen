@@ -98,6 +98,9 @@ public class ControleurGraphContextMenuNode extends MouseAdapter implements Acti
                 choixForme.getItem(1).setSelected(true);
             }
                 break;
+            case Initial: {
+                choixForme.getItem(2).setSelected(true);
+            }
             default: {
                 for (int i = 0; i < choixForme.getItemCount(); i++)
                     choixForme.getItem(i).setSelected(false);

@@ -64,7 +64,11 @@ public class GestionnaireSauvegarde {
         s += "\t<!ATTLIST codeSize value CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT tabSize EMPTY >\n";
         s += "\t<!ATTLIST tabSize value CDATA #REQUIRED >\n";
-        s += "\t<!ELEMENT couleurs (couleursNoeuds, couleursLiens) >\n";
+        s += "\t<!ELEMENT couleurs (couleurNoeudInitial, couleursNoeuds, couleursLiens) >\n";
+        s += "\t<!ELEMENT couleurNoeudInitial EMPTY >\n";
+        s += "\t<!ATTLIST couleurNoeudInitial r CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST couleurNoeudInitial g CDATA #REQUIRED >\n";
+        s += "\t<!ATTLIST couleurNoeudInitial b CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT couleursNoeuds (couleur)* >\n";
         s += "\t<!ELEMENT couleursLiens (couleur)* >\n";
         s += "\t<!ELEMENT couleur EMPTY >\n";
@@ -94,6 +98,7 @@ public class GestionnaireSauvegarde {
         s += "\t<!ATTLIST case numero CDATA #REQUIRED >\n\n";
         s += "\t<!ELEMENT graph (noeuds, liens) >\n";
         s += "\t<!ATTLIST graph styleLien (0|1) \"0\" >\n";
+        s += "\t<!ATTLIST graph noeudInitial CDATA #REQUIRED >\n";
         s += "\t<!ELEMENT noeuds (noeud)* >\n";
         s += "\t<!ELEMENT noeud (label,etats) >\n";
         s += "\t<!ELEMENT label (#PCDATA) >\n";
@@ -160,8 +165,9 @@ public class GestionnaireSauvegarde {
         res += "\t\t\t<tabSize value=\"" + i.getTabSize() + "\" />\n";
         res += "\t\t</sizes>\n";
         res += "\t\t<couleurs>\n";
+        Color c = i.getCouleurNoeudInitial();
+        res += "\t\t\t<couleurNoeudInitial r=\"" + c.getRed() + "\" g=\"" + c.getGreen() + "\" b=\"" + c.getBlue() + "\" />\n";
         res += "\t\t\t<couleursNoeuds>\n";
-        Color c;
         for (EtatParcours etat : EtatParcours.values()) {
             c = i.getCouleursNoeuds().get(etat);
             res += "\t\t\t\t<couleur etat=\"" + i.getIntForEtat(etat) + "\" r=\"" + c.getRed() + "\" g=\"" + c.getGreen() + "\" b=\"" + c.getBlue() + "\"/>\n";
@@ -185,10 +191,14 @@ public class GestionnaireSauvegarde {
      * @return la chaine XML du graph
      */
     public static String sauvegarderGraph(Graph g) {
-        String res = "\t<graph" + ((g.isArrow()) ? " styleLien=\"1\"" : "") + ">\n";
+        String res = "";
         res += "\t\t<noeuds>\n";
         int i = 0;
+        int idInit = -1;
         for (Noeud n : g.getNoeuds()) {
+            if (n == g.getNoeudInitial()) {
+                idInit = i;
+            }
             String forme = (n.getForme() == TypeForme.Double) ? " forme = \"1\"" : "";
             res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\"" + forme + ">\n";
             res += "\t\t\t\t<label><![CDATA[" + n.getText() + "]]></label>\n";
@@ -202,6 +212,7 @@ public class GestionnaireSauvegarde {
             res += "\t\t\t</noeud>\n";
             i++;
         }
+        res = "\t<graph" + ((g.isArrow()) ? " styleLien=\"1\"" : "") + ((idInit != -1) ? " noeudInitial=\"" + idInit + "\"" : "") + " >\n" + res;
         res += "\t\t</noeuds>\n";
 
         res += "\t\t<liens>\n";
@@ -369,7 +380,11 @@ public class GestionnaireSauvegarde {
             infos.setCodeSize((Double) path.evaluate(infosPath + "/sizes/codeSize/@value", root, XPathConstants.NUMBER));
             infos.setTabSize((Double) path.evaluate(infosPath + "/sizes/tabSize/@value", root, XPathConstants.NUMBER));
             int r, g, b, intEtat;
-            String infosColorPath;
+            String infosColorPath = infosPath + "/couleurs/couleurNoeudInitial";
+            r = ((Double) path.evaluate(infosColorPath + "/@r", root, XPathConstants.NUMBER)).intValue();
+            g = ((Double) path.evaluate(infosColorPath + "/@g", root, XPathConstants.NUMBER)).intValue();
+            b = ((Double) path.evaluate(infosColorPath + "/@b", root, XPathConstants.NUMBER)).intValue();
+            infos.setCouleurNoeudInitial(new Color(r, g, b));
             // On récupère les couleurs des états
             for (EtatParcours etat : EtatParcours.values()) {
                 intEtat = infos.getIntForEtat(etat);
@@ -433,6 +448,8 @@ public class GestionnaireSauvegarde {
                     int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
                     g.changerEtatNoeud(noeuds.get(id), j, g.getEtatForInt(etat));
                 }
+                String idInitial = (String) path.evaluate("/projet/graph/@noeudInitial", root, XPathConstants.STRING);
+                g.setNoeudInitial(noeuds.get(idInitial));
             }
 
             // chargement des liens

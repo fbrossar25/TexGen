@@ -20,7 +20,7 @@ public class Noeud extends JTextField {
     /** Type énuméré qui donne les formes possible */
     @SuppressWarnings("javadoc")
     public enum TypeForme {
-        Simple, Double,
+        Simple, Double, Initial
     }
 
     /** la forme du noeud */

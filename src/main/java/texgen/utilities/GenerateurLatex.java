@@ -61,9 +61,9 @@ public class GenerateurLatex {
      * @return la liste des couleurs sous forme de chaîne
      */
     public static String genererCouleurs(Graph graph) {
-        String res = "";
-        Color c;
-        int r, g, b;
+        Color c = graph.getFenetre().getInfos().getCouleurNoeudInitial();
+        int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
+        String res = "\\definecolor{noeudInitial}{RGB}{" + r + "," + g + "," + b + "}\n";
         for (EtatParcours etat : EtatParcours.values()) {
             c = graph.getCouleurEtatNoeud(etat);
             r = c.getRed();
@@ -133,11 +133,13 @@ public class GenerateurLatex {
     public static String genererTikz(String tikzLinkStyle) {
         String res = "\\tikzset{\n";
         res += "\tlien/.style={" + tikzLinkStyle + ",thick,color=#1},\n";
-        res += "\tlien/.default={black!21},\n";
+        res += "\tlien/.default={lienInactif},\n";
         res += "\tetat/.style={draw,thick,circle,color=#1},\n";
-        res += "\tetat/.default={black!21},\n";
+        res += "\tetat/.default={noeudInactif},\n";
+        res += "\tetatInit/.style={draw,circle,thick,color=#1},\n";
+        res += "\tetatInit/.default={noeudInitial},\n";
         res += "\tetatFinal/.style={draw,double,circle,color=#1},\n";
-        res += "\tetatFinal/.default={blue!21}\n";
+        res += "\tetatFinal/.default={noeudInactif}\n";
         return res + "}";
     }
 
@@ -241,11 +243,18 @@ public class GenerateurLatex {
                 noeudSansNom++;
             }
             String label = "{\\scriptsize " + normalizedLabel + "}";
-            String typeNoeud = (n.getForme() == TypeForme.Simple) ? "etat" : "etatFinal";
+            String typeNoeud;
+            if (n == g.getNoeudInitial()) {
+                typeNoeud = "etatInit";
+            } else if (n.getForme() == TypeForme.Double) {
+                typeNoeud = "etatFinal";
+            } else {
+                typeNoeud = "etat";
+            }
             String coordonnees = getCoordonneeString(g, n);
             for (EtatParcours etat : g.getEtatsNoeudDistinct(n)) {
                 String listeDiapos = getDiapoNoeudString(g, n, etat);
-                String couleur = "noeud" + etat.toString();
+                String couleur = (typeNoeud.equals("etatInit") && (etat == EtatParcours.Inactif || etat == EtatParcours.Parcourus)) ? "" : "noeud" + etat.toString();
                 res += "\t\\node" + listeDiapos + "[" + typeNoeud + ((couleur.equals("")) ? "" : "=") + couleur + "] (" + normalizedLabel + ") at " + coordonnees + label + ";\n";
             }
         }

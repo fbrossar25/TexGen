@@ -32,6 +32,8 @@ public class InfosPresentation {
     private HashMap<EtatParcours, Color> couleursLiens;
     /** liste des couleurs des noeuds en fonction de leurs états */
     private HashMap<EtatParcours, Color> couleursNoeuds;
+    /** Couleur du noeud initial */
+    private Color                        couleurNoeudInitial;
     /** la fenêtre principale */
     private FenetrePrincipale            fen;
     /** Espace horizontale entre le pseudoCode et le tableau (en cm) */
@@ -59,6 +61,7 @@ public class InfosPresentation {
         hspace_code_tab = 0.0;
         codeSize = 5.0;
         tabSize = 5.0;
+        couleurNoeudInitial = Color.ORANGE;
         initCouleurs();
     }
 
@@ -75,6 +78,7 @@ public class InfosPresentation {
      * Initialise les valeurs par défauts des couleurs
      */
     private void initCouleurs() {
+        couleurNoeudInitial = Color.ORANGE;
         couleursLiens = new HashMap<>();
         couleursNoeuds = new HashMap<>();
         for (EtatParcours etat : EtatParcours.values()) {
@@ -99,6 +103,25 @@ public class InfosPresentation {
      */
     public HashMap<EtatParcours, Color> getCouleursLiens() {
         return couleursLiens;
+    }
+
+    /**
+     * Retourne la couleur du noeud initial
+     * 
+     * @return la couleur du noeud initial
+     */
+    public Color getCouleurNoeudInitial() {
+        return couleurNoeudInitial;
+    }
+
+    /**
+     * Défnis la couleur du noeud initial
+     * 
+     * @param c
+     *            la couleur du noeud initial
+     */
+    public void setCouleurNoeudInitial(Color c) {
+        couleurNoeudInitial = c;
     }
 
     /**

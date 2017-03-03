@@ -115,15 +115,19 @@ public class ControleurGraph implements MouseListener, MouseMotionListener {
     private JMenu getNodeShapeMenu() {
         ActionListener ctrl = new ControleurChoixFormeNoeud(graph);
         ButtonGroup groupe = new ButtonGroup();
-        JMenu menu = new JMenu("Forme");
+        JMenu menu = new JMenu("Type");
         JRadioButtonMenuItem simple = new JRadioButtonMenuItem("Simple");
         groupe.add(simple);
         menu.add(simple);
         simple.addActionListener(ctrl);
-        JRadioButtonMenuItem formeDouble = new JRadioButtonMenuItem("Double");
-        groupe.add(formeDouble);
-        menu.add(formeDouble);
-        formeDouble.addActionListener(ctrl);
+        JRadioButtonMenuItem typeDouble = new JRadioButtonMenuItem("Double");
+        groupe.add(typeDouble);
+        menu.add(typeDouble);
+        typeDouble.addActionListener(ctrl);
+        JRadioButtonMenuItem initial = new JRadioButtonMenuItem("Initial");
+        groupe.add(initial);
+        menu.add(initial);
+        initial.addActionListener(ctrl);
         return menu;
     }
 
