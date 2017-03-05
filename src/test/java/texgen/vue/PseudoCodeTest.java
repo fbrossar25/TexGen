@@ -39,6 +39,11 @@ public class PseudoCodeTest {
     public void testGetNombreLignes() {
         PseudoCode p = new PseudoCode(null);
         assertEquals(1, p.getNombreLignes());
+        p.getTextArea().setText("");
+        for (int i = 0; i < 99; i++) {
+            p.getTextArea().append("test\n");
+        }
+        assertEquals(100, p.getNombreLignes());
     }
 
     /**

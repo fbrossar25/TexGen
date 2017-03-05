@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 
 import texgen.utilities.FileUtilities;
 import texgen.utilities.GestionnaireSauvegarde;
+import texgen.vue.APropos;
 import texgen.vue.BarreMenu;
 import texgen.vue.FenetrePrincipale;
 import texgen.vue.Graph;
@@ -74,6 +75,8 @@ public class ControleurBarreMenu implements ActionListener {
             barreMenu.getFenetre().getGraph().setArrow(false);
         } else if (source.getText().equals("Changer couleurs")) {
             barreMenu.getFenetre().choixCouleurs();
+        } else if (source.getText().equals("A propos")) {
+            new APropos();
         }
     }
 
