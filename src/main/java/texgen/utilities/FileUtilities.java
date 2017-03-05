@@ -1,9 +1,13 @@
 package texgen.utilities;
 
 import java.awt.Desktop;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,11 +33,14 @@ public class FileUtilities {
      *            true pour ouvrir l'editeur après l'écriture du fichier, false sinon
      */
     public static void writeStringInFile(String s, String fullPath, boolean openEditor) {
-        FileWriter fw = null;
+        Writer fstream = null;
+        BufferedWriter out = null;
         try {
-            fw = new FileWriter(new File(fullPath));
-            fw.write(s);
-            fw.close();
+            fstream = new OutputStreamWriter(new FileOutputStream(new File(fullPath)), StandardCharsets.UTF_8);
+            out = new BufferedWriter(fstream);
+            out.write(s);
+            out.close();
+            fstream.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
