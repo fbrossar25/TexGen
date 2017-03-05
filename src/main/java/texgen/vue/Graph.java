@@ -530,7 +530,6 @@ public class Graph extends JPanel {
             nombreDiapos++;
         } else {
             ajouterDiapo();
-            diapoCourante--;
         }
     }
 
@@ -548,13 +547,12 @@ public class Graph extends JPanel {
      */
     public void ajouterDiapo() {
         for (Noeud n : getNoeuds()) {
-            noeuds.get(n).add((getEtatCourantNoeud(n) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
+            noeuds.get(n).add((getEtatNoeudDiapo(n, nombreDiapos) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
         }
         for (Lien l : getLiens()) {
-            liens.get(l).add((getEtatCourantLien(l) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
+            liens.get(l).add((getEtatLienDiapo(l, nombreDiapos) != EtatParcours.Inactif) ? EtatParcours.Parcourus : EtatParcours.Inactif);
         }
         nombreDiapos++;
-        diapoSuivante();
     }
 
     /**

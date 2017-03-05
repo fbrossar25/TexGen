@@ -257,14 +257,14 @@ public class PseudoCode extends JPanel {
         int prochainMarqueur;
         // S'il n'y avait aucun marqueur, ou si le dernier marqueur était à la dernière ligne, on marque la première
         // ligne, sinon on marque la ligne suivant le dernier marqueur
-        if (getDiapo(diapoCourante).isEmpty() || (getDiapo(diapoCourante).last() == getNombreLignes())) {
+        if (getDiapo(getNombreDiapos()).isEmpty() || (getDiapo(getNombreDiapos()).last() == getNombreLignes())) {
             prochainMarqueur = 1;
         } else {
             // On utilise new Integer et intValue pour ne pas modifier le dernier marqueur
-            prochainMarqueur = new Integer(getDiapo(diapoCourante).last().intValue()) + 1;
+            prochainMarqueur = new Integer(getDiapo(getNombreDiapos()).last().intValue()) + 1;
             // System.out.println("next mark at " + prochainMarqueur);
         }
-        marquage(diapoCourante + 1, prochainMarqueur);
+        marquage(getNombreDiapos(), prochainMarqueur);
         // afficherMarqueurs();
     }
 
@@ -401,6 +401,9 @@ public class PseudoCode extends JPanel {
      *            Le numero de la diapo à insérer
      */
     public void insererDiapo(int i) {
+        if (i > getNombreDiapos() || i < 1) {
+            return;
+        }
         if (i < getNombreDiapos()) {// On copie l'état suivant s'il existe
             TreeSet<Integer> cpy = new TreeSet<>();
             for (Integer n : getDiapo(i)) {

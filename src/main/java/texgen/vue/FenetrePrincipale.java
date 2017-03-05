@@ -221,8 +221,8 @@ public class FenetrePrincipale extends JFrame {
         pseudoCode.ajouterDiapo();
         tableau.ajouterDiapo();
         graph.ajouterDiapo();
-        allerDiapo(getNombreDiapos());
         toolBar.updateCompteursDiapo();
+        allerDiapo(getNombreDiapos());
     }
 
     /**

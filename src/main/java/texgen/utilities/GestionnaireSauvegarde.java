@@ -3,6 +3,7 @@ package texgen.utilities;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -18,6 +19,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -203,10 +205,15 @@ public class GestionnaireSauvegarde {
             res += "\t\t\t<noeud id=\"" + i + "\" x=\"" + n.getCentre().x + "\" y=\"" + n.getCentre().y + "\"" + forme + ">\n";
             res += "\t\t\t\t<label><![CDATA[" + n.getText() + "]]></label>\n";
             res += "\t\t\t\t<etats>\n";
-            int j = 1;
-            for (EtatParcours etat : g.getEtatsNoeud(n)) {
-                res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
-                j++;
+            ArrayList<EtatParcours> etats = g.getEtatsNoeud(n);
+            int sz = etats.size();
+            EtatParcours etat, prev = null;
+            for (int j = 0; j < sz; j++) {
+                etat = etats.get(j);
+                if (prev == null || etat != prev) {
+                    res += "\t\t\t\t\t<diapo_g numero=\"" + (j + 1) + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+                }
+                prev = etat;
             }
             res += "\t\t\t\t</etats>\n";
             res += "\t\t\t</noeud>\n";
@@ -224,10 +231,15 @@ public class GestionnaireSauvegarde {
             res += "\t\t\t<lien depart=\"" + depart + "\" arrive=\"" + arrive + "\">\n";
             res += "\t\t\t\t<label><![CDATA[" + l.getText() + "]]></label>\n";
             res += "\t\t\t\t<etats>\n";
-            int j = 1;
-            for (EtatParcours etat : g.getEtatsLien(l)) {
-                res += "\t\t\t\t\t<diapo_g numero=\"" + j + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
-                j++;
+            ArrayList<EtatParcours> etats = g.getEtatsLien(l);
+            int sz = etats.size();
+            EtatParcours etat, prev = null;
+            for (int j = 0; j < sz; j++) {
+                etat = etats.get(j);
+                if (prev == null || etat != prev) {
+                    res += "\t\t\t\t\t<diapo_g numero=\"" + (j + 1) + "\">" + g.getIntForEtat(etat) + "</diapo_g>\n";
+                }
+                prev = etat;
             }
             res += "\t\t\t\t</etats>\n";
             res += "\t\t\t</lien>\n";
@@ -331,10 +343,13 @@ public class GestionnaireSauvegarde {
         // On utilise la validation pour éviter un mouvais fichier XML
         factory.setValidating(true);
         try {
+            // System.out.println("Loading...");
+            // long begin = System.nanoTime();
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new XMLErrorHandler());
             try {
                 Document xml = builder.parse(new File(fullPath));
+                // long parseTime = System.nanoTime() - begin;
                 Element root = xml.getDocumentElement();
                 XPathFactory xpf = XPathFactory.newInstance();
                 XPath path = xpf.newXPath();
@@ -344,6 +359,11 @@ public class GestionnaireSauvegarde {
                 chargerMarqueursPseudoCode(root, f.getPseudoCode(), path);
                 chargerTableau(root, f.getTableau(), path);
                 chargerGraph(root, f.getGraph(), path);
+                // long loadTime = System.nanoTime() - (parseTime + begin);
+                // long totalTime = parseTime + loadTime;
+                // System.out.println("parse time : " + parseTime / 1000000 + "ms");
+                // System.out.println("load time : " + loadTime / 1000000 + "ms");
+                // System.out.println("total time : " + totalTime / 1000000 + "ms");
                 f.refresh();
             } catch (SAXParseException e) {
                 JOptionPane.showMessageDialog(f, "Fichier invalide, introuvable ou illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -420,9 +440,9 @@ public class GestionnaireSauvegarde {
      *            une instance de XPath
      */
     public static void chargerGraph(Element root, Graph g, XPath path) {
+        String expression = "count(/projet/graph/noeuds/*)";
         try {
             // Chargement des noeuds
-            String expression = "count(/projet/graph/noeuds/*)";
             int nombreNoeuds = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
             expression = "/projet/@diapos";
             int nombreDiapos = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
@@ -443,10 +463,19 @@ public class GestionnaireSauvegarde {
                 if (forme.equals("1")) {
                     noeuds.get(id).changerForme(TypeForme.Double);
                 }
+                EtatParcours prev = null;
                 for (int j = 1; j <= nombreDiapos; j++) {
-                    expression = xpathNode + "/etats/diapo_g[" + j + "]";
-                    int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                    g.changerEtatNoeud(noeuds.get(id), j, g.getEtatForInt(etat));
+                    expression = xpathNode + "/etats/diapo_g[@numero='" + j + "']";
+                    Node node = (Node) path.evaluate(expression, root, XPathConstants.NODE);
+                    // Si le noeud est présent
+                    if (node != null) {
+                        int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                        // on change le dernier etat connus
+                        prev = g.getEtatForInt(etat);
+                    }
+                    if (prev != null) {
+                        g.changerEtatNoeud(noeuds.get(id), j, prev);
+                    }
                 }
                 String idInitial = (String) path.evaluate("/projet/graph/@noeudInitial", root, XPathConstants.STRING);
                 g.setNoeudInitial(noeuds.get(idInitial));
@@ -468,11 +497,20 @@ public class GestionnaireSauvegarde {
                 Noeud arrive = noeuds.get(idArrive);
                 // System.out.println("Restauration avec ('" + value + "', '" + depart.getText() + "' (" + indexDepart + "), '" + arrive.getText() + "' (" + indexArrive + "))");
                 Lien l = g.creerLien(value, depart, arrive);
-
+                EtatParcours prev = null;
                 for (int j = 1; j <= nombreDiapos; j++) {
-                    expression = xpathLink + "/etats/diapo_g[" + j + "]";
-                    int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
-                    g.changerEtatLien(l, j, g.getEtatForInt(etat));
+                    expression = xpathLink + "/etats/diapo_g[@numero='" + j + "']";
+                    Node node = (Node) path.evaluate(expression, root, XPathConstants.NODE);
+                    // Si le lien est présent
+                    if (node != null) {
+                        int etat = ((Double) path.evaluate(expression, root, XPathConstants.NUMBER)).intValue();
+                        g.changerEtatLien(l, j, g.getEtatForInt(etat));
+                        // on change le dernier etat connus
+                        prev = g.getEtatForInt(etat);
+                    }
+                    if (prev != null) {
+                        g.changerEtatLien(l, j, prev);
+                    }
                 }
             }
 
@@ -483,6 +521,7 @@ public class GestionnaireSauvegarde {
         } catch (XPathExpressionException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(g.getFenetre(), "Fichier illisible", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.err.println("\n\n expression was " + expression);
         }
     }
 

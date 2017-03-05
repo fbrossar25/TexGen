@@ -285,7 +285,7 @@ public class Tableau extends JPanel {
         // On copie le modele de la diapo précédente
         for (int i = 0; i < li; i++) {
             for (int j = 0; j < col; j++) {
-                newModel.setValueAt(getDiapo(diapoCourante).getValueAt(i, j), i, j);
+                newModel.setValueAt(getDiapo(getNombreDiapos()).getValueAt(i, j), i, j);
             }
         }
         if (!diapos.add(newModel)) {
