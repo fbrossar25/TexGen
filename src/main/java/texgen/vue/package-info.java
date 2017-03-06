@@ -1,5 +1,5 @@
 /**
- * Package regroupent les classes gérant les vus du projet.
+ * Package regroupent les classes gérant les vues du projet.
  * 
  * @author Florian BROSSARD
  * @author Fanny MILLOTTE
