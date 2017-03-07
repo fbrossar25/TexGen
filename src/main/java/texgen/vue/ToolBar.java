@@ -75,7 +75,7 @@ public class ToolBar extends JToolBar {
      * @param fen
      *            la fenetre principale de l'application
      */
-    public ToolBar(FenetrePrincipale fen) {
+    public ToolBar(final FenetrePrincipale fen) {
         this.fen = fen;
 
         ctrl = new ControleurToolBar(this);

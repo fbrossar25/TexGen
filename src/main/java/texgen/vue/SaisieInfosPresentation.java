@@ -54,7 +54,7 @@ public class SaisieInfosPresentation extends JDialog {
      * @param infos
      *            les informations de la présentation
      */
-    public SaisieInfosPresentation(FenetrePrincipale fen, InfosPresentation infos) {
+    public SaisieInfosPresentation(final FenetrePrincipale fen, InfosPresentation infos) {
         super();
         this.setTitle("Informations sur la présentation");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
