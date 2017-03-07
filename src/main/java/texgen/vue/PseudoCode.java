@@ -257,11 +257,11 @@ public class PseudoCode extends JPanel {
         int prochainMarqueur;
         // S'il n'y avait aucun marqueur, ou si le dernier marqueur était à la dernière ligne, on marque la première
         // ligne, sinon on marque la ligne suivant le dernier marqueur
-        if (getDiapo(getNombreDiapos()).isEmpty() || (getDiapo(getNombreDiapos()).last() == getNombreLignes())) {
+        if (getNombreDiapos() - 1 > 0 && (getDiapo(getNombreDiapos() - 1).isEmpty() || (getDiapo(getNombreDiapos() - 1).last() == getNombreLignes()))) {
             prochainMarqueur = 1;
         } else {
             // On utilise new Integer et intValue pour ne pas modifier le dernier marqueur
-            prochainMarqueur = new Integer(getDiapo(getNombreDiapos()).last().intValue()) + 1;
+            prochainMarqueur = new Integer(getDiapo(getNombreDiapos() - 1).last().intValue()) + 1;
             // System.out.println("next mark at " + prochainMarqueur);
         }
         marquage(getNombreDiapos(), prochainMarqueur);
