@@ -294,7 +294,7 @@ public class PseudoCode extends JPanel {
      *            Numéro de la diapo à supprimer
      */
     public void supprimerDiapo(int i) {
-        if (getNombreDiapos() > 1 && (i >= 0) && (i < marqueurs.size())) {
+        if (getNombreDiapos() > 1 && (i > 0) && (i <= marqueurs.size())) {
             if (i == getNombreDiapos()) {
                 diapoCourante--;
             }
